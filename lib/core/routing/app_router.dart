@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/core/routing/routes.dart';
+import 'package:money_manager/features/onboarding/on_boarding_screen.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings settings) {
@@ -9,7 +10,7 @@ class AppRouter {
       case Routes.onBoardingScreen:
         return MaterialPageRoute(
           builder: (BuildContext context) {
-            return const Text('Moneyist');
+            return const OnBoardingScreen();
           },
         );
       default:
