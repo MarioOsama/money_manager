@@ -7,8 +7,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:money_manager/core/di/dependency_injection.dart';
 import 'package:money_manager/core/routing/app_router.dart';
-
+import 'package:money_manager/features/verification/data/repos/verification_repo.dart';
 import 'package:money_manager/money_manager_app.dart';
 
 void main() {
@@ -16,6 +17,7 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MoneyManagerApp(
       appRouter: AppRouter(),
+      verificationRepo: getIt<VerificationRepo>(),
     ));
 
     // Verify that our counter starts at 0.

@@ -3,13 +3,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/routing/app_router.dart';
 import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/core/theming/colors.dart';
+import 'package:money_manager/features/verification/data/repos/verification_repo.dart';
 
 class MoneyManagerApp extends StatelessWidget {
   final AppRouter appRouter;
-  const MoneyManagerApp({super.key, required this.appRouter});
+  final VerificationRepo verificationRepo;
+  const MoneyManagerApp({
+    super.key,
+    required this.appRouter,
+    required this.verificationRepo,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final isUserExist = verificationRepo.userExistence();
     return ScreenUtilInit(
       designSize: const Size(420, 890),
       minTextAdapt: true,
@@ -21,7 +28,8 @@ class MoneyManagerApp extends StatelessWidget {
           primaryColor: AppColors.primaryColor,
           scaffoldBackgroundColor: Colors.white,
         ),
-        initialRoute: Routes.onBoardingScreen,
+        initialRoute:
+            isUserExist ? Routes.verificationScreen : Routes.onBoardingScreen,
         onGenerateRoute: appRouter.onGenerateRoute,
       ),
     );

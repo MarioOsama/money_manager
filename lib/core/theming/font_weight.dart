@@ -9,5 +9,5 @@ class FontWeights {
   static const FontWeight semiBold = FontWeight.w600;
   static const FontWeight bold = FontWeight.w700;
   static const FontWeight extraBold = FontWeight.w800;
-  static const FontWeight black = FontWeight.w900;
+  static const FontWeight mostBold = FontWeight.w900;
 }
