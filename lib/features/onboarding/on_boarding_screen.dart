@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
+import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/core/widgets/app_button.dart';
 
@@ -18,7 +20,9 @@ class OnBoardingScreen extends StatelessWidget {
           _buildSloganText(),
           verticalSpace(20),
           AppButton(
-            onPress: () {},
+            onPress: () {
+              context.pushNamed(Routes.verificationScreen);
+            },
             text: 'Get Started',
             width: 365,
           ),
@@ -28,9 +32,9 @@ class OnBoardingScreen extends StatelessWidget {
   }
 
   Widget _buildSloganText() {
-    return const Text(
+    return Text(
       "Spend Smarter\nSave More",
-      style: TextStyles.f36PrimaryBlack,
+      style: TextStyles.f36PrimaryMostBlack,
       textAlign: TextAlign.center,
     );
   }
