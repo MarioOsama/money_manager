@@ -10,7 +10,7 @@ class TextStyles {
     color: AppColors.primaryColor,
   );
 
-  static TextStyle f36PrimaryMostBlack = TextStyle(
+  static TextStyle f36PrimaryMostBold = TextStyle(
     fontSize: 36.sp,
     fontWeight: FontWeights.mostBold,
     color: AppColors.primaryColor,
@@ -22,9 +22,63 @@ class TextStyles {
     color: AppColors.cyanColor,
   );
 
+  static TextStyle f30WhiteBold = TextStyle(
+    fontSize: 30.sp,
+    fontWeight: FontWeights.bold,
+    color: Colors.white,
+  );
+
   static TextStyle f18WhiteSemiBold = TextStyle(
     fontSize: 18.sp,
     fontWeight: FontWeights.semiBold,
     color: Colors.white,
+  );
+
+  static TextStyle f18BlackSemiBold = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeights.semiBold,
+    color: Colors.black,
+  );
+
+  static TextStyle f18RedSemiBold = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeights.semiBold,
+    color: AppColors.lightRedColor,
+  );
+
+  static TextStyle f18GreenSemiBold = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeights.semiBold,
+    color: AppColors.lightGreenColor,
+  );
+
+  static TextStyle f18CyanMedium = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeights.medium,
+    color: AppColors.cyanColor,
+  );
+
+  static TextStyle f18CyanRegular = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeights.regular,
+    color: AppColors.cyanColor,
+  );
+
+  static TextStyle f14WhiteRegular = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeights.regular,
+    color: Colors.white,
+  );
+
+  static TextStyle f14BlackNormal = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeights.regular,
+    color: Colors.black,
+  );
+
+  static TextStyle f15GreyRegular = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeights.regular,
+    color: const Color(0xFF646464),
   );
 }

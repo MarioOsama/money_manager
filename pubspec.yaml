@@ -44,6 +44,7 @@ dependencies:
   json_annotation: ^4.8.1
   json_serializable: ^6.7.1
   onscreen_num_keyboard: ^1.0.4
+  path_provider: ^2.1.2
 
 dev_dependencies:
   hive_generator: ^2.0.1

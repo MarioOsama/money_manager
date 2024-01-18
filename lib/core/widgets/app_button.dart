@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
 
+const _buttonRadius = 15.0;
+
 class AppButton extends StatelessWidget {
   final VoidCallback onPress;
   final String text;
@@ -29,12 +31,10 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Check the button has outline border or not
     final isBorder = borderWidth != null;
     return _buildContainer(isBorder);
   }
 
-  // Build the Container widget
   Widget _buildContainer(bool isBorder) {
     return Container(
       width: width?.w ?? double.maxFinite,
@@ -44,7 +44,6 @@ class AppButton extends StatelessWidget {
     );
   }
 
-  // Build the BoxDecoration
   BoxDecoration _buildDecoration(bool isBorder) {
     return BoxDecoration(
       gradient: !isBorder
@@ -57,21 +56,20 @@ class AppButton extends StatelessWidget {
               ],
             )
           : null,
-      borderRadius: BorderRadius.circular(radius ?? 50),
+      borderRadius: BorderRadius.circular(radius ?? _buttonRadius),
       boxShadow: !isBorder
           ? [
               BoxShadow(
                 color: AppColors.primaryColor.withOpacity(0.7),
                 blurRadius: 20,
                 offset: const Offset(0, 10),
-                spreadRadius: 1,
+                spreadRadius: 3,
               ),
             ]
           : null,
     );
   }
 
-  // Build the TextButton widget
   Widget _buildTextButton(bool isBorder) {
     return TextButton(
       onPressed: onPress,
@@ -84,7 +82,7 @@ class AppButton extends StatelessWidget {
         ),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radius ?? 50),
+            borderRadius: BorderRadius.circular(radius ?? _buttonRadius),
             side: BorderSide(
               color: AppColors.primaryColor,
               width: borderWidth ?? 1,
