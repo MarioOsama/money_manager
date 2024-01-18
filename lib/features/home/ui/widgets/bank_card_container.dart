@@ -12,7 +12,7 @@ class BankCardContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 285.h,
+      height: 275.h,
       width: double.infinity,
       alignment: Alignment.center,
       padding: const EdgeInsets.only(top: 50),
