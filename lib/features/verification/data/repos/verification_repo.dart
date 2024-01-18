@@ -6,6 +6,15 @@ class VerificationRepo {
   VerificationRepo(this._databaseServices);
 
   bool userExistence() {
-    return _databaseServices.isDatabaseInitialized();
+    return _databaseServices.isVerificationDatabaseInitialized();
+  }
+
+  void storeUserPinCode(String pinCode) {
+    _databaseServices
+        .initializeVerificationDatabaseAndStoreUserPinCode(pinCode);
+  }
+
+  bool isVerifiedUserPinCode(String pinCode) {
+    return _databaseServices.isVerifiedUserPinCode(pinCode);
   }
 }

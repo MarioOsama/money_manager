@@ -5,15 +5,21 @@ class _VerificationBlocListener extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Map<int, Color> errorColorsMap = {
+      0: AppColors.redColor,
+      1: AppColors.orangeColor,
+      2: AppColors.primaryDarkColor,
+    };
     return BlocListener<VerificationCubit, VerificationState>(
       listener: (BuildContext context, state) {
         if (state is VerificationErrorState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: AppColors.primaryDarkColor,
-              content: Text(state.getValue, style: TextStyles.f18WhiteSemiBold),
-            ),
-          );
+          context.clearSnackBar();
+          context.showSnackBar(
+              message: state.getValue,
+              color: errorColorsMap[state.getErrorCode]);
+        } else if (state is VerificationSuccess) {
+          context.clearSnackBar();
+          context.pushReplacementNamed(Routes.homeScreen);
         }
       },
       child: const SizedBox.shrink(),

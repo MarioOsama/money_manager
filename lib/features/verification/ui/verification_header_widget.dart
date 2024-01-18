@@ -11,7 +11,7 @@ class _VerificationHeader extends StatelessWidget {
       alignment: Alignment.center,
       child: BlocBuilder<VerificationCubit, VerificationState>(
         builder: (context, state) {
-          if (state is VerificationCreatePin || state is VerificationInitial) {
+          if (state is VerificationCreatePin) {
             verificationHeader = "Let's setup your PIN";
           } else if (state is VerificationConfirmPin) {
             verificationHeader = 'Confirm your PIN';

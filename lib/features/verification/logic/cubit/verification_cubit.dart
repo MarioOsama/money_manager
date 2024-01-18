@@ -18,36 +18,77 @@ class VerificationCubit extends Cubit<VerificationState> {
     }
   }
 
-  bool get isUserExist {
-    return _verificationRepo.userExistence();
-  }
+  bool get isUserExist => _verificationRepo.userExistence();
 
   void emitUserState() {
     if (isUserExist) {
-      emit(VerificationVerifyPin());
-    }
-    if (isInConfirmationMode) {
-      emit(const VerificationConfirmPin(confirmationPin: ''));
+      emit(const VerificationVerifyPin(verificationPin: ''));
     } else {
-      emit(const VerificationCreatePin(pin: ''));
+      isInConfirmationMode
+          ? emit(const VerificationConfirmPin(confirmationPin: ''))
+          : emit(const VerificationCreatePin(pin: ''));
     }
   }
 
   void updatePin(String newPin) {
-    if (isInConfirmationMode) {
-      emit(VerificationConfirmPin(confirmationPin: newPin));
-    } else {
-      emit(VerificationCreatePin(pin: newPin));
+    switch (state.runtimeType) {
+      case VerificationCreatePin:
+        emit(VerificationCreatePin(pin: newPin));
+        break;
+      case VerificationConfirmPin:
+        emit(VerificationConfirmPin(confirmationPin: newPin));
+        break;
+      case VerificationVerifyPin:
+        emit(VerificationVerifyPin(verificationPin: newPin));
+        break;
+      default:
+        break;
     }
   }
 
   void onDoneTap() {
+    final pinCode = state.getValue;
+
+    if (pinCode.length < 4) {
+      emit(const VerificationErrorState(
+        error: "PIN must be 4 digits.",
+        errorCode: 1,
+      ));
+      emitUserState();
+      return;
+    }
+
+    if (state is VerificationVerifyPin) {
+      handleVerifyPin(pinCode);
+    } else {
+      handleConfirmationMode();
+    }
+  }
+
+  void handleVerifyPin(String pinCode) {
+    final isPinVerified = isVerifiedPin(pinCode);
+
+    if (isPinVerified) {
+      emit(VerificationSuccess(pinCode: pinCode));
+    } else {
+      emit(const VerificationErrorState(
+        error: "Incorrect PIN. Please try again.",
+        errorCode: 0,
+      ));
+      emitUserState();
+    }
+  }
+
+  void handleConfirmationMode() {
     if (isInConfirmationMode) {
       confirmPin();
     } else {
       toggleConfirmationMode();
     }
   }
+
+  bool isVerifiedPin(String pin) =>
+      _verificationRepo.isVerifiedUserPinCode(pin);
 
   void toggleConfirmationMode() {
     isInConfirmationMode = !isInConfirmationMode;
@@ -57,64 +98,25 @@ class VerificationCubit extends Cubit<VerificationState> {
   void confirmPin() {
     final pinCode = previousState.getValue;
     final confirmationCode = state.getValue;
+
     if (pinCode == confirmationCode) {
-      emit(VerificationSuccess());
+      emit(
+        VerificationSuccess(
+          pinCode: confirmationCode,
+        ),
+      );
+      storePinCode(state.getValue);
     } else {
-      emit(const VerificationErrorState(
-          error: "Unmatched PIN. Please try again."));
+      emit(
+        const VerificationErrorState(
+          error: "Unmatched PIN. Please try again.",
+          errorCode: 2,
+        ),
+      );
       isInConfirmationMode = false;
       emitUserState();
     }
   }
 
-  // // Get verification code
-  // String get verificationCode {
-  //   final code = ['1234', '4321'];
-  //   print(code[Random().nextInt(2)]);
-  //   return code[Random().nextInt(2)];
-  // }
-
-  // // Method to trigger the verification of an existing PIN
-  // void verifyPin(String pin) {
-  //   // Logic to check if the entered PIN matches the stored PIN
-  //   // You should implement your own logic to retrieve and compare the PIN securely
-  //   // For example, you can use a secure storage library.
-  //   if (/* PIN verification logic */) {
-  //     emit(VerificationSuccess());
-  //   } else {
-  //     emit(VerificationError("Invalid PIN. Please try again."));
-  //   }
-  // }
-
-  // // Method to trigger the creation of a new PIN
-  // void createPin(bool isInConfirmationMode) {
-  //   emit(VerificationCreatePin(isInConfirmationMode: isInConfirmationMode));
-  //   if (checkPinLegnth()) {
-  //     emit(VerificationSuccess());
-  //   } else {
-  //     emit(const VerificationErrorState(
-  //         error: "Invalid PIN. Please enter 4 digits."));
-  //   }
-  //   // Logic to store the newly created PIN
-  //   // You should implement your own logic to store the PIN securely
-  //   // For example, you can use a secure storage library.
-  // }
-
-  // bool isNewUser = false;
-
-  // States emitting
-
-  // void emitVerificationCode(String code) {
-  //   if (checkCodeLegnth()) {
-  //     isInConfirmationMode = true;
-  //     emit(code);
-  //   } else {
-  //     isInConfirmationMode = false;
-  //     emit(null);
-  //   }
-  // }
-
-  // bool checkPinLegnth() {
-  //   return pin.length == 4;
-  // }
+  void storePinCode(String pin) => _verificationRepo.storeUserPinCode(pin);
 }

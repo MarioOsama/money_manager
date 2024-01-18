@@ -10,6 +10,9 @@ import 'package:money_manager/core/widgets/app_button.dart';
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
 
+  //TODO: Add carousel to onboarding screen
+  //TODO: Update the splash screen
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +37,7 @@ class OnBoardingScreen extends StatelessWidget {
   Widget _buildSloganText() {
     return Text(
       "Spend Smarter\nSave More",
-      style: TextStyles.f36PrimaryMostBlack,
+      style: TextStyles.f36PrimaryMostBold,
       textAlign: TextAlign.center,
     );
   }
