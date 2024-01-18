@@ -18,8 +18,11 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
       selectedIconTheme: IconThemeData(size: 35.sp),
       currentIndex: _selctedIndex,
       enableFeedback: false,
-      showSelectedLabels: false,
       showUnselectedLabels: false,
+      selectedLabelStyle: TextStyle(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w600,
+      ),
       iconSize: 30.sp,
       selectedItemColor: AppColors.primaryColor,
       unselectedItemColor: Colors.grey,
@@ -31,6 +34,10 @@ class _AppBottomNavigationBarState extends State<AppBottomNavigationBar> {
         BottomNavigationBarItem(
           icon: Icon(Icons.bar_chart_sharp),
           label: 'Statistics',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.add_box),
+          label: 'Create',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_balance_wallet_sharp),
