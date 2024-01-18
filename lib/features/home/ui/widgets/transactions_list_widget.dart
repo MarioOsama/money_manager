@@ -6,35 +6,36 @@ class _TransactionsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isExpanse = transactionType == TransactionType.expense;
+    final bool isExpanse = transactionType == TransactionType.expense;
+    final String typeSign = isExpanse ? '-' : '+';
     final Map<String, Map<String, dynamic>> expensesDummyData = {
       'expense1': {
         'title': 'Groceries',
         'amount': 50.0,
         'date': '2024-01-18',
         'imageUrl':
-            'https://images.unsplash.com/photo-1705436195969-5678d64b9720?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            'https://images.unsplash.com/photo-1590779033100-9f60a05a013d?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       },
       'expense2': {
         'title': 'Dinner',
         'amount': 30.0,
         'date': '2024-01-17',
         'imageUrl':
-            'https://images.unsplash.com/photo-1705179573286-495f1b4fabaf?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            'https://images.unsplash.com/photo-1603073163308-9654c3fb70b5?q=80&w=1627&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       },
       'expense3': {
         'title': 'Gasoline',
         'amount': 40.0,
         'date': '2024-01-16',
         'imageUrl':
-            'https://images.unsplash.com/photo-1682687982470-8f1b0e79151a?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            'https://images.unsplash.com/photo-1635627529674-912a0176c6cc?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       },
       'expense4': {
         'title': 'Gasoline',
         'amount': 40.0,
         'date': '2024-01-16',
         'imageUrl':
-            'https://images.unsplash.com/photo-1682687982470-8f1b0e79151a?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            'https://images.unsplash.com/photo-1635627529674-912a0176c6cc?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       },
     };
     return ListView.builder(
@@ -62,7 +63,7 @@ class _TransactionsListWidget extends StatelessWidget {
             expense['date'],
             style: TextStyles.f15GreyRegular,
           ),
-          trailing: Text('-\$${expense['amount']}',
+          trailing: Text('$typeSign\$${expense['amount']}',
               style: isExpanse
                   ? TextStyles.f18RedSemiBold
                   : TextStyles.f18GreenSemiBold),
