@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
+import 'package:money_manager/features/home/data/models/transaction.dart';
+import 'package:money_manager/features/home/logic/cubit/transaction_cubit.dart';
 
 part 'transactions_header_widget.dart';
 part 'transactions_list_widget.dart';
-
-enum TransactionType { expense, income }
 
 class TransactionsContainer extends StatelessWidget {
   const TransactionsContainer({super.key});

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_manager/core/di/dependency_injection.dart';
 import 'package:money_manager/core/routing/routes.dart';
+import 'package:money_manager/features/home/logic/cubit/transaction_cubit.dart';
 import 'package:money_manager/features/home/ui/home_screen.dart';
 import 'package:money_manager/features/onboarding/on_boarding_screen.dart';
 import 'package:money_manager/features/verification/ui/verification_screen.dart';
@@ -19,15 +20,16 @@ class AppRouter {
       case Routes.verificationScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider<VerificationCubit>(
-            create: (context) {
-              return getIt<VerificationCubit>();
-            },
+            create: (context) => getIt<VerificationCubit>(),
             child: const VerificationScreen(),
           ),
         );
       case Routes.homeScreen:
         return MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
+          builder: (_) => BlocProvider<TransactionCubit>(
+            create: (context) => getIt<TransactionCubit>(),
+            child: const HomeScreen(),
+          ),
         );
       default:
         return MaterialPageRoute(
