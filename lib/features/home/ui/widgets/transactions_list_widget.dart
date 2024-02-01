@@ -6,69 +6,118 @@ class _TransactionsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<TransactionCubit>().filterTransactionsByType(transactionType);
+
     final bool isExpanse = transactionType == TransactionType.expense;
     final String typeSign = isExpanse ? '-' : '+';
-    final Map<String, Map<String, dynamic>> expensesDummyData = {
-      'expense1': {
-        'title': 'Groceries',
-        'amount': 50.0,
-        'date': '2024-01-18',
-        'imageUrl':
-            'https://images.unsplash.com/photo-1590779033100-9f60a05a013d?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      },
-      'expense2': {
-        'title': 'Dinner',
-        'amount': 30.0,
-        'date': '2024-01-17',
-        'imageUrl':
-            'https://images.unsplash.com/photo-1603073163308-9654c3fb70b5?q=80&w=1627&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      },
-      'expense3': {
-        'title': 'Gasoline',
-        'amount': 40.0,
-        'date': '2024-01-16',
-        'imageUrl':
-            'https://images.unsplash.com/photo-1635627529674-912a0176c6cc?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      },
-      'expense4': {
-        'title': 'Gasoline',
-        'amount': 40.0,
-        'date': '2024-01-16',
-        'imageUrl':
-            'https://images.unsplash.com/photo-1635627529674-912a0176c6cc?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      },
-    };
-    return ListView.builder(
-      padding: EdgeInsets.only(top: 5.h),
-      itemCount: expensesDummyData.length,
-      itemBuilder: (context, index) {
-        final String key = expensesDummyData.keys.elementAt(index);
-        final Map<String, dynamic> expense = expensesDummyData[key]!;
-        return ListTile(
-          titleAlignment: ListTileTitleAlignment.top,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-          leading: Container(
-            height: 50.h,
-            width: 50.w,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.r),
-              image: DecorationImage(
-                image: NetworkImage(expense['imageUrl']),
-                fit: BoxFit.cover,
+    // TODO: implement periodic formate logic in settings
+    final bool isPeriodicFormate = false;
+
+    return BlocBuilder<TransactionCubit, TransactionState>(
+      builder: (context, state) {
+        final List<Transaction> transactions = state is TransactionFiltered
+            ? isExpanse
+                ? state.expenses
+                : state.incomes
+            : [];
+
+        final int listLength = transactions.length;
+        return ListView.builder(
+          padding: EdgeInsets.only(top: 5.h),
+          itemCount: listLength > 5 ? 5 : listLength,
+          itemBuilder: (context, index) {
+            final String title = transactions[index].title;
+            final DateTime date = transactions[index].date;
+            final String formattedDate = isPeriodicFormate
+                ? _getPeriodicDate(date)
+                : _getFormattedDate(date);
+            final double amount = transactions[index].amount;
+
+            return Dismissible(
+              key: Key(transactions[index].id),
+              background: _buildDeleteDismissibleBackground(),
+              secondaryBackground: _buildEditDismissibleBackground(),
+              child: ListTile(
+                titleAlignment: ListTileTitleAlignment.top,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                leading: Container(
+                  height: 50.h,
+                  width: 50.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    image: DecorationImage(
+                      image: NetworkImage(transactions[index].imagePath!),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                title: Text(title, style: TextStyles.f18BlackSemiBold),
+                subtitle: Text(
+                  formattedDate,
+                  style: TextStyles.f15GreyRegular,
+                ),
+                trailing: Text('$typeSign\$$amount',
+                    style: isExpanse
+                        ? TextStyles.f18RedSemiBold
+                        : TextStyles.f18GreenSemiBold),
               ),
-            ),
-          ),
-          title: Text(expense['title'], style: TextStyles.f18BlackSemiBold),
-          subtitle: Text(
-            expense['date'],
-            style: TextStyles.f15GreyRegular,
-          ),
-          trailing: Text('$typeSign\$${expense['amount']}',
-              style: isExpanse
-                  ? TextStyles.f18RedSemiBold
-                  : TextStyles.f18GreenSemiBold),
+            );
+          },
         );
       },
+    );
+  }
+
+  String _getFormattedDate(DateTime date) {
+    final String month = date.month.toString();
+    final String day = date.day.toString();
+    final String year = date.year.toString();
+    return '$day, $month, $year';
+  }
+
+  String _getPeriodicDate(DateTime date) {
+    final now = DateTime.now();
+    final diff = now.difference(date);
+    if (diff.inDays > 0) {
+      return '${diff.inDays} days ago';
+    } else if (diff.inHours > 0) {
+      return '${diff.inHours} hours ago';
+    } else if (diff.inMinutes > 0) {
+      return '${diff.inMinutes} minutes ago';
+    } else {
+      return 'Just now';
+    }
+  }
+
+  Widget _buildDeleteDismissibleBackground() {
+    return Container(
+      padding: EdgeInsets.only(left: 20.w),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.r),
+        color: AppColors.lightRedColor,
+      ),
+      alignment: Alignment.centerLeft,
+      child: const Icon(
+        Icons.delete,
+        color: Colors.white,
+        size: 30,
+      ),
+    );
+  }
+
+  Widget _buildEditDismissibleBackground() {
+    return Container(
+      padding: EdgeInsets.only(right: 20.w),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.r),
+        color: AppColors.lightGreenColor,
+      ),
+      alignment: Alignment.centerRight,
+      child: const Icon(
+        Icons.edit,
+        color: Colors.white,
+        size: 30,
+      ),
     );
   }
 }

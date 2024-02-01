@@ -5,76 +5,87 @@ class _BankCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 205.h,
-      width: 375.w,
-      padding: const EdgeInsets.all(25),
-      decoration: BoxDecoration(
-        color: AppColors.primaryColor,
-        borderRadius: BorderRadius.circular(20.r),
-        boxShadow: const [
-          BoxShadow(
-            color: AppColors.cyanColor,
-            blurRadius: 15,
-            offset: Offset(0, 5),
-            spreadRadius: 5,
-          )
-        ],
-        image: const DecorationImage(
-            image: AssetImage('assets/images/home-card-circles.png'),
-            fit: BoxFit.fitWidth),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return BlocBuilder<TransactionCubit, TransactionState>(
+      builder: (context, state) {
+        double totalBalance = state is TransactionFiltered
+            ? state.incomesAmount - state.expensesAmount
+            : 0.0;
+        double income =
+            state is TransactionFiltered ? state.incomesAmount : 0.0;
+        double expense =
+            state is TransactionFiltered ? state.expensesAmount : 0.0;
+        return Container(
+          height: 205.h,
+          width: 375.w,
+          padding: const EdgeInsets.all(25),
+          decoration: BoxDecoration(
+            color: AppColors.primaryColor,
+            borderRadius: BorderRadius.circular(20.r),
+            boxShadow: const [
+              BoxShadow(
+                color: AppColors.cyanColor,
+                blurRadius: 15,
+                offset: Offset(0, 5),
+                spreadRadius: 5,
+              )
+            ],
+            image: const DecorationImage(
+                image: AssetImage('assets/images/home-card-circles.png'),
+                fit: BoxFit.fitWidth),
+          ),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Total Balance',
-                    style: TextStyles.f18CyanMedium,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Total Balance',
+                        style: TextStyles.f18CyanMedium,
+                      ),
+                      Text('\$$totalBalance', style: TextStyles.f30WhiteBold),
+                    ],
                   ),
-                  Text('\$2,580.00', style: TextStyles.f30WhiteBold),
+                  const Spacer(),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.more_horiz,
+                        size: 30,
+                        color: AppColors.cyanColor,
+                      ))
                 ],
               ),
               const Spacer(),
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.more_horiz,
-                    size: 30,
-                    color: AppColors.cyanColor,
-                  ))
+              Row(
+                children: [
+                  _buildBalanceCard(
+                      title: 'Income',
+                      amount: '\$$income',
+                      icon: const Icon(
+                        Icons.download_sharp,
+                        color: AppColors.cyanColor,
+                        size: 20,
+                      )),
+                  const Spacer(),
+                  horizontalSpace(10),
+                  _buildBalanceCard(
+                      title: 'Expense',
+                      amount: '\$$expense',
+                      icon: const Icon(
+                        Icons.file_upload,
+                        color: AppColors.cyanColor,
+                        size: 20,
+                      )),
+                ],
+              )
             ],
           ),
-          const Spacer(),
-          Row(
-            children: [
-              _buildBalanceCard(
-                  title: 'Income',
-                  amount: '\$1,500.00',
-                  icon: const Icon(
-                    Icons.download_sharp,
-                    color: AppColors.cyanColor,
-                    size: 20,
-                  )),
-              const Spacer(),
-              horizontalSpace(10),
-              _buildBalanceCard(
-                  title: 'Expense',
-                  amount: '\$1,500.00',
-                  icon: const Icon(
-                    Icons.file_upload,
-                    color: AppColors.cyanColor,
-                    size: 20,
-                  )),
-            ],
-          )
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -84,7 +95,6 @@ class _BankCardWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             CircleAvatar(
               radius: 13,
