@@ -33,29 +33,34 @@ class _TransactionsListWidget extends StatelessWidget {
                 : _getFormattedDate(date);
             final double amount = transactions[index].amount;
 
-            return ListTile(
-              titleAlignment: ListTileTitleAlignment.top,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-              leading: Container(
-                height: 50.h,
-                width: 50.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  image: DecorationImage(
-                    image: NetworkImage(transactions[index].imagePath!),
-                    fit: BoxFit.cover,
+            return Dismissible(
+              key: Key(transactions[index].id),
+              background: _buildDeleteDismissibleBackground(),
+              secondaryBackground: _buildEditDismissibleBackground(),
+              child: ListTile(
+                titleAlignment: ListTileTitleAlignment.top,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                leading: Container(
+                  height: 50.h,
+                  width: 50.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    image: DecorationImage(
+                      image: NetworkImage(transactions[index].imagePath!),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
+                title: Text(title, style: TextStyles.f18BlackSemiBold),
+                subtitle: Text(
+                  formattedDate,
+                  style: TextStyles.f15GreyRegular,
+                ),
+                trailing: Text('$typeSign\$$amount',
+                    style: isExpanse
+                        ? TextStyles.f18RedSemiBold
+                        : TextStyles.f18GreenSemiBold),
               ),
-              title: Text(title, style: TextStyles.f18BlackSemiBold),
-              subtitle: Text(
-                formattedDate,
-                style: TextStyles.f15GreyRegular,
-              ),
-              trailing: Text('$typeSign\$$amount',
-                  style: isExpanse
-                      ? TextStyles.f18RedSemiBold
-                      : TextStyles.f18GreenSemiBold),
             );
           },
         );
@@ -82,5 +87,37 @@ class _TransactionsListWidget extends StatelessWidget {
     } else {
       return 'Just now';
     }
+  }
+
+  Widget _buildDeleteDismissibleBackground() {
+    return Container(
+      padding: EdgeInsets.only(left: 20.w),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.r),
+        color: AppColors.lightRedColor,
+      ),
+      alignment: Alignment.centerLeft,
+      child: const Icon(
+        Icons.delete,
+        color: Colors.white,
+        size: 30,
+      ),
+    );
+  }
+
+  Widget _buildEditDismissibleBackground() {
+    return Container(
+      padding: EdgeInsets.only(right: 20.w),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.r),
+        color: AppColors.lightGreenColor,
+      ),
+      alignment: Alignment.centerRight,
+      child: const Icon(
+        Icons.edit,
+        color: Colors.white,
+        size: 30,
+      ),
+    );
   }
 }

@@ -46,7 +46,7 @@ class _BankCardWidget extends StatelessWidget {
                         'Total Balance',
                         style: TextStyles.f18CyanMedium,
                       ),
-                      Text('$totalBalance', style: TextStyles.f30WhiteBold),
+                      Text('\$$totalBalance', style: TextStyles.f30WhiteBold),
                     ],
                   ),
                   const Spacer(),
@@ -64,7 +64,7 @@ class _BankCardWidget extends StatelessWidget {
                 children: [
                   _buildBalanceCard(
                       title: 'Income',
-                      amount: '$income',
+                      amount: '\$$income',
                       icon: const Icon(
                         Icons.download_sharp,
                         color: AppColors.cyanColor,
@@ -74,7 +74,7 @@ class _BankCardWidget extends StatelessWidget {
                   horizontalSpace(10),
                   _buildBalanceCard(
                       title: 'Expense',
-                      amount: '$expense',
+                      amount: '\$$expense',
                       icon: const Icon(
                         Icons.file_upload,
                         color: AppColors.cyanColor,

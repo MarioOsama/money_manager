@@ -7,6 +7,7 @@ import 'package:money_manager/features/home/ui/home_screen.dart';
 import 'package:money_manager/features/onboarding/on_boarding_screen.dart';
 import 'package:money_manager/features/verification/ui/verification_screen.dart';
 import 'package:money_manager/features/verification/logic/cubit/verification_cubit.dart';
+import 'package:money_manager/main_screen.dart';
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings settings) {
@@ -24,11 +25,11 @@ class AppRouter {
             child: const VerificationScreen(),
           ),
         );
-      case Routes.homeScreen:
+      case Routes.mainScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider<TransactionCubit>(
             create: (context) => getIt<TransactionCubit>(),
-            child: const HomeScreen(),
+            child: const MainScreen(),
           ),
         );
       default:

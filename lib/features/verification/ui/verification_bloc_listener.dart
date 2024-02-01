@@ -19,7 +19,7 @@ class _VerificationBlocListener extends StatelessWidget {
               color: errorColorsMap[state.getErrorCode]);
         } else if (state is VerificationSuccess) {
           context.clearSnackBar();
-          context.pushReplacementNamed(Routes.homeScreen);
+          context.pushReplacementNamed(Routes.mainScreen);
         }
       },
       child: const SizedBox.shrink(),
