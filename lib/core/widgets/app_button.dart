@@ -17,7 +17,7 @@ class AppButton extends StatelessWidget {
   final double? radius;
 
   const AppButton({
-    Key? key,
+    super.key,
     required this.onPress,
     required this.text,
     this.backgroundColor,
@@ -27,7 +27,7 @@ class AppButton extends StatelessWidget {
     this.horizontalPadding,
     this.verticalPadding,
     this.radius,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

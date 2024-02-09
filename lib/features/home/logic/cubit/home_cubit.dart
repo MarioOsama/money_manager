@@ -1,39 +1,42 @@
 import 'package:bloc/bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:money_manager/features/home/data/models/transaction.dart';
+import 'package:flutter/material.dart';
+import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/features/home/data/repos/home_repo.dart';
 
-part 'transaction_state.dart';
+part 'home_state.dart';
 
-class TransactionCubit extends Cubit<TransactionState> {
+class HomeCubit extends Cubit<HomeState> {
   final HomeRepo _homeRepo;
 
-  TransactionCubit(this._homeRepo) : super(TransactionInitial());
+  HomeCubit(this._homeRepo) : super(HomeInitial());
+
+  TextEditingController tabIndexController = TextEditingController();
 
   void getTransactionsData() {
-    emit(TransactionLoading());
+    emit(HomeLoading());
     try {
       final List<Transaction> transactions =
           _homeRepo.getTransactionsFromDatabase();
-      emit(TransactionLoaded(transactions: transactions));
+      emit(HomeLoaded(transactions: transactions));
     } catch (e) {
-      emit(TransactionErrorState(error: e.toString(), errorCode: 500));
+      emit(HomeError(error: e.toString(), errorCode: 500));
     }
   }
 
-  void filterTransactionsByType(TransactionType transactionType) {
-    emit(TransactionLoading());
+  void filterTransactionsByType() {
+    print('filterTransactionsByType');
+    emit(HomeLoading());
     try {
       final List<Transaction> expenses;
       final List<Transaction> incomes;
       (expenses, incomes) = _homeRepo.getFilteredTransactionsByType();
-      emit(TransactionFiltered(
+      emit(HomeTransactionsFiltered(
           expenses: expenses,
           incomes: incomes,
           expensesAmount: getExpensesAmount(),
           incomesAmount: getIncomesAmount()));
     } catch (e) {
-      emit(TransactionErrorState(error: e.toString(), errorCode: 500));
+      emit(HomeError(error: e.toString(), errorCode: 500));
     }
   }
 

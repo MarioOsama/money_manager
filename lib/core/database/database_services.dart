@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:money_manager/core/database/database_constants.dart';
-import 'package:money_manager/features/home/data/models/transaction.dart';
+import 'package:money_manager/core/models/transaction.dart';
 
 class DatabaseServices {
   final _verBox = Hive.box(DatabaseConstants.verBox);
@@ -11,45 +11,33 @@ class DatabaseServices {
     Transaction(
       title: 'Groceries',
       amount: 175.00,
-      iconCode: const Icon(Icons.shopping_cart).icon!.codePoint,
-      date: DateTime.now(),
+      date: DateTime.now().toUtc(),
       category:
-          Category(name: 'Groceries', colorCode: const Color(0xff00ff00).value),
-      imagePath:
-          'https://images.unsplash.com/photo-1590779033100-9f60a05a013d?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          Category(name: 'Groceries', colorCode: const Color(0xFFE1E6C3).value),
       transactionType: TransactionType.expense,
     ),
     Transaction(
       title: 'Salary',
       amount: 1000.00,
-      iconCode: const Icon(Icons.money).icon!.codePoint,
-      date: DateTime.now(),
+      date: DateTime.now().subtract(const Duration(days: 5)).toUtc(),
       category:
-          Category(name: 'Salary', colorCode: const Color(0xff0000ff).value),
-      imagePath:
-          'https://images.unsplash.com/photo-1553729459-efe14ef6055d?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          Category(name: 'Salary', colorCode: const Color(0xFFC3E6C8).value),
       transactionType: TransactionType.income,
     ),
     Transaction(
       title: 'Shopping',
       amount: 100.00,
-      iconCode: const Icon(Icons.shopping_cart).icon!.codePoint,
-      date: DateTime.now(),
+      date: DateTime.now().subtract(const Duration(days: 12)).toUtc(),
       category:
-          Category(name: 'Shopping', colorCode: const Color(0xffff0000).value),
-      imagePath:
-          'https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          Category(name: 'Shopping', colorCode: const Color(0xFFC3C7E6).value),
       transactionType: TransactionType.expense,
     ),
     Transaction(
-      title: 'Flat Rent',
+      title: 'Flat Renting',
       amount: 400.00,
-      iconCode: const Icon(Icons.money).icon!.codePoint,
-      date: DateTime.now().subtract(const Duration(days: 1)),
+      date: DateTime.now().subtract(const Duration(days: 17)).toUtc(),
       category:
-          Category(name: 'Salary', colorCode: const Color(0xff0000ff).value),
-      imagePath:
-          'https://images.unsplash.com/photo-1569152811536-fb47aced8409?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          Category(name: 'Renting', colorCode: const Color(0xFFDFC3E6).value),
       transactionType: TransactionType.income,
     ),
   ];
@@ -83,7 +71,11 @@ class DatabaseServices {
 
   void _initializeTransactionsDatabase() {
     for (var transaction in initialData) {
-      _transactionsBox.put(transaction.id, transaction);
+      _transactionsBox.put(transaction.createdAt, transaction);
     }
+  }
+
+  void saveTransactionToDatabase(Transaction newTransaction) {
+    _transactionsBox.put(newTransaction.createdAt, newTransaction);
   }
 }

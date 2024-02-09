@@ -1,26 +1,37 @@
-part of 'bank_card_container.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/helpers/spacing.dart';
+import 'package:money_manager/core/logic/cubit/bank_card_cubit.dart';
+import 'package:money_manager/core/theming/colors.dart';
+import 'package:money_manager/core/theming/text_styles.dart';
 
-class _BankCardWidget extends StatelessWidget {
-  const _BankCardWidget();
+class BankCardWidget extends StatelessWidget {
+  final double? radius;
+  final double? height;
+  final double? width;
+  final EdgeInsets? padding;
+
+  const BankCardWidget(
+      {super.key, this.radius, this.height, this.width, this.padding});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TransactionCubit, TransactionState>(
+    context.read<BankCardCubit>().getBankCardData();
+    return BlocBuilder<BankCardCubit, BankCardState>(
       builder: (context, state) {
-        double totalBalance = state is TransactionFiltered
-            ? state.incomesAmount - state.expensesAmount
-            : 0.0;
-        double income =
-            state is TransactionFiltered ? state.incomesAmount : 0.0;
-        double expense =
-            state is TransactionFiltered ? state.expensesAmount : 0.0;
-        return Container(
-          height: 205.h,
-          width: 375.w,
-          padding: const EdgeInsets.all(25),
+        double totalBalance =
+            state is BankCardLoaded ? state.bankCardBalance : 0.0;
+        double income = state is BankCardLoaded ? state.bankCardIncomes : 0.0;
+        double expense = state is BankCardLoaded ? state.bankCardExpenses : 0.0;
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          height: height?.h ?? 225.h,
+          width: width?.w ?? double.infinity,
+          padding: padding ?? const EdgeInsets.all(25),
           decoration: BoxDecoration(
             color: AppColors.primaryColor,
-            borderRadius: BorderRadius.circular(20.r),
+            borderRadius: BorderRadius.circular(radius?.r ?? 20.r),
             boxShadow: const [
               BoxShadow(
                 color: AppColors.cyanColor,
@@ -30,7 +41,7 @@ class _BankCardWidget extends StatelessWidget {
               )
             ],
             image: const DecorationImage(
-                image: AssetImage('assets/images/home-card-circles.png'),
+                image: AssetImage('assets/images/bank-card-circles.png'),
                 fit: BoxFit.fitWidth),
           ),
           child: Column(

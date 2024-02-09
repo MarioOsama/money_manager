@@ -28,6 +28,18 @@ class TextStyles {
     color: Colors.white,
   );
 
+  static TextStyle f23WhiteRegular = TextStyle(
+    fontSize: 23.sp,
+    fontWeight: FontWeights.regular,
+    color: Colors.white,
+  );
+
+  static TextStyle f20RedBold = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeights.bold,
+    color: AppColors.redColor,
+  );
+
   static TextStyle f18WhiteSemiBold = TextStyle(
     fontSize: 18.sp,
     fontWeight: FontWeights.semiBold,
@@ -46,10 +58,10 @@ class TextStyles {
     color: AppColors.lightRedColor,
   );
 
-  static TextStyle f18GreenSemiBold = TextStyle(
+  static TextStyle f18PrimaryLightSemiBold = TextStyle(
     fontSize: 18.sp,
     fontWeight: FontWeights.semiBold,
-    color: AppColors.lightGreenColor,
+    color: AppColors.primaryLightColor,
   );
 
   static TextStyle f18CyanMedium = TextStyle(
@@ -64,10 +76,52 @@ class TextStyles {
     color: AppColors.cyanColor,
   );
 
+  static TextStyle f16PrimarySemiMedium = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeights.medium,
+    color: AppColors.primaryColor,
+  );
+
+  static TextStyle f16PrimaryLightMedium = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeights.medium,
+    color: AppColors.primaryLightColor,
+  );
+
+  static TextStyle f15GreyRegular = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeights.regular,
+    color: const Color(0xFF646464),
+  );
+
+  static TextStyle f15GreySemiBold = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeights.semiBold,
+    color: const Color(0xFF646464),
+  );
+
+  static TextStyle f15PrimarySemiBold = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeights.semiBold,
+    color: AppColors.primaryColor,
+  );
+
+  static TextStyle f15PrimaryLightSemiBold = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeights.semiBold,
+    color: AppColors.primaryLightColor,
+  );
+
   static TextStyle f14WhiteRegular = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeights.regular,
     color: Colors.white,
+  );
+
+  static TextStyle f14GreySemiBold = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeights.semiBold,
+    color: const Color(0xFF646464),
   );
 
   static TextStyle f14BlackNormal = TextStyle(
@@ -76,9 +130,9 @@ class TextStyles {
     color: Colors.black,
   );
 
-  static TextStyle f15GreyRegular = TextStyle(
-    fontSize: 15.sp,
-    fontWeight: FontWeights.regular,
-    color: const Color(0xFF646464),
+  static TextStyle f12BlackSemiBold = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeights.extraBold,
+    color: Colors.black,
   );
 }

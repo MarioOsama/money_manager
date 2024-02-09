@@ -19,11 +19,11 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
     return Transaction(
       title: fields[1] as String,
       amount: fields[2] as double,
-      iconCode: fields[5] as int?,
       date: fields[3] as DateTime,
-      category: fields[4] as Category?,
-      imagePath: fields[6] as String?,
-      transactionType: fields[7] as TransactionType?,
+      category: fields[4] as Category,
+      transactionType: fields[5] as TransactionType,
+      note: fields[6] as String?,
+      attachmentPath: fields[7] as String?,
     );
   }
 
@@ -32,7 +32,7 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
     writer
       ..writeByte(8)
       ..writeByte(0)
-      ..write(obj.id)
+      ..write(obj.createdAt)
       ..writeByte(1)
       ..write(obj.title)
       ..writeByte(2)
@@ -42,11 +42,11 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
       ..writeByte(4)
       ..write(obj.category)
       ..writeByte(5)
-      ..write(obj.iconCode)
+      ..write(obj.transactionType)
       ..writeByte(6)
-      ..write(obj.imagePath)
+      ..write(obj.note)
       ..writeByte(7)
-      ..write(obj.transactionType);
+      ..write(obj.attachmentPath);
   }
 
   @override

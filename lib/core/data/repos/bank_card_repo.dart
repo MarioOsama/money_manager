@@ -1,20 +1,20 @@
 import 'package:money_manager/core/database/database_services.dart';
 import 'package:money_manager/core/models/transaction.dart';
 
-class HomeRepo {
+class BankCardRepo {
   final DatabaseServices _databaseServices;
   List<Transaction> allTransactions = [];
   List<Transaction> expenses = [];
   List<Transaction> incomes = [];
 
-  HomeRepo(this._databaseServices);
+  BankCardRepo(this._databaseServices);
 
-  List<Transaction> getTransactionsFromDatabase() {
+  List<Transaction> loadTransactionsFromDatabase() {
     allTransactions = _databaseServices.getTransactionsFromDatabase();
     return allTransactions;
   }
 
-  (List<Transaction>, List<Transaction>) getFilteredTransactionsByType() {
+  (List<Transaction>, List<Transaction>) filteTransactionsByType() {
     expenses = allTransactions
         .where((transaction) =>
             transaction.transactionType == TransactionType.expense)
@@ -42,11 +42,4 @@ class HomeRepo {
     }
     return incomesAmount;
   }
-
-  // List<Transaction> getTransactionsByCategory(String category) {
-  //   final List<Transaction> transactions = allTransactions
-  //       .where((transaction) => transaction.category == category)
-  //       .toList();
-  //   return transactions;
-  // }
 }

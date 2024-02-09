@@ -6,16 +6,19 @@ class _TransactionsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<TransactionCubit>().filterTransactionsByType(transactionType);
+    final homeCubit = context.read<HomeCubit>();
+    if (homeCubit.state is! HomeTransactionsFiltered) {
+      homeCubit.filterTransactionsByType();
+    }
 
     final bool isExpanse = transactionType == TransactionType.expense;
     final String typeSign = isExpanse ? '-' : '+';
     // TODO: implement periodic formate logic in settings
     final bool isPeriodicFormate = false;
 
-    return BlocBuilder<TransactionCubit, TransactionState>(
+    return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
-        final List<Transaction> transactions = state is TransactionFiltered
+        final List<Transaction> transactions = state is HomeTransactionsFiltered
             ? isExpanse
                 ? state.expenses
                 : state.incomes
@@ -26,40 +29,93 @@ class _TransactionsListWidget extends StatelessWidget {
           padding: EdgeInsets.only(top: 5.h),
           itemCount: listLength > 5 ? 5 : listLength,
           itemBuilder: (context, index) {
-            final String title = transactions[index].title;
-            final DateTime date = transactions[index].date;
+            final Transaction currentTransaction = transactions[index];
+            final String title = currentTransaction.title;
+            final DateTime date = currentTransaction.date;
             final String formattedDate = isPeriodicFormate
                 ? _getPeriodicDate(date)
                 : _getFormattedDate(date);
-            final double amount = transactions[index].amount;
+            final double amount = currentTransaction.amount;
+            final int categoryColorCode = currentTransaction.category.colorCode;
 
             return Dismissible(
-              key: Key(transactions[index].id),
+              key: Key(transactions[index].createdAt),
               background: _buildDeleteDismissibleBackground(),
-              secondaryBackground: _buildEditDismissibleBackground(),
-              child: ListTile(
-                titleAlignment: ListTileTitleAlignment.top,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                leading: Container(
-                  height: 50.h,
-                  width: 50.w,
+              direction: DismissDirection.endToStart,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.r),
-                    image: DecorationImage(
-                      image: NetworkImage(transactions[index].imagePath!),
-                      fit: BoxFit.cover,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 0.1,
+                        blurRadius: 5,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                    color: Colors.grey[50],
+                    border: Border(
+                      left: BorderSide(
+                        color: isExpanse
+                            ? AppColors.lightRedColor
+                            : AppColors.primaryLightColor,
+                        width: 5.w,
+                      ),
+                    ),
+                    borderRadius: BorderRadius.circular(5.r),
+                  ),
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    titleAlignment: ListTileTitleAlignment.top,
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                    title: Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Text(title, style: TextStyles.f18BlackSemiBold),
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Text(
+                        formattedDate,
+                        style: TextStyles.f15GreySemiBold,
+                      ),
+                    ),
+                    trailing: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text('$typeSign\$$amount',
+                            style: isExpanse
+                                ? TextStyles.f18RedSemiBold
+                                : TextStyles.f18PrimaryLightSemiBold),
+                        const Spacer(),
+                        Container(
+                          width: 100.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.r),
+                            color: Color(categoryColorCode).withOpacity(0.25),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 3.0,
+                            ),
+                            child: Text(
+                              currentTransaction.category.name,
+                              textAlign: TextAlign.center,
+                              style: TextStyles.f12BlackSemiBold.copyWith(
+                                color: Color(categoryColorCode +
+                                        categoryColorCode * 3)
+                                    .withOpacity(0.75),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),
-                title: Text(title, style: TextStyles.f18BlackSemiBold),
-                subtitle: Text(
-                  formattedDate,
-                  style: TextStyles.f15GreyRegular,
-                ),
-                trailing: Text('$typeSign\$$amount',
-                    style: isExpanse
-                        ? TextStyles.f18RedSemiBold
-                        : TextStyles.f18GreenSemiBold),
               ),
             );
           },
@@ -91,12 +147,13 @@ class _TransactionsListWidget extends StatelessWidget {
 
   Widget _buildDeleteDismissibleBackground() {
     return Container(
-      padding: EdgeInsets.only(left: 20.w),
+      margin: EdgeInsets.symmetric(vertical: 7.h),
+      padding: EdgeInsets.only(right: 20.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.r),
         color: AppColors.lightRedColor,
       ),
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.centerRight,
       child: const Icon(
         Icons.delete,
         color: Colors.white,
@@ -105,12 +162,13 @@ class _TransactionsListWidget extends StatelessWidget {
     );
   }
 
+  //TODO: Delete this method if not used
   Widget _buildEditDismissibleBackground() {
     return Container(
       padding: EdgeInsets.only(right: 20.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.r),
-        color: AppColors.lightGreenColor,
+        color: AppColors.primaryLightColor,
       ),
       alignment: Alignment.centerRight,
       child: const Icon(
