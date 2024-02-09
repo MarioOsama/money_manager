@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
-import 'package:money_manager/features/home/data/models/transaction.dart';
-import 'package:money_manager/features/home/logic/cubit/transaction_cubit.dart';
+import 'package:money_manager/core/models/transaction.dart';
+import 'package:money_manager/features/home/logic/cubit/home_cubit.dart';
 
 part 'transactions_header_widget.dart';
 part 'transactions_list_widget.dart';

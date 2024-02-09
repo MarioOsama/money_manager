@@ -18,7 +18,7 @@ class MoneyManagerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final isUserExist = verificationRepo.userExistence();
     return ScreenUtilInit(
-      designSize: const Size(420, 890),
+      designSize: const Size(420, 900),
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
