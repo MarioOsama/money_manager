@@ -60,7 +60,7 @@ class _MainScreenState extends State<MainScreen> {
                 },
                 icon: const Icon(Icons.receipt_long_outlined),
                 color: _tabIndex == 0
-                    ? AppColors.primaryLightColor
+                    ? AppColors.lightPrimaryColor
                     : AppColors.primaryDarkColor.withOpacity(0.50),
                 iconSize: _tabIndex == 0 ? 35.sp : 25.sp,
               ),
@@ -73,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
                 },
                 icon: const Icon(Icons.insert_chart_outlined_rounded),
                 color: _tabIndex == 1
-                    ? AppColors.primaryLightColor
+                    ? AppColors.lightPrimaryColor
                     : AppColors.primaryDarkColor.withOpacity(0.50),
                 iconSize: _tabIndex == 1 ? 40.sp : 30.sp,
               ),
@@ -86,7 +86,7 @@ class _MainScreenState extends State<MainScreen> {
                 },
                 icon: const Icon(Icons.account_balance_wallet_outlined),
                 color: _tabIndex == 2
-                    ? AppColors.primaryLightColor
+                    ? AppColors.lightPrimaryColor
                     : AppColors.primaryDarkColor.withOpacity(0.50),
                 iconSize: _tabIndex == 2 ? 40.sp : 30.sp,
               ),
@@ -99,7 +99,7 @@ class _MainScreenState extends State<MainScreen> {
                 },
                 icon: const Icon(Icons.settings_outlined),
                 color: _tabIndex == 3
-                    ? AppColors.primaryLightColor
+                    ? AppColors.lightPrimaryColor
                     : AppColors.primaryDarkColor.withOpacity(0.50),
                 iconSize: _tabIndex == 3 ? 40.sp : 30.sp,
               ),

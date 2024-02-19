@@ -32,11 +32,11 @@ class BankCardWidget extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.primaryColor,
             borderRadius: BorderRadius.circular(radius?.r ?? 20.r),
-            boxShadow: const [
+            boxShadow: [
               BoxShadow(
-                color: AppColors.cyanColor,
+                color: AppColors.primaryColor.withOpacity(0.75),
                 blurRadius: 15,
-                offset: Offset(0, 5),
+                offset: const Offset(0, 15),
                 spreadRadius: 5,
               )
             ],
@@ -66,7 +66,7 @@ class BankCardWidget extends StatelessWidget {
                       icon: const Icon(
                         Icons.more_horiz,
                         size: 30,
-                        color: AppColors.cyanColor,
+                        color: AppColors.lightCyanColor,
                       ))
                 ],
               ),
@@ -78,7 +78,7 @@ class BankCardWidget extends StatelessWidget {
                       amount: '\$$income',
                       icon: const Icon(
                         Icons.download_sharp,
-                        color: AppColors.cyanColor,
+                        color: AppColors.lightCyanColor,
                         size: 20,
                       )),
                   const Spacer(),
@@ -88,7 +88,7 @@ class BankCardWidget extends StatelessWidget {
                       amount: '\$$expense',
                       icon: const Icon(
                         Icons.file_upload,
-                        color: AppColors.cyanColor,
+                        color: AppColors.lightCyanColor,
                         size: 20,
                       )),
                 ],
@@ -109,7 +109,7 @@ class BankCardWidget extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 13,
-              backgroundColor: AppColors.cyanColor.withOpacity(0.2),
+              backgroundColor: AppColors.lightCyanColor.withOpacity(0.2),
               child: icon,
             ),
             horizontalSpace(7),

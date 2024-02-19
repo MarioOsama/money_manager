@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/logic/cubit/bank_card_cubit.dart';
 import 'package:money_manager/core/theming/colors.dart';
@@ -29,22 +28,20 @@ class TransactionScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             'New Transaction',
-            style: TextStyles.f23WhiteRegular,
+            style: TextStyles.f24whiteSemiBold,
             textAlign: TextAlign.center,
           ),
-          surfaceTintColor: AppColors.primaryDarkColor,
           backgroundColor: AppColors.cyanColor,
-          iconTheme: const IconThemeData(
-            size: 30,
-          ),
+          foregroundColor: Colors.white,
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
               const AnimatedBankCardContainer(
-                padding: EdgeInsets.fromLTRB(12, 0, 12, 10),
+                padding: EdgeInsets.all(12),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 30.h),

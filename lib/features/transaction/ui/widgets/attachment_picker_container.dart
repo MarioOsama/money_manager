@@ -85,7 +85,7 @@ class AttachmentPickerContainer extends StatelessWidget {
         children: [
           const Icon(
             Icons.delete,
-            color: AppColors.primaryLightColor,
+            color: AppColors.lightPrimaryColor,
           ),
           const SizedBox(
             width: 10,
