@@ -59,60 +59,66 @@ class _TransactionsListWidget extends StatelessWidget {
                       left: BorderSide(
                         color: isExpanse
                             ? AppColors.lightRedColor
-                            : AppColors.primaryLightColor,
+                            : AppColors.lightGreenColor,
                         width: 5.w,
                       ),
                     ),
                     borderRadius: BorderRadius.circular(5.r),
                   ),
-                  child: ListTile(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    titleAlignment: ListTileTitleAlignment.top,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                    title: Padding(
-                      padding: const EdgeInsets.only(left: 15.0),
-                      child: Text(title, style: TextStyles.f18BlackSemiBold),
-                    ),
-                    subtitle: Padding(
-                      padding: const EdgeInsets.only(left: 15.0),
-                      child: Text(
-                        formattedDate,
-                        style: TextStyles.f15GreySemiBold,
+                  child: GestureDetector(
+                    onTap: () {
+                      context.pushNamed(Routes.transactionDetailsScreen,
+                          arguments: currentTransaction);
+                    },
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.r),
                       ),
-                    ),
-                    trailing: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text('$typeSign\$$amount',
-                            style: isExpanse
-                                ? TextStyles.f18RedSemiBold
-                                : TextStyles.f18PrimaryLightSemiBold),
-                        const Spacer(),
-                        Container(
-                          width: 100.w,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.r),
-                            color: Color(categoryColorCode).withOpacity(0.25),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 3.0,
+                      titleAlignment: ListTileTitleAlignment.top,
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                      title: Padding(
+                        padding: const EdgeInsets.only(left: 15.0),
+                        child: Text(title, style: TextStyles.f18BlackSemiBold),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(left: 15.0),
+                        child: Text(
+                          formattedDate,
+                          style: TextStyles.f15GreySemiBold,
+                        ),
+                      ),
+                      trailing: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text('$typeSign\$$amount',
+                              style: isExpanse
+                                  ? TextStyles.f18RedSemiBold
+                                  : TextStyles.f18LightGreenSemiBold),
+                          const Spacer(),
+                          Container(
+                            width: 100.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.r),
+                              color: Color(categoryColorCode).withOpacity(0.25),
                             ),
-                            child: Text(
-                              currentTransaction.category.name,
-                              textAlign: TextAlign.center,
-                              style: TextStyles.f12BlackSemiBold.copyWith(
-                                color: Color(categoryColorCode +
-                                        categoryColorCode * 3)
-                                    .withOpacity(0.75),
-                                overflow: TextOverflow.ellipsis,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 3.0,
+                              ),
+                              child: Text(
+                                currentTransaction.category.name,
+                                textAlign: TextAlign.center,
+                                style: TextStyles.f12BlackSemiBold.copyWith(
+                                  color: Color(categoryColorCode +
+                                          categoryColorCode * 3)
+                                      .withOpacity(0.75),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -168,7 +174,7 @@ class _TransactionsListWidget extends StatelessWidget {
       padding: EdgeInsets.only(right: 20.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.r),
-        color: AppColors.primaryLightColor,
+        color: AppColors.lightPrimaryColor,
       ),
       alignment: Alignment.centerRight,
       child: const Icon(

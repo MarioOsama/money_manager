@@ -41,7 +41,7 @@ class AppTextFormField extends StatelessWidget {
             child: TextFormField(
               controller: controller,
               keyboardType: keyboardType,
-              style: TextStyles.f18PrimaryLightSemiBold,
+              style: TextStyles.f18LightPrimarySemiBold,
               onChanged: onChanged,
               decoration: InputDecoration(
                 hintText: hintText,
@@ -57,7 +57,7 @@ class AppTextFormField extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                   borderSide: const BorderSide(
                     width: 2,
-                    color: AppColors.primaryLightColor,
+                    color: AppColors.lightPrimaryColor,
                   ),
                 ),
                 errorBorder: OutlineInputBorder(

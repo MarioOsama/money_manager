@@ -35,7 +35,7 @@ class TransactionErrorBlocListener extends StatelessWidget {
               ),
               content: Text(
                 error,
-                style: TextStyles.f16PrimarySemiMedium,
+                style: TextStyles.f16PrimaryMedium,
               ),
               actions: [
                 TextButton(

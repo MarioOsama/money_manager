@@ -39,7 +39,7 @@ class TextFieldsGroup extends StatelessWidget {
             },
             child: DateIcon(
               size: 30,
-              color: AppColors.primaryLightColor,
+              color: AppColors.lightPrimaryColor,
               dateController: transactionCubit.dateController,
             ),
           ),
@@ -91,8 +91,8 @@ class TextFieldsGroup extends StatelessWidget {
               primary: AppColors.primaryColor,
               onPrimary: Colors.white,
               surface: Colors.white.withOpacity(1),
-              onSurface: AppColors.primaryLightColor,
-              onBackground: AppColors.primaryLightColor,
+              onSurface: AppColors.lightPrimaryColor,
+              onBackground: AppColors.lightPrimaryColor,
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
