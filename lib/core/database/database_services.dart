@@ -42,6 +42,7 @@ class DatabaseServices {
     ),
   ];
 
+  // Verification Database
   bool isVerificationDatabaseInitialized() {
     return _verBox.get(DatabaseConstants.verBox) != null;
   }
@@ -55,6 +56,7 @@ class DatabaseServices {
     return storedPinCode == pinCode;
   }
 
+  // Transactions Database
   bool isTransactionsDatabaseInitialized() {
     return _transactionsBox.get(DatabaseConstants.transactionsBox) != null;
   }

@@ -100,10 +100,10 @@ class TextStyles {
     color: AppColors.cyanColor,
   );
 
-  static TextStyle f20GreySemiBold = TextStyle(
+  static TextStyle f20LightGreySemiBold = TextStyle(
     fontSize: 20.sp,
     fontWeight: FontWeights.semiBold,
-    color: const Color(0xFF646464),
+    color: const Color(0xFF989898),
   );
 
   static TextStyle f18GreySemiBold = TextStyle(
@@ -136,10 +136,10 @@ class TextStyles {
     color: const Color(0xFF646464),
   );
 
-  static TextStyle f16GreySemiBold = TextStyle(
+  static TextStyle f16LightGreySemiBold = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeights.semiBold,
-    color: const Color(0xFF646464),
+    color: const Color(0xFF989898),
   );
 
   static TextStyle f15GreySemiBold = TextStyle(

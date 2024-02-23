@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/routing/app_router.dart';
 import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/core/theming/colors.dart';
-import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/features/verification/data/repos/verification_repo.dart';
 
 class MoneyManagerApp extends StatelessWidget {

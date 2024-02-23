@@ -61,6 +61,7 @@ class BankCardWidget extends StatelessWidget {
                     ],
                   ),
                   const Spacer(),
+                  //TODO: Remove this icon button if not needed
                   IconButton(
                       onPressed: () {},
                       icon: const Icon(

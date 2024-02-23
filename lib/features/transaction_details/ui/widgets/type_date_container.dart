@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/helpers/date.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
+import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
 
 class TypeDateContainer extends StatelessWidget {
-  const TypeDateContainer({super.key});
+  final bool isExpense;
+  final DateTime transactionDate;
+  const TypeDateContainer(
+      {super.key, required this.isExpense, required this.transactionDate});
 
   @override
   Widget build(BuildContext context) {
+    final String transactionType = isExpense ? 'Expense' : 'Income';
+    final transactionFormattedDate =
+        DateHelper.getFormattedDate(transactionDate);
     return Positioned(
       bottom: 5,
       left: 20,
@@ -18,20 +26,14 @@ class TypeDateContainer extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
-            color: Colors.grey[500]!,
+            color: Colors.grey[400]!,
           ),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.25),
               spreadRadius: 3,
               blurRadius: 10,
-              offset: const Offset(5, 5),
-            ),
-            BoxShadow(
-              color: Colors.black.withOpacity(0.25),
-              spreadRadius: 3,
-              blurRadius: 10,
-              offset: const Offset(5, 5),
+              offset: const Offset(0, 5),
             ),
           ],
         ),
@@ -43,23 +45,25 @@ class TypeDateContainer extends StatelessWidget {
               children: [
                 Text(
                   'Type',
-                  style: TextStyles.f16GreySemiBold,
+                  style: TextStyles.f16LightGreySemiBold,
                 ),
                 Row(
                   children: [
                     Container(
                       height: 16,
                       width: 3,
-                      decoration: const BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.only(
+                      decoration: BoxDecoration(
+                          color: isExpense
+                              ? AppColors.lightRedColor
+                              : AppColors.lightGreenColor,
+                          borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(5),
                             bottomLeft: Radius.circular(5),
                           )),
                     ),
                     horizontalSpace(5),
                     Text(
-                      'Expense',
+                      transactionType,
                       style: TextStyles.f18BlackSemiBold,
                     ),
                   ],
@@ -78,10 +82,10 @@ class TypeDateContainer extends StatelessWidget {
               children: [
                 Text(
                   'Date',
-                  style: TextStyles.f16GreySemiBold,
+                  style: TextStyles.f16LightGreySemiBold,
                 ),
                 Text(
-                  '11/12/2021',
+                  transactionFormattedDate,
                   style: TextStyles.f18BlackSemiBold,
                 ),
               ],
