@@ -40,10 +40,16 @@ class _AppDropDownMenuItemState extends State<AppDropDownMenuItem> {
     final colors = widget.itemColors ??
         widget.items.map((e) => Colors.transparent).toList();
     final itemsHaveColor = widget.itemsHaveColorProperty ?? false;
+
     final List<DropdownMenuItem<String>> items = [
       for (var item in widget.items)
         _buildDropDownMenuItem(item, itemsHaveColor, colors)
     ];
+
+    if (items.where((item) => item.value == _controller.text).isEmpty) {
+      _controller.text = widget.items.first.toString();
+    }
+
     return Container(
       decoration: BoxDecoration(
         border: const Border(
@@ -68,7 +74,7 @@ class _AppDropDownMenuItemState extends State<AppDropDownMenuItem> {
             dropdownColor: Colors.grey[200],
             isDense: true,
             isExpanded: true,
-            value: widget.items[selectedItemIndex].toString(),
+            value: _controller.text,
             items: items,
             onChanged: (newValue) {
               setState(() {

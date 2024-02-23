@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:money_manager/core/helpers/date.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/features/transaction/data/repos/transaction_repo.dart';
 
@@ -157,13 +158,12 @@ class TransactionCubit extends Cubit<TransactionState> {
     return true;
   }
 
-  Future<bool> isUserEnteredData() {
-    return Future(() =>
-        titleController.text.trim().isNotEmpty ||
+  bool isUserEnteredData() {
+    return titleController.text.trim().isNotEmpty ||
         amountController.text.trim().isNotEmpty ||
         dateController.text.trim().isNotEmpty ||
         noteController.text.trim().isNotEmpty ||
-        attachmentPathController.text.isNotEmpty);
+        attachmentPathController.text.isNotEmpty;
   }
 
   void saveTransaction() {
@@ -197,5 +197,21 @@ class TransactionCubit extends Cubit<TransactionState> {
           error: 'Error Saving Transaction', errorCode: 500));
     }
     // print('Saving Transaction...');
+  }
+
+  void setupEditingTransactionEnvironment(Transaction currentTransaction) {
+    emit(TransactionEditing(transaction: currentTransaction));
+    titleController.text = currentTransaction.title;
+    amountController.text = currentTransaction.amount.toStringAsFixed(2);
+    final String formattedDate =
+        DateHelper.getFormattedDate(currentTransaction.date);
+    dateController.text = formattedDate;
+    typeController.text =
+        currentTransaction.transactionType == TransactionType.expense
+            ? 'Expense'
+            : 'Income';
+    categoryController.text = currentTransaction.category.name;
+    noteController.text = currentTransaction.note ?? '';
+    attachmentPathController.text = currentTransaction.attachmentPath ?? '';
   }
 }

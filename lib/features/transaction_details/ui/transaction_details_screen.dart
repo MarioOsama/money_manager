@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/models/transaction.dart';
+import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/core/widgets/app_button.dart';
@@ -70,7 +72,12 @@ class TransactionDetailsScreen extends StatelessWidget {
             padding:
                 const EdgeInsets.symmetric(horizontal: 18.0, vertical: 16.0),
             child: AppButton(
-              onPress: () {},
+              onPress: () {
+                context.pushNamed(
+                  Routes.transactionScreen,
+                  arguments: transaction,
+                );
+              },
               text: 'Edit',
             ),
           ),

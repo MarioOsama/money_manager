@@ -3,7 +3,7 @@ class DateHelper {
     final String month = date.month.toString();
     final String day = date.day.toString();
     final String year = date.year.toString();
-    return '$day-$month-$year';
+    return '$year-$month-$day';
   }
 
   static String getPeriodicDate(DateTime date) {

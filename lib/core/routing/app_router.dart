@@ -39,7 +39,9 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => getIt<TransactionCubit>(),
-            child: const TransactionScreen(),
+            child: TransactionScreen(
+              transaction: args as Transaction?,
+            ),
           ),
         );
       case Routes.transactionDetailsScreen:

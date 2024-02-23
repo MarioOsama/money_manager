@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_manager/core/logic/cubit/bank_card_cubit.dart';
 import 'package:money_manager/core/models/transaction.dart';
+import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/widgets/app_drop_down_menu_item.dart';
 import 'package:money_manager/features/transaction/logic/cubit/transaction_cubit.dart';
 
@@ -13,6 +14,9 @@ class DropDownMenuItemsRow extends StatelessWidget {
     final transactionCubit = context.read<TransactionCubit>();
     final typeController = transactionCubit.typeController;
     final categoryController = transactionCubit.categoryController;
+
+    final isTransactionEdidtingState =
+        transactionCubit.state is TransactionEditing;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -20,10 +24,10 @@ class DropDownMenuItemsRow extends StatelessWidget {
           title: 'Transaction Type',
           items: const [TransactionType.expense, TransactionType.income],
           controller: typeController,
-          onChanged: _onChanged,
+          onChanged: _onTransactionTypeChanged,
           itemColors: const [
-            Color(0xFFD45F5F),
-            Color(0xFF5F6DD4),
+            AppColors.lightRedColor,
+            AppColors.lightGreenColor,
           ],
         ),
         AppDropDownMenuItem(
@@ -40,7 +44,8 @@ class DropDownMenuItemsRow extends StatelessWidget {
     );
   }
 
-  void _onChanged(BuildContext context, TextEditingController controller) {
+  void _onTransactionTypeChanged(
+      BuildContext context, TextEditingController controller) {
     final double? newTransactionAmount =
         double.tryParse(context.read<TransactionCubit>().amountController.text);
     final bankCardCubit = context.read<BankCardCubit>();

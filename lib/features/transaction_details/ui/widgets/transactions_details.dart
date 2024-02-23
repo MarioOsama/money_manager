@@ -40,7 +40,7 @@ class TransactionDetails extends StatelessWidget {
           children: [
             // Category
             Container(
-              padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 16.0),
+              padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 30.0),
               decoration: BoxDecoration(
                 color: Color(tarnsactionCategory.colorCode).withOpacity(0.50),
                 borderRadius: BorderRadius.circular(5),
@@ -100,7 +100,7 @@ class TransactionDetails extends StatelessWidget {
               height: 150.h,
               width: double.infinity,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
                   image: FileImage(
                     File(transactionAttachmentPath!),
