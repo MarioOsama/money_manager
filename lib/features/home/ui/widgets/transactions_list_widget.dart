@@ -33,8 +33,8 @@ class _TransactionsListWidget extends StatelessWidget {
             final String title = currentTransaction.title;
             final DateTime date = currentTransaction.date;
             final String formattedDate = isPeriodicFormate
-                ? _getPeriodicDate(date)
-                : _getFormattedDate(date);
+                ? DateHelper.getPeriodicDate(date)
+                : DateHelper.getFormattedDate(date);
             final double amount = currentTransaction.amount;
             final int categoryColorCode = currentTransaction.category.colorCode;
 
@@ -99,7 +99,7 @@ class _TransactionsListWidget extends StatelessWidget {
                             width: 100.w,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5.r),
-                              color: Color(categoryColorCode).withOpacity(0.25),
+                              color: Color(categoryColorCode).withOpacity(0.50),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -128,27 +128,6 @@ class _TransactionsListWidget extends StatelessWidget {
         );
       },
     );
-  }
-
-  String _getFormattedDate(DateTime date) {
-    final String month = date.month.toString();
-    final String day = date.day.toString();
-    final String year = date.year.toString();
-    return '$day, $month, $year';
-  }
-
-  String _getPeriodicDate(DateTime date) {
-    final now = DateTime.now();
-    final diff = now.difference(date);
-    if (diff.inDays > 0) {
-      return '${diff.inDays} days ago';
-    } else if (diff.inHours > 0) {
-      return '${diff.inHours} hours ago';
-    } else if (diff.inMinutes > 0) {
-      return '${diff.inMinutes} minutes ago';
-    } else {
-      return 'Just now';
-    }
   }
 
   Widget _buildDeleteDismissibleBackground() {
