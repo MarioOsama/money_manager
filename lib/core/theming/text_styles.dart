@@ -118,13 +118,13 @@ class TextStyles {
     color: AppColors.primaryColor,
   );
 
-  static TextStyle f16BlackRegular = TextStyle(
+  static TextStyle f16BlackMedium = TextStyle(
     fontSize: 16.sp,
-    fontWeight: FontWeights.regular,
+    fontWeight: FontWeights.medium,
     color: Colors.black,
   );
 
-  static TextStyle f16PrimaryLightMedium = TextStyle(
+  static TextStyle f16LightPrimaryMedium = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeights.medium,
     color: AppColors.lightPrimaryColor,

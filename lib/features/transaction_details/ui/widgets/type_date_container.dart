@@ -8,14 +8,19 @@ import 'package:money_manager/core/theming/text_styles.dart';
 class TypeDateContainer extends StatelessWidget {
   final bool isExpense;
   final DateTime transactionDate;
-  const TypeDateContainer(
-      {super.key, required this.isExpense, required this.transactionDate});
+  final String transactionId;
+  const TypeDateContainer({
+    super.key,
+    required this.isExpense,
+    required this.transactionDate,
+    required this.transactionId,
+  });
 
   @override
   Widget build(BuildContext context) {
     final String transactionType = isExpense ? 'Expense' : 'Income';
     final transactionFormattedDate =
-        DateHelper.getFormattedDate(transactionDate);
+        DateHelper.toDateFormat(transactionDate.toString());
     return Positioned(
       bottom: 5,
       left: 20,
@@ -84,9 +89,14 @@ class TypeDateContainer extends StatelessWidget {
                   'Date',
                   style: TextStyles.f16LightGreySemiBold,
                 ),
-                Text(
-                  transactionFormattedDate,
-                  style: TextStyles.f18BlackSemiBold,
+                Hero(
+                  tag: '$transactionId+$transactionFormattedDate',
+                  child: DefaultTextStyle(
+                    style: TextStyles.f18BlackSemiBold,
+                    child: Text(
+                      transactionFormattedDate!,
+                    ),
+                  ),
                 ),
               ],
             ),

@@ -16,7 +16,6 @@ class AttachmentPickerContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TransactionCubit, TransactionState>(
-      buildWhen: (previous, current) => current is TransactionComposing,
       builder: (context, state) {
         final transactionCubit = context.read<TransactionCubit>();
         final isAttachmentPicked =
@@ -104,20 +103,15 @@ class AttachmentPickerContainer extends StatelessWidget {
 
     if (result != null) {
       File file = File(result.files.single.path!);
-      // print(file);
       final transactionCubit = context.read<TransactionCubit>();
-      // print(
-      //     'Transaction Cubit Attachment Controller Before Editing: ${transactionCubit.attachmentPathController.text}');
       transactionCubit.attachmentPathController.text = file.path;
-      transactionCubit.isAttachmentPicked();
-      // print(
-      //     "Transaction Cubit Attachment Controller After Editing: ${transactionCubit.attachmentPathController.text}");
+      transactionCubit.changeAttachmentState();
     }
   }
 
   void _onRemoveAttachment(BuildContext context) {
     final transactionCubit = context.read<TransactionCubit>();
     transactionCubit.attachmentPathController.text = '';
-    transactionCubit.isAttachmentPicked();
+    transactionCubit.changeAttachmentState();
   }
 }

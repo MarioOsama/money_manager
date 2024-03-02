@@ -3,13 +3,12 @@ import 'package:uuid/uuid.dart';
 
 part 'transaction.g.dart';
 
-//TODO: Change the Transaction id to be the creation date of the transaction
 const _uuid = Uuid();
 
 @HiveType(typeId: 1)
 class Transaction {
   @HiveField(0)
-  final String createdAt;
+  String createdAt;
   @HiveField(1)
   final String title;
   @HiveField(2)
@@ -36,6 +35,7 @@ class Transaction {
   }) : createdAt = DateTime.now().toUtc().toString();
 
   Transaction copyWith({
+    String? id,
     String? title,
     double? amount,
     DateTime? date,
@@ -52,7 +52,7 @@ class Transaction {
       attachmentPath: attachmentPath ?? this.attachmentPath,
       note: note ?? this.note,
       transactionType: transactionType ?? this.transactionType,
-    );
+    )..createdAt = id ?? this.createdAt;
   }
 }
 

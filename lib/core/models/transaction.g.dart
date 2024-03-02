@@ -24,7 +24,7 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
       transactionType: fields[5] as TransactionType,
       note: fields[6] as String?,
       attachmentPath: fields[7] as String?,
-    );
+    )..createdAt = fields[0] as String;
   }
 
   @override

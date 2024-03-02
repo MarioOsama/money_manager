@@ -69,7 +69,9 @@ class TransactionScreen extends StatelessWidget {
                       verticalSpace(20),
                       const AttachmentPickerContainer(),
                       verticalSpace(35),
-                      const SaveTransactionButton(),
+                      SaveTransactionButton(
+                        isEditing: isEditing,
+                      ),
                       const TransactionErrorBlocListener(),
                     ],
                   ),

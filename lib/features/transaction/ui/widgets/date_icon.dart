@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_manager/core/helpers/date.dart';
 import 'package:money_manager/features/transaction/logic/cubit/transaction_cubit.dart';
 
 class DateIcon extends StatelessWidget {
@@ -15,12 +16,20 @@ class DateIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TransactionCubit, TransactionState>(
-      buildWhen: (previous, current) => current is TransactionComposing,
       builder: (context, state) {
-        final isValidDate =
-            state is TransactionComposing ? state.isValidDate ?? false : false;
+        bool? isValidDate;
+        if (state is TransactionComposing) {
+          isValidDate = state.isValidDate;
+        } else if (state is TransactionEditing) {
+          final String? validatedDate =
+              DateHelper.toDateFormat(dateController.text);
+          isValidDate = validatedDate != null ? true : false;
+        } else {
+          isValidDate = false;
+        }
+
         return Icon(
-          isValidDate ? Icons.calendar_month : Icons.calendar_today_outlined,
+          isValidDate! ? Icons.calendar_month : Icons.calendar_today_outlined,
           size: size,
           color: isValidDate ? color : null,
         );

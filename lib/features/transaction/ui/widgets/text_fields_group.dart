@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_manager/core/helpers/date.dart';
 import 'package:money_manager/core/logic/cubit/bank_card_cubit.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/widgets/app_text_form_field.dart';
@@ -12,6 +13,8 @@ class TextFieldsGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final transactionCubit = context.read<TransactionCubit>();
+    final currentState = transactionCubit.state;
+    final isEditing = currentState is TransactionEditing;
     return Column(
       children: [
         AppTextFormField(
@@ -25,7 +28,7 @@ class TextFieldsGroup extends StatelessWidget {
             controller: transactionCubit.amountController,
             hintText: '0.00',
             onChanged: (value) {
-              _updateTotalBalanceInstantly(value, context);
+              isEditing ? null : _updateTotalBalanceInstantly(value, context);
             }),
         AppTextFormField(
           title: 'Date',
@@ -62,9 +65,7 @@ class TextFieldsGroup extends StatelessWidget {
     if (picked == null) return;
     final transactionCubit = context.read<TransactionCubit>();
     String stringPickedDate = picked.toString();
-    String dateToDisplay = context
-        .read<TransactionCubit>()
-        .splitWantedDateFragment(stringPickedDate);
+    String dateToDisplay = DateHelper.splitWantedDateFragment(stringPickedDate);
     transactionCubit.dateController.text = dateToDisplay;
     transactionCubit.isValidDate(dateToDisplay);
   }
@@ -79,6 +80,7 @@ class TextFieldsGroup extends StatelessWidget {
         ? backCardCubit.instantlyUpdateBankCardValues(
             transactionAmount, transactionType)
         : backCardCubit.instantlyUpdateBankCardValues(0, transactionType);
+    print('transactionAmount: $transactionAmount');
   }
 
   Future<DateTime?> _showDatePickerDialog(BuildContext context) async {

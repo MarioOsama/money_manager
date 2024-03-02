@@ -6,27 +6,45 @@ import 'package:money_manager/core/widgets/app_button.dart';
 import 'package:money_manager/features/transaction/logic/cubit/transaction_cubit.dart';
 
 class SaveTransactionButton extends StatelessWidget {
-  const SaveTransactionButton({super.key});
+  final bool isEditing;
+  const SaveTransactionButton({
+    super.key,
+    required this.isEditing,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AppButton(
       onPress: () {
-        _validateAndSaveTransaction(context);
+        isEditing
+            ? _validateAndSaveChanges(context)
+            : _validateAndSaveTransaction(context);
       },
-      text: 'Save Transaction',
+      text: isEditing ? 'Save Changes' : 'Save Transaction',
     );
   }
 
   void _validateAndSaveTransaction(BuildContext context) {
     final form = context.read<TransactionCubit>().formKey.currentState;
     if (form!.validate()) {
-      context.read<TransactionCubit>().processTransaction();
+      context.read<TransactionCubit>().processTransaction(false);
       final isSavedSuccessfuly =
           context.read<TransactionCubit>().state is TransactionSaved;
       if (isSavedSuccessfuly) {
         context.pushReplacementNamed(Routes.mainScreen);
       }
-    } else {}
+    }
+  }
+
+  _validateAndSaveChanges(BuildContext context) {
+    final form = context.read<TransactionCubit>().formKey.currentState;
+    if (form!.validate()) {
+      context.read<TransactionCubit>().processTransaction(true);
+      final isSavedSuccessfuly =
+          context.read<TransactionCubit>().state is TransactionSaved;
+      if (isSavedSuccessfuly) {
+        context.pushReplacementNamed(Routes.mainScreen);
+      }
+    }
   }
 }

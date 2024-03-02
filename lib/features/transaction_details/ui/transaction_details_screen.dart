@@ -17,11 +17,12 @@ class TransactionDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final isExpense = transaction.transactionType == TransactionType.expense;
     final transactionTitle = transaction.title;
-    final transactionPrice = transaction.amount;
+    final transactionAmount = transaction.amount;
     final transactionDate = transaction.date;
     final transactionCategory = transaction.category;
     final transactionNote = transaction.note;
     final transactionAttachmentPath = transaction.attachmentPath;
+    final transactionId = transaction.createdAt;
 
     return Scaffold(
       appBar: AppBar(
@@ -49,12 +50,14 @@ class TransactionDetailsScreen extends StatelessWidget {
                     children: [
                       PriceNameContainer(
                         transactionTitle: transactionTitle,
-                        transactionPrice: transactionPrice,
+                        transactionAmount: transactionAmount,
+                        transactionId: transactionId,
                         isExpense: isExpense,
                       ),
                       TypeDateContainer(
                         isExpense: isExpense,
                         transactionDate: transactionDate,
+                        transactionId: transactionId,
                       ),
                     ],
                   ),
@@ -63,6 +66,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                     tarnsactionCategory: transactionCategory,
                     transactionNote: transactionNote,
                     transactionAttachmentPath: transactionAttachmentPath,
+                    transactionId: transactionId,
                   ),
                 ],
               ),
