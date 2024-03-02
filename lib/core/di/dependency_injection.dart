@@ -6,6 +6,7 @@ import 'package:money_manager/features/home/data/repos/home_repo.dart';
 import 'package:money_manager/features/home/logic/cubit/home_cubit.dart';
 import 'package:money_manager/features/transaction/data/repos/transaction_repo.dart';
 import 'package:money_manager/features/transaction/logic/cubit/transaction_cubit.dart';
+import 'package:money_manager/features/transaction_details/data/repos/transaction_details_repo.dart';
 import 'package:money_manager/features/verification/data/repos/verification_repo.dart';
 import 'package:money_manager/features/verification/logic/cubit/verification_cubit.dart';
 
@@ -24,4 +25,6 @@ void setupGetIt() async {
   getIt.registerLazySingleton<HomeRepo>(() => HomeRepo(getIt()));
   getIt.registerLazySingleton<TransactionRepo>(() => TransactionRepo(getIt()));
   getIt.registerLazySingleton<BankCardRepo>(() => BankCardRepo(getIt()));
+  getIt.registerLazySingleton<TransactionDetailsRepo>(
+      () => TransactionDetailsRepo(getIt()));
 }

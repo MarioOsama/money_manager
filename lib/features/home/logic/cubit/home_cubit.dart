@@ -47,4 +47,12 @@ class HomeCubit extends Cubit<HomeState> {
   double getIncomesAmount() {
     return _homeRepo.getIncomesAmount();
   }
+
+  void deleteTransaction(String transactionId) {
+    try {
+      _homeRepo.deleteTransaction(transactionId);
+    } catch (e) {
+      emit(HomeError(error: e.toString(), errorCode: 500));
+    }
+  }
 }

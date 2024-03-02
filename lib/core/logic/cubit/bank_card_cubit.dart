@@ -9,7 +9,7 @@ class BankCardCubit extends Cubit<BankCardState> {
 
   BankCardCubit(this._bankCardRepo) : super(const BankCardInitial());
 
-  void getBankCardData() {
+  void updateBankCardData() {
     emit(const BankCardLoading());
     try {
       _bankCardRepo.loadTransactionsFromDatabase();

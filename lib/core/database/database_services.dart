@@ -62,7 +62,7 @@ class DatabaseServices {
   }
 
   List<Transaction> getTransactionsFromDatabase() {
-    if (isTransactionsDatabaseInitialized() || _transactionsBox.isEmpty) {
+    if (isTransactionsDatabaseInitialized()) {
       _initializeTransactionsDatabase();
     }
 
@@ -79,5 +79,9 @@ class DatabaseServices {
 
   void saveTransactionToDatabase(Transaction newTransaction) {
     _transactionsBox.put(newTransaction.createdAt, newTransaction);
+  }
+
+  void deleteTransactionFromDatabase(String transactionId) {
+    _transactionsBox.delete(transactionId);
   }
 }
