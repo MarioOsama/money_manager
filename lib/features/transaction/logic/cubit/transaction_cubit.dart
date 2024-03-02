@@ -18,13 +18,14 @@ class TransactionCubit extends Cubit<TransactionState> {
   TextEditingController noteController = TextEditingController();
   TextEditingController attachmentPathController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  Transaction? transactionToEdit;
 
   void setupTransactionControllers() {
     typeController.text = 'Expense';
     categoryController.text = 'Shopping';
   }
 
-  void processTransaction() {
+  void processTransaction(bool isEditing) {
     emit(const TransactionComposing());
 
     final isValidatedDate = isValidDate(dateController.text);
@@ -50,76 +51,20 @@ class TransactionCubit extends Cubit<TransactionState> {
       return;
     }
 
+    if (isEditing) {
+      updateTransaction();
+      return;
+    }
     saveTransaction();
-
-    // if (isValidatedDate && isValidatedAmount) {
-    //   emit(const TransactionComposing(isValidAmount: true, isValidDate: true));
-    //   // saveTransaction();
-    // }
-
-    // print('${dateController.text} date from processTransaction');
-    // print('${amountController.text} amount from processTransaction');
-    // print('${typeController.text} type from processTransaction');
-    // print('${categoryController.text} category from processTransaction');
-    // print('${noteController.text} note from processTransaction');
-    // print(
-    //     '${attachmentPathController.text} attachment from processTransaction');
-    // print('Saving Transaction...');
-    // saveTransaction();
   }
 
   double? _toNumericAmount(String stringAmount) {
     return double.tryParse(stringAmount);
   }
 
-  String? _toDateFormat(String stringDate) {
-    final String wantedDateFragment = splitWantedDateFragment(stringDate);
-    final List<String> stringDateFragments = wantedDateFragment.split('-');
-    if (stringDateFragments.length != 3 ||
-        stringDateFragments[0].length != 4 ||
-        stringDateFragments[1].length != 2 ||
-        stringDateFragments[2].length != 2) {
-      return null;
-    }
-    final List<int?>? intDateFragments =
-        _checkIntDateFormat(stringDateFragments);
-    final bool isValidDateValues = intDateFragments != null;
-
-    if (!isValidDateValues) {
-      return null;
-    }
-
-    final String validDate = intDateFragments.join('-');
-    final String formattedDate = validDate
-        .split('-')
-        .map((dateFragment) =>
-            dateFragment.length == 1 ? '0$dateFragment' : dateFragment)
-        .join('-');
-    return formattedDate;
-  }
-
-  String splitWantedDateFragment(String stringDate) {
-    return stringDate.trim().split(' ').first;
-  }
-
-  List<int?>? _checkIntDateFormat(List<String> dateFragments) {
-    final List<int?> intFragmentsList = dateFragments
-        .map((stringDateFragment) => int.tryParse(stringDateFragment))
-        .toList();
-    if (intFragmentsList.contains(null) ||
-        intFragmentsList[0]! < 2000 ||
-        intFragmentsList.contains(0) ||
-        intFragmentsList[1]! > 12 ||
-        intFragmentsList[2]! > 31) {
-      return null;
-    }
-    return intFragmentsList;
-  }
-
   bool isValidDate(String date) {
-    final String? formattedDate = _toDateFormat(date);
+    final String? formattedDate = DateHelper.toDateFormat(date);
     if (formattedDate == null) {
-      // print('Invalid Date');
       emit(const TransactionComposing().copyWith(state, isValidDate: false));
       return false;
     }
@@ -131,7 +76,6 @@ class TransactionCubit extends Cubit<TransactionState> {
   bool isValidAmount(String amount) {
     final double? formattedAmount = _toNumericAmount(amount);
     if (formattedAmount == null) {
-      // print('Invalid Amount');
       emit(const TransactionComposing().copyWith(state, isValidAmount: false));
       return false;
     }
@@ -140,15 +84,23 @@ class TransactionCubit extends Cubit<TransactionState> {
     return true;
   }
 
-  bool isAttachmentPicked() {
+  void changeAttachmentState() {
+    if (state is TransactionEditing) {
+      emit(TransactionEditing(
+          transaction: (state as TransactionEditing).transaction.copyWith(
+                attachmentPath: attachmentPathController.text.isEmpty
+                    ? null
+                    : attachmentPathController.text,
+              )));
+      return;
+    }
     if (attachmentPathController.text.isEmpty) {
       emit(const TransactionComposing()
           .copyWith(state, isAttachmentPicked: false));
-      return false;
+      return;
     }
     emit(
         const TransactionComposing().copyWith(state, isAttachmentPicked: true));
-    return true;
   }
 
   bool isWithNote() {
@@ -166,10 +118,20 @@ class TransactionCubit extends Cubit<TransactionState> {
         attachmentPathController.text.isNotEmpty;
   }
 
+  String? get getAttachmentPath {
+    return attachmentPathController.text.isNotEmpty
+        ? attachmentPathController.text
+        : null;
+  }
+
+  String? get getNote {
+    return isWithNote() ? noteController.text : null;
+  }
+
   void saveTransaction() {
     emit(const TransactionSaving());
-    final isAttachmentAttached = isAttachmentPicked();
-    final isNoteAttached = isWithNote();
+    final attachmentPath = getAttachmentPath;
+    final note = getNote;
     final Transaction newTransaction = Transaction(
       title: titleController.text,
       amount: double.parse(amountController.text),
@@ -181,9 +143,8 @@ class TransactionCubit extends Cubit<TransactionState> {
       transactionType: typeController.text == 'Expense'
           ? TransactionType.expense
           : TransactionType.income,
-      note: isNoteAttached ? noteController.text : null,
-      attachmentPath:
-          isAttachmentAttached ? attachmentPathController.text : null,
+      note: note,
+      attachmentPath: attachmentPath,
     );
     try {
       _transactionRepo.saveTransaction(newTransaction);
@@ -196,15 +157,16 @@ class TransactionCubit extends Cubit<TransactionState> {
       emit(const TransactionErrorState(
           error: 'Error Saving Transaction', errorCode: 500));
     }
-    // print('Saving Transaction...');
   }
 
   void setupEditingTransactionEnvironment(Transaction currentTransaction) {
     emit(TransactionEditing(transaction: currentTransaction));
+    transactionToEdit = currentTransaction;
+
     titleController.text = currentTransaction.title;
     amountController.text = currentTransaction.amount.toStringAsFixed(2);
     final String formattedDate =
-        DateHelper.getFormattedDate(currentTransaction.date);
+        DateHelper.toDateFormat(currentTransaction.date.toString())!;
     dateController.text = formattedDate;
     typeController.text =
         currentTransaction.transactionType == TransactionType.expense
@@ -213,5 +175,35 @@ class TransactionCubit extends Cubit<TransactionState> {
     categoryController.text = currentTransaction.category.name;
     noteController.text = currentTransaction.note ?? '';
     attachmentPathController.text = currentTransaction.attachmentPath ?? '';
+  }
+
+  void updateTransaction() {
+    final Transaction updatedTransaction = transactionToEdit!.copyWith(
+      title: titleController.text,
+      amount: double.parse(amountController.text),
+      date: DateTime.parse(dateController.text).toUtc(),
+      category: Category(
+        name: categoryController.text,
+        colorCode: Colors.blueAccent.value,
+      ),
+      transactionType: typeController.text == 'Expense'
+          ? TransactionType.expense
+          : TransactionType.income,
+      note: noteController.text.isEmpty ? null : noteController.text,
+      attachmentPath: attachmentPathController.text.isEmpty
+          ? null
+          : attachmentPathController.text,
+    );
+    try {
+      _transactionRepo.updateTransaction(updatedTransaction);
+      emit(
+        TransactionSaved(
+            message:
+                "${updatedTransaction.title} Transaction Updated in Your ${updatedTransaction.transactionType}!"),
+      );
+    } catch (e) {
+      emit(const TransactionErrorState(
+          error: 'Error Updating Transaction', errorCode: 500));
+    }
   }
 }

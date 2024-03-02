@@ -44,7 +44,7 @@ class TransactionErrorBlocListener extends StatelessWidget {
                   },
                   child: Text(
                     'Got it',
-                    style: TextStyles.f16PrimaryLightMedium,
+                    style: TextStyles.f16LightPrimaryMedium,
                   ),
                 ),
               ],

@@ -112,7 +112,7 @@ class _AppDropDownMenuItemState extends State<AppDropDownMenuItem> {
         child: Text(
           item.toString(),
           overflow: TextOverflow.ellipsis,
-          style: TextStyles.f16PrimaryLightMedium.copyWith(
+          style: TextStyles.f16LightPrimaryMedium.copyWith(
               color: itemsHaveColor
                   ? Color(item.colorCode + item.colorCode * 3)
                   : Colors.indigo),

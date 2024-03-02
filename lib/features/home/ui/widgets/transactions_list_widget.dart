@@ -34,9 +34,10 @@ class _TransactionsListWidget extends StatelessWidget {
             final DateTime date = currentTransaction.date;
             final String formattedDate = isPeriodicFormate
                 ? DateHelper.getPeriodicDate(date)
-                : DateHelper.getFormattedDate(date);
+                : DateHelper.toDateFormat(date.toString())!;
             final double amount = currentTransaction.amount;
             final int categoryColorCode = currentTransaction.category.colorCode;
+            final String createdAt = currentTransaction.createdAt;
 
             return Dismissible(
               key: Key(transactions[index].createdAt),
@@ -78,41 +79,67 @@ class _TransactionsListWidget extends StatelessWidget {
                       contentPadding: const EdgeInsets.symmetric(horizontal: 5),
                       title: Padding(
                         padding: const EdgeInsets.only(left: 15.0),
-                        child: Text(title, style: TextStyles.f18BlackSemiBold),
+                        child: Hero(
+                          tag: '$createdAt+$title',
+                          child: DefaultTextStyle(
+                            style: TextStyles.f18BlackSemiBold,
+                            child: Text(
+                              title,
+                            ),
+                          ),
+                        ),
                       ),
                       subtitle: Padding(
                         padding: const EdgeInsets.only(left: 15.0),
-                        child: Text(
-                          formattedDate,
-                          style: TextStyles.f15GreySemiBold,
+                        child: Hero(
+                          tag: '$createdAt+$formattedDate',
+                          child: DefaultTextStyle(
+                            style: TextStyles.f15GreySemiBold,
+                            child: Text(
+                              formattedDate,
+                            ),
+                          ),
                         ),
                       ),
                       trailing: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text('$typeSign\$$amount',
+                          Hero(
+                            tag: '$createdAt+$amount',
+                            child: DefaultTextStyle(
                               style: isExpanse
                                   ? TextStyles.f18RedSemiBold
-                                  : TextStyles.f18LightGreenSemiBold),
-                          const Spacer(),
-                          Container(
-                            width: 100.w,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.r),
-                              color: Color(categoryColorCode).withOpacity(0.50),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 3.0,
-                              ),
+                                  : TextStyles.f18LightGreenSemiBold,
                               child: Text(
-                                currentTransaction.category.name,
-                                textAlign: TextAlign.center,
-                                style: TextStyles.f12BlackSemiBold.copyWith(
-                                  color: Color(categoryColorCode +
-                                          categoryColorCode * 3)
-                                      .withOpacity(0.75),
-                                  overflow: TextOverflow.ellipsis,
+                                '$typeSign\$$amount',
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                          Hero(
+                            tag: '$createdAt+$categoryColorCode',
+                            child: Container(
+                              width: 100.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.r),
+                                color:
+                                    Color(categoryColorCode).withOpacity(0.50),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 3.0,
+                                ),
+                                child: DefaultTextStyle(
+                                  style: TextStyles.f12BlackSemiBold.copyWith(
+                                    color: Color(categoryColorCode +
+                                            categoryColorCode * 3)
+                                        .withOpacity(0.75),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  child: Text(
+                                    currentTransaction.category.name,
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
                               ),
                             ),

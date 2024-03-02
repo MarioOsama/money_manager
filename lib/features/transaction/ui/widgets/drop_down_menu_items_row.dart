@@ -15,8 +15,6 @@ class DropDownMenuItemsRow extends StatelessWidget {
     final typeController = transactionCubit.typeController;
     final categoryController = transactionCubit.categoryController;
 
-    final isTransactionEdidtingState =
-        transactionCubit.state is TransactionEditing;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

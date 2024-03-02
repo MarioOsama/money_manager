@@ -10,17 +10,21 @@ import 'package:open_file/open_file.dart';
 
 class TransactionDetails extends StatelessWidget {
   final Category tarnsactionCategory;
+  final String transactionId;
   final String? transactionNote;
   final String? transactionAttachmentPath;
-  const TransactionDetails(
-      {super.key,
-      required this.tarnsactionCategory,
-      this.transactionNote,
-      this.transactionAttachmentPath});
+  const TransactionDetails({
+    super.key,
+    required this.tarnsactionCategory,
+    this.transactionNote,
+    this.transactionAttachmentPath,
+    required this.transactionId,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final isAttachement = transactionAttachmentPath != null;
+    final isAttachement = transactionAttachmentPath != null &&
+        transactionAttachmentPath!.isNotEmpty;
     final isPhotoAttachment = isAttachement
         ? transactionAttachmentPath!.contains('.jpg') ||
             transactionAttachmentPath!.contains('.png')
@@ -39,17 +43,22 @@ class TransactionDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Category
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 30.0),
-              decoration: BoxDecoration(
-                color: Color(tarnsactionCategory.colorCode).withOpacity(0.50),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Text(
-                tarnsactionCategory.name,
-                style: TextStyles.f18BlackSemiBold.copyWith(
-                  color: Color(categoryColorCode + categoryColorCode * 3)
-                      .withOpacity(0.75),
+            Hero(
+              tag: '$transactionId+$categoryColorCode',
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 30.0),
+                decoration: BoxDecoration(
+                  color: Color(tarnsactionCategory.colorCode).withOpacity(0.50),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: DefaultTextStyle(
+                  style: TextStyles.f18BlackSemiBold.copyWith(
+                    color: Color(categoryColorCode + categoryColorCode * 3)
+                        .withOpacity(0.75),
+                  ),
+                  child: Text(
+                    tarnsactionCategory.name,
+                  ),
                 ),
               ),
             ),
@@ -69,7 +78,7 @@ class TransactionDetails extends StatelessWidget {
                     transactionNote ?? 'No Note Added',
                     style: transactionNote == null
                         ? TextStyles.f15GreyRegular
-                        : TextStyles.f16BlackRegular,
+                        : TextStyles.f16BlackMedium,
                   ),
                 ],
               ),
@@ -125,11 +134,9 @@ class TransactionDetails extends StatelessWidget {
               label: const Text(
                 'OpenAttachment',
               ),
-              icon: isAttachement
-                  ? const Icon(
-                      Icons.file_open_outlined,
-                    )
-                  : null,
+              icon: const Icon(
+                Icons.file_open_outlined,
+              ),
             ),
           );
 

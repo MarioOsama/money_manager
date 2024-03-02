@@ -1,18 +1,23 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
 
 class PriceNameContainer extends StatelessWidget {
-  final double transactionPrice;
+  final double transactionAmount;
   final String transactionTitle;
+  final String transactionId;
   final bool isExpense;
-  const PriceNameContainer(
-      {super.key,
-      required this.transactionPrice,
-      required this.transactionTitle,
-      required this.isExpense});
+  const PriceNameContainer({
+    super.key,
+    required this.transactionAmount,
+    required this.transactionTitle,
+    required this.isExpense,
+    required this.transactionId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +44,6 @@ class PriceNameContainer extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 '\$',
@@ -56,24 +60,34 @@ class PriceNameContainer extends StatelessWidget {
                     ]),
               ),
               horizontalSpace(5),
-              Text(
-                '$transactionPrice',
-                style: TextStyles.f42WhiteBold
-                    .copyWith(color: priceColor)
-                    .copyWith(shadows: [
-                  Shadow(
-                    color: Colors.black.withOpacity(0.25),
-                    offset: const Offset(0, 5),
-                    blurRadius: 10,
-                  )
-                ]),
+              Hero(
+                tag: '$transactionId+$transactionAmount',
+                child: DefaultTextStyle(
+                  style: TextStyles.f42WhiteBold
+                      .copyWith(color: priceColor)
+                      .copyWith(shadows: [
+                    Shadow(
+                      color: Colors.black.withOpacity(0.25),
+                      offset: const Offset(0, 5),
+                      blurRadius: 10,
+                    )
+                  ]),
+                  child: Text(
+                    '$transactionAmount',
+                  ),
+                ),
               ),
             ],
           ),
           verticalSpace(25),
-          Text(
-            transactionTitle,
-            style: TextStyles.f22WhiteRegular,
+          Hero(
+            tag: '$transactionId+$transactionTitle',
+            child: DefaultTextStyle(
+              style: TextStyles.f22WhiteRegular,
+              child: Text(
+                transactionTitle,
+              ),
+            ),
           ),
         ],
       ),

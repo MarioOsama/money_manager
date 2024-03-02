@@ -9,4 +9,8 @@ class TransactionRepo {
   void saveTransaction(Transaction newTransaction) {
     _databaseServices.saveTransactionToDatabase(newTransaction);
   }
+
+  void updateTransaction(Transaction updatedTransaction) {
+    _databaseServices.saveTransactionToDatabase(updatedTransaction);
+  }
 }
