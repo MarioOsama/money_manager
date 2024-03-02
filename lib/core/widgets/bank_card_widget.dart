@@ -17,7 +17,7 @@ class BankCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<BankCardCubit>().getBankCardData();
+    context.read<BankCardCubit>().updateBankCardData();
     return BlocBuilder<BankCardCubit, BankCardState>(
       builder: (context, state) {
         double totalBalance =

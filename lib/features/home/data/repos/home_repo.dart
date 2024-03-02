@@ -43,10 +43,7 @@ class HomeRepo {
     return incomesAmount;
   }
 
-  // List<Transaction> getTransactionsByCategory(String category) {
-  //   final List<Transaction> transactions = allTransactions
-  //       .where((transaction) => transaction.category == category)
-  //       .toList();
-  //   return transactions;
-  // }
+  void deleteTransaction(String transactionId) {
+    _databaseServices.deleteTransactionFromDatabase(transactionId);
+  }
 }

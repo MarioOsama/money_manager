@@ -41,6 +41,7 @@ class _TransactionsListWidget extends StatelessWidget {
 
             return Dismissible(
               key: Key(transactions[index].createdAt),
+              onDismissed: (direction) => onDismissed(context, createdAt),
               background: _buildDeleteDismissibleBackground(),
               direction: DismissDirection.endToStart,
               child: Padding(
@@ -189,5 +190,12 @@ class _TransactionsListWidget extends StatelessWidget {
         size: 30,
       ),
     );
+  }
+
+  onDismissed(BuildContext context, String createdAt) {
+    final HomeCubit homeCubit = context.read<HomeCubit>();
+    final BankCardCubit bankCardCubit = context.read<BankCardCubit>();
+    homeCubit.deleteTransaction(createdAt);
+    bankCardCubit.updateBankCardData();
   }
 }

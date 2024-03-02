@@ -34,7 +34,7 @@ class TransactionScreen extends StatelessWidget {
 
     return PopScope(
       onPopInvoked: (didPop) {
-        bankCardCubit.getBankCardData();
+        bankCardCubit.updateBankCardData();
       },
       child: Scaffold(
         appBar: AppBar(

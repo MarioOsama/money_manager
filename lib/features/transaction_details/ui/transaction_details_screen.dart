@@ -5,13 +5,19 @@ import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/core/widgets/app_button.dart';
+import 'package:money_manager/features/transaction_details/data/repos/transaction_details_repo.dart';
 import 'package:money_manager/features/transaction_details/ui/widgets/transactions_details.dart';
 import 'package:money_manager/features/transaction_details/ui/widgets/type_date_container.dart';
 import 'package:money_manager/features/transaction_details/ui/widgets/price_name_container.dart';
 
 class TransactionDetailsScreen extends StatelessWidget {
+  final TransactionDetailsRepo transactionDetailsRepo;
   final Transaction transaction;
-  const TransactionDetailsScreen({super.key, required this.transaction});
+  const TransactionDetailsScreen({
+    super.key,
+    required this.transaction,
+    required this.transactionDetailsRepo,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +40,13 @@ class TransactionDetailsScreen extends StatelessWidget {
         foregroundColor: Colors.white,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              deleteTransaction(
+                context,
+                transactionId,
+                transactionDetailsRepo,
+              );
+            },
             icon: const Icon(Icons.delete),
           ),
         ],
@@ -88,5 +100,34 @@ class TransactionDetailsScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void deleteTransaction(BuildContext context, String transactionId,
+      TransactionDetailsRepo transactionDetailsRepo) {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: const Text('Delete Transaction'),
+            content:
+                const Text('Are you sure you want to delete this transaction?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  ctx.pop();
+                },
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  ctx.pop();
+                  transactionDetailsRepo.deleteTransaction(transactionId);
+                  context.pushReplacementNamed(Routes.mainScreen);
+                },
+                child: const Text('Delete'),
+              ),
+            ],
+          );
+        });
   }
 }
