@@ -132,14 +132,12 @@ class TransactionCubit extends Cubit<TransactionState> {
     emit(const TransactionSaving());
     final attachmentPath = getAttachmentPath;
     final note = getNote;
+    final categoryName = categoryController.text;
     final Transaction newTransaction = Transaction(
       title: titleController.text,
       amount: double.parse(amountController.text),
       date: DateTime.parse(dateController.text).toUtc(),
-      category: Category(
-        name: categoryController.text,
-        colorCode: Colors.blueAccent.value,
-      ),
+      categoryName: categoryName,
       transactionType: typeController.text == 'Expense'
           ? TransactionType.expense
           : TransactionType.income,
@@ -172,7 +170,7 @@ class TransactionCubit extends Cubit<TransactionState> {
         currentTransaction.transactionType == TransactionType.expense
             ? 'Expense'
             : 'Income';
-    categoryController.text = currentTransaction.category.name;
+    categoryController.text = currentTransaction.categoryName;
     noteController.text = currentTransaction.note ?? '';
     attachmentPathController.text = currentTransaction.attachmentPath ?? '';
   }
@@ -182,10 +180,7 @@ class TransactionCubit extends Cubit<TransactionState> {
       title: titleController.text,
       amount: double.parse(amountController.text),
       date: DateTime.parse(dateController.text).toUtc(),
-      category: Category(
-        name: categoryController.text,
-        colorCode: Colors.blueAccent.value,
-      ),
+      categoryName: categoryController.text,
       transactionType: typeController.text == 'Expense'
           ? TransactionType.expense
           : TransactionType.income,

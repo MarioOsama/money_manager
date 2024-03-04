@@ -4,6 +4,7 @@ import 'package:money_manager/core/logic/cubit/bank_card_cubit.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/widgets/app_drop_down_menu_item.dart';
+import 'package:money_manager/features/categories/cubit/categories_cubit.dart';
 import 'package:money_manager/features/transaction/logic/cubit/transaction_cubit.dart';
 
 class DropDownMenuItemsRow extends StatelessWidget {
@@ -14,6 +15,9 @@ class DropDownMenuItemsRow extends StatelessWidget {
     final transactionCubit = context.read<TransactionCubit>();
     final typeController = transactionCubit.typeController;
     final categoryController = transactionCubit.categoryController;
+    final categoriesCubit = context.read<CategoriesCubit>();
+    categoriesCubit.loadCategories();
+    final categories = (categoriesCubit.state as CategoriesLoaded).categories;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,11 +34,7 @@ class DropDownMenuItemsRow extends StatelessWidget {
         ),
         AppDropDownMenuItem(
           title: 'Transaction Category',
-          items: [
-            Category(
-                name: 'Shopping', colorCode: const Color(0xFFC3D0E6).value),
-            Category(name: 'Online', colorCode: const Color(0xFFC3E6C4).value),
-          ],
+          items: categories,
           controller: categoryController,
           itemsHaveColorProperty: true,
         ),

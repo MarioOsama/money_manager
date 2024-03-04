@@ -46,4 +46,8 @@ class HomeRepo {
   void deleteTransaction(String transactionId) {
     _databaseServices.deleteTransactionFromDatabase(transactionId);
   }
+
+  Category getTransactionCategory(categoryName) {
+    return _databaseServices.getCategoryByName(categoryName);
+  }
 }

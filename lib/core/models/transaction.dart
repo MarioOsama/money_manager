@@ -16,7 +16,7 @@ class Transaction {
   @HiveField(3)
   final DateTime date;
   @HiveField(4)
-  final Category category;
+  final String categoryName;
   @HiveField(5)
   final TransactionType transactionType;
   @HiveField(6)
@@ -28,7 +28,7 @@ class Transaction {
     required this.title,
     required this.amount,
     required this.date,
-    required this.category,
+    required this.categoryName,
     required this.transactionType,
     this.note,
     this.attachmentPath,
@@ -39,7 +39,7 @@ class Transaction {
     String? title,
     double? amount,
     DateTime? date,
-    Category? category,
+    String? categoryName,
     TransactionType? transactionType,
     String? note,
     String? attachmentPath,
@@ -48,7 +48,7 @@ class Transaction {
       title: title ?? this.title,
       amount: amount ?? this.amount,
       date: date ?? this.date,
-      category: category ?? this.category,
+      categoryName: categoryName ?? this.categoryName,
       attachmentPath: attachmentPath ?? this.attachmentPath,
       note: note ?? this.note,
       transactionType: transactionType ?? this.transactionType,
@@ -65,7 +65,10 @@ class Category {
   @HiveField(2)
   final int colorCode;
 
-  Category({required this.name, required this.colorCode}) : id = _uuid.v4();
+  Category({
+    required this.name,
+    required this.colorCode,
+  }) : id = _uuid.v4();
 
   Category copyWith({String? name, int? colorCode}) {
     return Category(

@@ -2,6 +2,8 @@ import 'package:get_it/get_it.dart';
 import 'package:money_manager/core/data/repos/bank_card_repo.dart';
 import 'package:money_manager/core/database/database_services.dart';
 import 'package:money_manager/core/logic/cubit/bank_card_cubit.dart';
+import 'package:money_manager/features/categories/cubit/categories_cubit.dart';
+import 'package:money_manager/features/categories/data/repos/categories_repo.dart';
 import 'package:money_manager/features/home/data/repos/home_repo.dart';
 import 'package:money_manager/features/home/logic/cubit/home_cubit.dart';
 import 'package:money_manager/features/transaction/data/repos/transaction_repo.dart';
@@ -19,6 +21,7 @@ void setupGetIt() async {
   getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt()));
   getIt.registerFactory<TransactionCubit>(() => TransactionCubit(getIt()));
   getIt.registerFactory<BankCardCubit>(() => BankCardCubit(getIt()));
+  getIt.registerFactory<CategoriesCubit>(() => CategoriesCubit(getIt()));
 
   getIt
       .registerLazySingleton<VerificationRepo>(() => VerificationRepo(getIt()));
@@ -27,4 +30,5 @@ void setupGetIt() async {
   getIt.registerLazySingleton<BankCardRepo>(() => BankCardRepo(getIt()));
   getIt.registerLazySingleton<TransactionDetailsRepo>(
       () => TransactionDetailsRepo(getIt()));
+  getIt.registerLazySingleton<CategoriesRepo>(() => CategoriesRepo(getIt()));
 }
