@@ -14,15 +14,15 @@ class AnimatedBankCardContainer extends StatelessWidget {
       alignment: Alignment.center,
       padding: padding ?? const EdgeInsets.fromLTRB(12, 50, 12, 12),
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            AppColors.cyanColor,
-            Colors.white,
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
+          // gradient: LinearGradient(
+          //   colors: [
+          //     AppColors.cyanColor,
+          //     Colors.white,
+          //   ],
+          //   begin: Alignment.topCenter,
+          //   end: Alignment.bottomCenter,
+          // ),
+          ),
       child: const BankCardWidget(),
     );
   }

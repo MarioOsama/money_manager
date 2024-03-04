@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/core/theming/colors.dart';
+import 'package:money_manager/core/theming/text_styles.dart';
+import 'package:money_manager/features/categories/ui/gategories_screen.dart';
 import 'package:money_manager/features/home/logic/cubit/home_cubit.dart';
 import 'package:money_manager/features/home/ui/home_screen.dart';
 
@@ -17,18 +19,38 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _tabIndex = 0;
 
-  final List<Widget> _bodiesList = [
-    const HomeScreen(),
-    const Center(child: Text('Statistics Screen')),
-    const Center(child: Text('Wallet Screen')),
-    const Center(child: Text('Settings Screen')),
-  ];
+  final Map<String, Widget> _bodiesList = {
+    'Home': const HomeScreen(),
+    'Statistics': const Center(child: Text('Statistics Screen')),
+    'Categories': const CategoriesScreen(),
+    'Settings': const Center(child: Text('Settings Screen')),
+  };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: _tabIndex != 0
+          ? AppBar(
+              backgroundColor: Colors.white,
+              foregroundColor: AppColors.primaryDarkColor,
+              elevation: 0,
+              titleSpacing: -40.w,
+              title: Text(
+                _bodiesList.keys.toList()[_tabIndex],
+                style: TextStyles.f20PrimaryDarkSemiBold,
+              ),
+              leading: const SizedBox.shrink(),
+              actions: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.add),
+                  iconSize: 30.sp,
+                ),
+              ],
+            )
+          : null,
       body: SingleChildScrollView(
-        child: _bodiesList[_tabIndex],
+        child: _bodiesList.values.toList()[_tabIndex],
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
@@ -42,7 +64,7 @@ class _MainScreenState extends State<MainScreen> {
           ],
         ),
         child: BottomAppBar(
-          padding: EdgeInsets.only(bottom: 5.h, left: 15.w, right: 15.w),
+          padding: EdgeInsets.symmetric(horizontal: 15.w),
           notchMargin: 7.r,
           surfaceTintColor: Colors.white,
           shape: const CircularNotchedRectangle(),
@@ -84,7 +106,7 @@ class _MainScreenState extends State<MainScreen> {
                     context.read<HomeCubit>().tabIndexController.text = '2';
                   });
                 },
-                icon: const Icon(Icons.account_balance_wallet_outlined),
+                icon: const Icon(Icons.category_outlined),
                 color: _tabIndex == 2
                     ? AppColors.lightPrimaryColor
                     : AppColors.primaryDarkColor.withOpacity(0.50),

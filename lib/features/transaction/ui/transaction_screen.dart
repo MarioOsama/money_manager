@@ -41,12 +41,14 @@ class TransactionScreen extends StatelessWidget {
           centerTitle: true,
           title: Text(
             isEditing ? 'Edit Transaction' : 'New Transaction',
-            style: TextStyles.f24whiteSemiBold,
+            style: TextStyles.f20PrimaryDarkSemiBold.copyWith(
+              color: isEditing ? Colors.white : AppColors.primaryDarkColor,
+            ),
             textAlign: TextAlign.center,
           ),
-          backgroundColor:
-              isEditing ? AppColors.primaryColor : AppColors.cyanColor,
-          foregroundColor: Colors.white,
+          backgroundColor: isEditing ? AppColors.primaryColor : Colors.white,
+          foregroundColor:
+              isEditing ? Colors.white : AppColors.primaryDarkColor,
         ),
         body: SingleChildScrollView(
           child: Column(

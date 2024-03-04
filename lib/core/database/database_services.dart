@@ -7,13 +7,13 @@ class DatabaseServices {
   final _verBox = Hive.box(DatabaseConstants.verBox);
   final _transactionsBox = Hive.box(DatabaseConstants.transactionsBox);
 
-  final List<Transaction> initialData = [
+  final List<Transaction> initialTransactions = [
     Transaction(
       title: 'Groceries',
       amount: 175.00,
       date: DateTime.now().toUtc(),
-      category:
-          Category(name: 'Groceries', colorCode: const Color(0xFFE1E6C3).value),
+      category: Category(
+          name: 'Super Market', colorCode: const Color(0xFFE1E6C3).value),
       transactionType: TransactionType.expense,
     ),
     Transaction(
@@ -25,7 +25,7 @@ class DatabaseServices {
       transactionType: TransactionType.income,
     ),
     Transaction(
-      title: 'Shopping',
+      title: 'Shoes',
       amount: 100.00,
       date: DateTime.now().subtract(const Duration(days: 12)).toUtc(),
       category:
@@ -47,8 +47,9 @@ class DatabaseServices {
     return _verBox.get(DatabaseConstants.verBox) != null;
   }
 
-  void initializeVerificationDatabaseAndStoreUserPinCode(String pin) {
+  void initializUserAndData(String pin) {
     _verBox.put(DatabaseConstants.verBox, pin);
+    _initializeTransactionsDatabase();
   }
 
   bool isVerifiedUserPinCode(String pinCode) {
@@ -57,22 +58,14 @@ class DatabaseServices {
   }
 
   // Transactions Database
-  bool isTransactionsDatabaseInitialized() {
-    return _transactionsBox.get(DatabaseConstants.transactionsBox) != null;
-  }
-
   List<Transaction> getTransactionsFromDatabase() {
-    if (isTransactionsDatabaseInitialized()) {
-      _initializeTransactionsDatabase();
-    }
-
     List<Transaction> transactions =
         _transactionsBox.values.cast<Transaction>().toList();
     return transactions;
   }
 
   void _initializeTransactionsDatabase() {
-    for (var transaction in initialData) {
+    for (var transaction in initialTransactions) {
       _transactionsBox.put(transaction.createdAt, transaction);
     }
   }
