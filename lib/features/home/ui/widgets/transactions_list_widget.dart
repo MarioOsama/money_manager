@@ -30,13 +30,16 @@ class _TransactionsListWidget extends StatelessWidget {
           itemCount: listLength > 5 ? 5 : listLength,
           itemBuilder: (context, index) {
             final Transaction currentTransaction = transactions[index];
+            final String categoryName = currentTransaction.categoryName;
+            final Category currentTransactionCategory =
+                homeCubit.getTransactionCategory(categoryName);
             final String title = currentTransaction.title;
             final DateTime date = currentTransaction.date;
             final String formattedDate = isPeriodicFormate
                 ? DateHelper.getPeriodicDate(date)
                 : DateHelper.toDateFormat(date.toString())!;
             final double amount = currentTransaction.amount;
-            final int categoryColorCode = currentTransaction.category.colorCode;
+            final int categoryColorCode = currentTransactionCategory.colorCode;
             final String createdAt = currentTransaction.createdAt;
 
             return Dismissible(
@@ -136,7 +139,7 @@ class _TransactionsListWidget extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 child: Text(
-                                  currentTransaction.category.name,
+                                  categoryName,
                                   textAlign: TextAlign.center,
                                 ),
                               ),

@@ -55,4 +55,8 @@ class HomeCubit extends Cubit<HomeState> {
       emit(HomeError(error: e.toString(), errorCode: 500));
     }
   }
+
+  Category getTransactionCategory(String categoryName) {
+    return _homeRepo.getTransactionCategory(categoryName);
+  }
 }

@@ -25,10 +25,13 @@ class TransactionDetailsScreen extends StatelessWidget {
     final transactionTitle = transaction.title;
     final transactionAmount = transaction.amount;
     final transactionDate = transaction.date;
-    final transactionCategory = transaction.category;
+    final transactionCategoryName = transaction.categoryName;
     final transactionNote = transaction.note;
     final transactionAttachmentPath = transaction.attachmentPath;
     final transactionId = transaction.createdAt;
+
+    final transactionCategory =
+        transactionDetailsRepo.getTransactionCategory(transactionCategoryName);
 
     return Scaffold(
       appBar: AppBar(

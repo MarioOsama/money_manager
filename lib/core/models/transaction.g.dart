@@ -20,7 +20,7 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
       title: fields[1] as String,
       amount: fields[2] as double,
       date: fields[3] as DateTime,
-      category: fields[4] as Category,
+      categoryName: fields[4] as String,
       transactionType: fields[5] as TransactionType,
       note: fields[6] as String?,
       attachmentPath: fields[7] as String?,
@@ -40,7 +40,7 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
       ..writeByte(3)
       ..write(obj.date)
       ..writeByte(4)
-      ..write(obj.category)
+      ..write(obj.categoryName)
       ..writeByte(5)
       ..write(obj.transactionType)
       ..writeByte(6)

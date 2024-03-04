@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/di/dependency_injection.dart';
 import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
+import 'package:money_manager/features/categories/cubit/categories_cubit.dart';
 import 'package:money_manager/features/categories/ui/gategories_screen.dart';
 import 'package:money_manager/features/home/logic/cubit/home_cubit.dart';
 import 'package:money_manager/features/home/ui/home_screen.dart';
@@ -22,7 +24,10 @@ class _MainScreenState extends State<MainScreen> {
   final Map<String, Widget> _bodiesList = {
     'Home': const HomeScreen(),
     'Statistics': const Center(child: Text('Statistics Screen')),
-    'Categories': const CategoriesScreen(),
+    'Categories': BlocProvider(
+      create: (context) => getIt<CategoriesCubit>(),
+      child: const CategoriesScreen(),
+    ),
     'Settings': const Center(child: Text('Settings Screen')),
   };
 
