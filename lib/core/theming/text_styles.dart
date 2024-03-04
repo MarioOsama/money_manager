@@ -52,6 +52,18 @@ class TextStyles {
     color: AppColors.redColor,
   );
 
+  static TextStyle f20PrimaryDarkSemiBold = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeights.semiBold,
+    color: AppColors.primaryDarkColor,
+  );
+
+  static TextStyle f20WhiteSemiBold = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeights.semiBold,
+    color: Colors.white,
+  );
+
   static TextStyle f22WhiteRegular = TextStyle(
     fontSize: 22.sp,
     fontWeight: FontWeights.regular,
@@ -163,6 +175,12 @@ class TextStyles {
   static TextStyle f14WhiteRegular = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeights.regular,
+    color: Colors.white,
+  );
+
+  static TextStyle f14WhiteSemiBold = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeights.semiBold,
     color: Colors.white,
   );
 

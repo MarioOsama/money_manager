@@ -3,5 +3,6 @@ class Routes {
   static const verificationScreen = '/verification';
   static const mainScreen = '/main';
   static const transactionScreen = '/transaction';
+  static const categoriesScreen = '/categories';
   static const transactionDetailsScreen = '/transactionDetails';
 }

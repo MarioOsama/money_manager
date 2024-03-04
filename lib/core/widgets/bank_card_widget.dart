@@ -34,10 +34,10 @@ class BankCardWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(radius?.r ?? 20.r),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primaryColor.withOpacity(0.75),
-                blurRadius: 15,
-                offset: const Offset(0, 15),
-                spreadRadius: 5,
+                color: AppColors.primaryDarkColor.withOpacity(0.75),
+                blurRadius: 10,
+                offset: const Offset(3, 7),
+                spreadRadius: 3,
               )
             ],
             image: const DecorationImage(

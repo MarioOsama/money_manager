@@ -40,7 +40,7 @@ class _TransactionsListWidget extends StatelessWidget {
             final String createdAt = currentTransaction.createdAt;
 
             return Dismissible(
-              key: Key(transactions[index].createdAt),
+              key: Key(currentTransaction.createdAt),
               onDismissed: (direction) => onDismissed(context, createdAt),
               background: _buildDeleteDismissibleBackground(),
               direction: DismissDirection.endToStart,
@@ -67,86 +67,83 @@ class _TransactionsListWidget extends StatelessWidget {
                     ),
                     borderRadius: BorderRadius.circular(5.r),
                   ),
-                  child: GestureDetector(
+                  child: ListTile(
                     onTap: () {
                       context.pushNamed(Routes.transactionDetailsScreen,
                           arguments: currentTransaction);
                     },
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      titleAlignment: ListTileTitleAlignment.top,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                      title: Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
-                        child: Hero(
-                          tag: '$createdAt+$title',
-                          child: DefaultTextStyle(
-                            style: TextStyles.f18BlackSemiBold,
-                            child: Text(
-                              title,
-                            ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    titleAlignment: ListTileTitleAlignment.top,
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                    title: Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Hero(
+                        tag: '$createdAt+$title',
+                        child: DefaultTextStyle(
+                          style: TextStyles.f18BlackSemiBold,
+                          child: Text(
+                            title,
                           ),
                         ),
                       ),
-                      subtitle: Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
-                        child: Hero(
-                          tag: '$createdAt+$formattedDate',
-                          child: DefaultTextStyle(
-                            style: TextStyles.f15GreySemiBold,
-                            child: Text(
-                              formattedDate,
-                            ),
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Hero(
+                        tag: '$createdAt+$formattedDate',
+                        child: DefaultTextStyle(
+                          style: TextStyles.f15GreySemiBold,
+                          child: Text(
+                            formattedDate,
                           ),
                         ),
                       ),
-                      trailing: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Hero(
-                            tag: '$createdAt+$amount',
-                            child: DefaultTextStyle(
-                              style: isExpanse
-                                  ? TextStyles.f18RedSemiBold
-                                  : TextStyles.f18LightGreenSemiBold,
-                              child: Text(
-                                '$typeSign\$$amount',
+                    ),
+                    trailing: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Hero(
+                          tag: '$createdAt+$amount',
+                          child: DefaultTextStyle(
+                            style: isExpanse
+                                ? TextStyles.f18RedSemiBold
+                                : TextStyles.f18LightGreenSemiBold,
+                            child: Text(
+                              '$typeSign\$$amount',
+                            ),
+                          ),
+                        ),
+                        const Spacer(),
+                        Hero(
+                          tag: '$createdAt+$categoryColorCode',
+                          child: Container(
+                            width: 100.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.r),
+                              color: Color(categoryColorCode).withOpacity(0.50),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 3.0,
+                              ),
+                              child: DefaultTextStyle(
+                                style: TextStyles.f12BlackSemiBold.copyWith(
+                                  color: Color(categoryColorCode +
+                                          categoryColorCode * 3)
+                                      .withOpacity(0.75),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                child: Text(
+                                  currentTransaction.category.name,
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
                           ),
-                          const Spacer(),
-                          Hero(
-                            tag: '$createdAt+$categoryColorCode',
-                            child: Container(
-                              width: 100.w,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.r),
-                                color:
-                                    Color(categoryColorCode).withOpacity(0.50),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 3.0,
-                                ),
-                                child: DefaultTextStyle(
-                                  style: TextStyles.f12BlackSemiBold.copyWith(
-                                    color: Color(categoryColorCode +
-                                            categoryColorCode * 3)
-                                        .withOpacity(0.75),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  child: Text(
-                                    currentTransaction.category.name,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                        )
+                      ],
                     ),
                   ),
                 ),

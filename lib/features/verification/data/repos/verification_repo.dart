@@ -9,9 +9,8 @@ class VerificationRepo {
     return _databaseServices.isVerificationDatabaseInitialized();
   }
 
-  void storeUserPinCode(String pinCode) {
-    _databaseServices
-        .initializeVerificationDatabaseAndStoreUserPinCode(pinCode);
+  void storeUserPinAndInitData(String pinCode) {
+    _databaseServices.initializUserAndData(pinCode);
   }
 
   bool isVerifiedUserPinCode(String pinCode) {

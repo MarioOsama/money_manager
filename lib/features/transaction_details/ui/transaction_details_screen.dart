@@ -34,7 +34,7 @@ class TransactionDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Transaction Details'),
-        titleTextStyle: TextStyles.f24whiteSemiBold,
+        titleTextStyle: TextStyles.f20WhiteSemiBold,
         backgroundColor: AppColors.primaryColor,
         shadowColor: AppColors.lightPrimaryColor,
         foregroundColor: Colors.white,
