@@ -9,6 +9,7 @@ import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/core/models/transaction.dart';
+import 'package:money_manager/core/widgets/dismissible_background.dart';
 import 'package:money_manager/features/home/logic/cubit/home_cubit.dart';
 
 part 'transactions_header_widget.dart';

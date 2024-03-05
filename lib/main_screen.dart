@@ -34,26 +34,26 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _tabIndex != 0
-          ? AppBar(
-              backgroundColor: Colors.white,
-              foregroundColor: AppColors.primaryDarkColor,
-              elevation: 0,
-              titleSpacing: -40.w,
-              title: Text(
-                _bodiesList.keys.toList()[_tabIndex],
-                style: TextStyles.f20PrimaryDarkSemiBold,
-              ),
-              leading: const SizedBox.shrink(),
-              actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.add),
-                  iconSize: 30.sp,
-                ),
-              ],
-            )
-          : null,
+      // appBar: _tabIndex != 0
+      //     ? AppBar(
+      //         backgroundColor: Colors.white,
+      //         foregroundColor: AppColors.primaryDarkColor,
+      //         elevation: 0,
+      //         titleSpacing: -40.w,
+      //         title: Text(
+      //           _bodiesList.keys.toList()[_tabIndex],
+      //           style: TextStyles.f20PrimaryDarkSemiBold,
+      //         ),
+      //         leading: const SizedBox.shrink(),
+      //         actions: [
+      //           IconButton(
+      //             onPressed: () {},
+      //             icon: const Icon(Icons.add),
+      //             iconSize: 30.sp,
+      //           ),
+      //         ],
+      //       )
+      //     : null,
       body: SingleChildScrollView(
         child: _bodiesList.values.toList()[_tabIndex],
       ),
