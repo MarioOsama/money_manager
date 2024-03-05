@@ -4,7 +4,6 @@ import 'package:money_manager/core/di/dependency_injection.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/features/categories/cubit/categories_cubit.dart';
-import 'package:money_manager/features/categories/ui/gategories_screen.dart';
 import 'package:money_manager/features/home/logic/cubit/home_cubit.dart';
 import 'package:money_manager/features/onboarding/on_boarding_screen.dart';
 import 'package:money_manager/features/transaction/logic/cubit/transaction_cubit.dart';

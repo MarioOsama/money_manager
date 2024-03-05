@@ -45,7 +45,7 @@ class _TransactionsListWidget extends StatelessWidget {
             return Dismissible(
               key: Key(currentTransaction.createdAt),
               onDismissed: (direction) => onDismissed(context, createdAt),
-              background: _buildDeleteDismissibleBackground(),
+              background: const DismissibleBackground(),
               direction: DismissDirection.endToStart,
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -155,23 +155,6 @@ class _TransactionsListWidget extends StatelessWidget {
           },
         );
       },
-    );
-  }
-
-  Widget _buildDeleteDismissibleBackground() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 7.h),
-      padding: EdgeInsets.only(right: 20.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.r),
-        color: AppColors.lightRedColor,
-      ),
-      alignment: Alignment.centerRight,
-      child: const Icon(
-        Icons.delete,
-        color: Colors.white,
-        size: 30,
-      ),
     );
   }
 

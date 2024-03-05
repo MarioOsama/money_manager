@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/widgets/bank_card_widget.dart';
 
 class AnimatedBankCardContainer extends StatelessWidget {
