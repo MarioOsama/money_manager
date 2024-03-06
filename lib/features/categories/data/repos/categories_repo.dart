@@ -6,6 +6,17 @@ class CategoriesRepo {
   List<Category> allCategories = [];
   List<Transaction> _allTransactions = [];
 
+  Map<String, int> categoriesColors = {
+    'Rose': 0xFFE6C3C3,
+    'Sunshine': 0xFFE6E0C3,
+    'Mint': 0xFFC3E6C3,
+    'Sky': 0xFFC3E2E6,
+    'Ocean': 0xFFC3D6E6,
+    'Lavender': 0xFFD9C3E6,
+    'Grape': 0xFFCFC3E6,
+    'Pink': 0xFFE6C3DC,
+  };
+
   CategoriesRepo(this._databaseServices);
 
   List<Category> getCategories() {
@@ -33,5 +44,12 @@ class CategoriesRepo {
         .where((transaction) => transaction.categoryName == category.name)
         .toList();
     return filteredTransaction.length;
+  }
+
+  void saveNewCategory(Category newCategory) {
+    final isCategoryExist = _databaseServices.isCategoryExist(newCategory.name);
+    if (!isCategoryExist) {
+      _databaseServices.saveNewCategoryToDatabase(newCategory);
+    }
   }
 }
