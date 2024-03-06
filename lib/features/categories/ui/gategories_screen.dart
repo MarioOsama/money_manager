@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/di/dependency_injection.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
@@ -16,9 +17,9 @@ class CategoriesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final categoriesCubit = context.read<CategoriesCubit>();
     categoriesCubit.loadCategories();
-
     return BlocBuilder<CategoriesCubit, CategoriesState>(
-      buildWhen: (previous, current) => current is CategoriesLoaded,
+      buildWhen: (previous, current) =>
+          current is CategoriesLoaded || current is CategoriesSaved,
       builder: (context, state) {
         final List<Category> categories =
             state is CategoriesLoaded ? state.categories : <Category>[];
@@ -36,8 +37,12 @@ class CategoriesScreen extends StatelessWidget {
                       style: TextStyles.f20PrimaryDarkSemiBold,
                     ),
                     IconButton(
-                      onPressed: () {
-                        showAddCategoriesBottomSheet(context);
+                      onPressed: () async {
+                        final bool? isSaved =
+                            await showAddCategoriesBottomSheet(context);
+                        if (isSaved == true) {
+                          categoriesCubit.loadCategories();
+                        }
                       },
                       icon: const Icon(
                         Icons.add,
@@ -49,6 +54,7 @@ class CategoriesScreen extends StatelessWidget {
               ),
               ListView.builder(
                 padding: const EdgeInsets.only(top: 10),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: categories.length,
                 itemBuilder: (ctx, index) {
@@ -69,12 +75,17 @@ class CategoriesScreen extends StatelessWidget {
     );
   }
 
-  void showAddCategoriesBottomSheet(BuildContext context) {
-    showModalBottomSheet(
+  Future<bool?> showAddCategoriesBottomSheet(BuildContext context) async {
+    context.read<CategoriesCubit>().emitCategoriesCreatingState();
+    final bool? savingProcessState = await showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return const AddCategoryBottomSheet();
+        return BlocProvider(
+          create: (context) => getIt<CategoriesCubit>(),
+          child: const AddCategoryBottomSheet(),
+        );
       },
     );
+    return savingProcessState;
   }
 }

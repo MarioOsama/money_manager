@@ -13,6 +13,14 @@ class CategoriesLoading extends CategoriesState {
   const CategoriesLoading();
 }
 
+class CategoriesCreating extends CategoriesState {
+  const CategoriesCreating();
+}
+
+class CategoriesSaved extends CategoriesState {
+  const CategoriesSaved();
+}
+
 class CategoriesLoaded extends CategoriesState {
   final List<Category> categories;
 

@@ -110,4 +110,16 @@ class DatabaseServices {
   Category getCategoryByName(String categoryName) {
     return _categoriesBox.get(categoryName);
   }
+
+  bool isCategoryExist(String categoryName) {
+    final isExist = _categoriesBox.get(categoryName);
+    if (isExist == null) {
+      return false;
+    }
+    return true;
+  }
+
+  void saveNewCategoryToDatabase(Category newCategory) {
+    _categoriesBox.put(newCategory.name, newCategory);
+  }
 }
