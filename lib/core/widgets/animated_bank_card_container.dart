@@ -11,7 +11,7 @@ class AnimatedBankCardContainer extends StatelessWidget {
       duration: const Duration(milliseconds: 250),
       width: double.infinity,
       alignment: Alignment.center,
-      padding: padding ?? const EdgeInsets.fromLTRB(12, 50, 12, 12),
+      padding: padding ?? const EdgeInsets.only(top: 35),
       decoration: const BoxDecoration(
           // gradient: LinearGradient(
           //   colors: [

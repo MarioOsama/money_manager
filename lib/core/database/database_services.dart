@@ -57,7 +57,7 @@ class DatabaseServices {
       colorCode: const Color(0xFFDFC3E6).value,
     ),
     Category(
-      name: 'Other',
+      name: 'Others',
       colorCode: const Color(0xFFECD1D1).value,
     ),
   ];
