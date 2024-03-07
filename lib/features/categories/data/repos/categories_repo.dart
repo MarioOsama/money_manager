@@ -52,4 +52,16 @@ class CategoriesRepo {
       _databaseServices.saveNewCategoryToDatabase(newCategory);
     }
   }
+
+  void deleteCategoryAndItsTransactionFromDatabase(String categoryName) {
+    final List<Transaction> transactionsList =
+        _databaseServices.getTransactionsFromDatabase();
+    final List<Transaction> transactionsListToDelete = transactionsList
+        .where((transaction) => transaction.categoryName == categoryName)
+        .toList();
+    transactionsListToDelete.forEach((transaction) {
+      _databaseServices.deleteTransactionFromDatabase(transaction.createdAt);
+    });
+    _databaseServices.deleteCategoryFromDatabase(categoryName);
+  }
 }

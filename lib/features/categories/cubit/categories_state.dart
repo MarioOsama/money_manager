@@ -32,3 +32,9 @@ class CategoriesError extends CategoriesState {
 
   const CategoriesError(this.message);
 }
+
+class CategoriesSelected extends CategoriesState {
+  final List<String> listOfSelectedCategories;
+
+  const CategoriesSelected(this.listOfSelectedCategories);
+}
