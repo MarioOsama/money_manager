@@ -6,9 +6,10 @@ import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/features/categories/cubit/categories_cubit.dart';
-import 'package:money_manager/features/categories/ui/gategories_screen.dart';
+import 'package:money_manager/features/categories/ui/categories_screen.dart';
 import 'package:money_manager/features/home/logic/cubit/home_cubit.dart';
 import 'package:money_manager/features/home/ui/home_screen.dart';
+import 'package:money_manager/features/profile/ui/settings_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -27,14 +28,17 @@ class _MainScreenState extends State<MainScreen> {
       create: (context) => getIt<CategoriesCubit>(),
       child: const CategoriesScreen(),
     ),
-    'Settings': const Center(child: Text('Settings Screen')),
+    'Settings': const SettingsScreen(),
   };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: _bodiesList.values.toList()[_tabIndex],
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: SingleChildScrollView(
+          child: _bodiesList.values.toList()[_tabIndex],
+        ),
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(

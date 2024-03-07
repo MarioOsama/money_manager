@@ -38,7 +38,7 @@ class _CategoriesListItemState extends State<CategoriesListItem> {
           );
 
     // Check the default category
-    final isOtherCategory = currentCategoryName == 'Other';
+    final isOtherCategory = currentCategoryName == 'Others';
 
     if (isOtherCategory) {
       checkBoxIcon = null;

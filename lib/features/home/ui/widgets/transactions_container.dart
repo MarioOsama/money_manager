@@ -24,7 +24,7 @@ class TransactionsContainer extends StatelessWidget {
       height: 500.h,
       width: double.infinity,
       margin: EdgeInsets.symmetric(vertical: 20.h),
-      padding: EdgeInsets.symmetric(horizontal: 27.w),
+      padding: EdgeInsets.symmetric(horizontal: 12.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
