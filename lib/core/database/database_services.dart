@@ -56,6 +56,10 @@ class DatabaseServices {
       name: 'Renting',
       colorCode: const Color(0xFFDFC3E6).value,
     ),
+    Category(
+      name: 'Other',
+      colorCode: const Color(0xFFECD1D1).value,
+    ),
   ];
 
   // Verification Database
@@ -121,5 +125,9 @@ class DatabaseServices {
 
   void saveNewCategoryToDatabase(Category newCategory) {
     _categoriesBox.put(newCategory.name, newCategory);
+  }
+
+  void deleteCategoryFromDatabase(String categoryName) {
+    _categoriesBox.delete(categoryName);
   }
 }

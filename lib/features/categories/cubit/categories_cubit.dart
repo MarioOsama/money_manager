@@ -72,4 +72,49 @@ class CategoriesCubit extends Cubit<CategoriesState> {
       return false;
     }
   }
+
+  void deleteCategory(String categoryName) {
+    _categoriesRepo.deleteCategoryAndItsTransactionFromDatabase(categoryName);
+  }
+
+  void toggleCategorySelection(String selectedCategory) {
+    emitCategoriesSelectedState();
+    final List<String>? updatedSelectedCategoriesList =
+        updateSelectedCategoriesList(selectedCategory);
+    if (updatedSelectedCategoriesList != null) {
+      emit(CategoriesSelected(updatedSelectedCategoriesList));
+    }
+  }
+
+  void emitCategoriesSelectedState() {
+    if (state is CategoriesSelected) {
+      final List<String> selectedCategories =
+          (state as CategoriesSelected).listOfSelectedCategories;
+      emit(CategoriesSelected(selectedCategories));
+      return;
+    }
+    emit(const CategoriesSelected([]));
+  }
+
+  List<String>? updateSelectedCategoriesList(String selectedCategory) {
+    if (state is CategoriesSelected) {
+      final List<String> currentSelectedCategories =
+          (state as CategoriesSelected).listOfSelectedCategories;
+      final bool isSelected =
+          currentSelectedCategories.contains(selectedCategory);
+      if (isSelected) {
+        currentSelectedCategories.remove(selectedCategory);
+        if (currentSelectedCategories.isEmpty) {
+          emit(const CategoriesSelected([]));
+        }
+        return currentSelectedCategories;
+      }
+      final List<String> updatedSelectedCategories = [
+        selectedCategory,
+        ...currentSelectedCategories
+      ];
+      return updatedSelectedCategories;
+    }
+    return null;
+  }
 }
