@@ -5,4 +5,5 @@ class Routes {
   static const transactionScreen = '/transaction';
   static const categoriesScreen = '/categories';
   static const transactionDetailsScreen = '/transactionDetails';
+  static const resetPasswordScreen = '/resetPassword';
 }

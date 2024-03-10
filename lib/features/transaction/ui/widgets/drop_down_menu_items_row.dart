@@ -4,7 +4,7 @@ import 'package:money_manager/core/logic/cubit/bank_card_cubit.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/widgets/app_drop_down_menu_item.dart';
-import 'package:money_manager/features/categories/cubit/categories_cubit.dart';
+import 'package:money_manager/features/categories/logic/cubit/categories_cubit.dart';
 import 'package:money_manager/features/transaction/logic/cubit/transaction_cubit.dart';
 
 class DropDownMenuItemsRow extends StatelessWidget {

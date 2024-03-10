@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_manager/core/di/dependency_injection.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/routing/routes.dart';
-import 'package:money_manager/features/categories/cubit/categories_cubit.dart';
+import 'package:money_manager/features/categories/logic/cubit/categories_cubit.dart';
 import 'package:money_manager/features/home/logic/cubit/home_cubit.dart';
 import 'package:money_manager/features/onboarding/on_boarding_screen.dart';
+import 'package:money_manager/features/reset_password/ui/reset_password.dart';
 import 'package:money_manager/features/transaction/logic/cubit/transaction_cubit.dart';
 import 'package:money_manager/features/transaction/ui/transaction_screen.dart';
 import 'package:money_manager/features/transaction_details/data/repos/transaction_details_repo.dart';
@@ -59,6 +60,10 @@ class AppRouter {
             transactionDetailsRepo: getIt<TransactionDetailsRepo>(),
             transaction: args as Transaction,
           ),
+        );
+      case Routes.resetPasswordScreen:
+        return MaterialPageRoute(
+          builder: (_) => const ResetPasswordScreen(),
         );
       default:
         return MaterialPageRoute(

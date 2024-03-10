@@ -6,7 +6,12 @@ import 'package:money_manager/core/theming/text_styles.dart';
 class SettingsItem extends StatelessWidget {
   final String title;
   final Icon icon;
-  const SettingsItem({super.key, required this.title, required this.icon});
+  final void Function() onTap;
+  const SettingsItem(
+      {super.key,
+      required this.title,
+      required this.icon,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +44,7 @@ class SettingsItem extends StatelessWidget {
         ),
         trailing: const Icon(Icons.chevron_right_sharp),
         iconColor: Colors.white,
+        onTap: onTap,
       ),
     );
   }

@@ -7,7 +7,7 @@ import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/core/widgets/app_button.dart';
 import 'package:money_manager/core/widgets/app_drop_down_menu_item.dart';
 import 'package:money_manager/core/widgets/app_text_form_field.dart';
-import 'package:money_manager/features/categories/cubit/categories_cubit.dart';
+import 'package:money_manager/features/categories/logic/cubit/categories_cubit.dart';
 
 class AddCategoryBottomSheet extends StatelessWidget {
   const AddCategoryBottomSheet({super.key});

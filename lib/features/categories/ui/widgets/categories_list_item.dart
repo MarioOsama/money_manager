@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
-import 'package:money_manager/features/categories/cubit/categories_cubit.dart';
+import 'package:money_manager/features/categories/logic/cubit/categories_cubit.dart';
 
 class CategoriesListItem extends StatefulWidget {
   final Category currentCategory;

@@ -2,7 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:money_manager/core/data/repos/bank_card_repo.dart';
 import 'package:money_manager/core/database/database_services.dart';
 import 'package:money_manager/core/logic/cubit/bank_card_cubit.dart';
-import 'package:money_manager/features/categories/cubit/categories_cubit.dart';
+import 'package:money_manager/features/categories/logic/cubit/categories_cubit.dart';
 import 'package:money_manager/features/categories/data/repos/categories_repo.dart';
 import 'package:money_manager/features/home/data/repos/home_repo.dart';
 import 'package:money_manager/features/home/logic/cubit/home_cubit.dart';

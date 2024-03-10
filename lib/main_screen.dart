@@ -5,11 +5,11 @@ import 'package:money_manager/core/di/dependency_injection.dart';
 import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/core/theming/colors.dart';
-import 'package:money_manager/features/categories/cubit/categories_cubit.dart';
+import 'package:money_manager/features/categories/logic/cubit/categories_cubit.dart';
 import 'package:money_manager/features/categories/ui/categories_screen.dart';
 import 'package:money_manager/features/home/logic/cubit/home_cubit.dart';
 import 'package:money_manager/features/home/ui/home_screen.dart';
-import 'package:money_manager/features/profile/ui/settings_screen.dart';
+import 'package:money_manager/features/settings/ui/settings_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
