@@ -136,6 +136,12 @@ class TextStyles {
     color: AppColors.primaryColor,
   );
 
+  static TextStyle f18PrimarySemiBold = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeights.semiBold,
+    color: AppColors.primaryColor,
+  );
+
   static TextStyle f16BlackMedium = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeights.medium,

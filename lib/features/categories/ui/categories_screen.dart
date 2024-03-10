@@ -6,7 +6,7 @@ import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/widgets/custom_app_bar.dart';
-import 'package:money_manager/features/categories/cubit/categories_cubit.dart';
+import 'package:money_manager/features/categories/logic/cubit/categories_cubit.dart';
 import 'package:money_manager/features/categories/ui/widgets/add_category_modal_bottom_sheet.dart';
 import 'package:money_manager/features/categories/ui/widgets/categories_list_item.dart';
 
