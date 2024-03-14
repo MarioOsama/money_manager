@@ -27,7 +27,9 @@ class SettingsScreen extends StatelessWidget {
             SettingsItem(
               title: 'Preferences',
               icon: const Icon(Icons.linear_scale_rounded),
-              onTap: () {},
+              onTap: () {
+                context.pushNamed(Routes.preferencesScreen);
+              },
             ),
           ],
         )

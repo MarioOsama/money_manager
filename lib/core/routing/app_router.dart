@@ -6,6 +6,7 @@ import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/features/categories/logic/cubit/categories_cubit.dart';
 import 'package:money_manager/features/home/logic/cubit/home_cubit.dart';
 import 'package:money_manager/features/onboarding/on_boarding_screen.dart';
+import 'package:money_manager/features/preferences/ui/preferences.dart';
 import 'package:money_manager/features/reset_password/logic/cubit/reset_password_cubit.dart';
 import 'package:money_manager/features/reset_password/ui/reset_password.dart';
 import 'package:money_manager/features/transaction/logic/cubit/transaction_cubit.dart';
@@ -68,6 +69,10 @@ class AppRouter {
             create: (context) => getIt<ResetPasswordCubit>(),
             child: const ResetPasswordScreen(),
           ),
+        );
+      case Routes.preferencesScreen:
+        return MaterialPageRoute(
+          builder: (_) => const PreferencesScreen(),
         );
       default:
         return MaterialPageRoute(
