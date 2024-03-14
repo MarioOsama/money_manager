@@ -8,8 +8,14 @@ import 'package:money_manager/core/widgets/app_text_form_field.dart';
 class PasswordStageWidget extends StatelessWidget {
   final String stageTitle;
   final String buttonTitle;
+  final TextEditingController passwordController;
+  final void Function() onPressed;
   const PasswordStageWidget(
-      {super.key, required this.stageTitle, required this.buttonTitle});
+      {super.key,
+      required this.stageTitle,
+      required this.buttonTitle,
+      required this.onPressed,
+      required this.passwordController});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +29,7 @@ class PasswordStageWidget extends StatelessWidget {
         ),
         verticalSpace(50),
         AppTextFormField(
-          controller: TextEditingController(),
+          controller: passwordController,
           keyboardType: TextInputType.number,
           maxLength: 4,
           obscure: true,
@@ -32,7 +38,7 @@ class PasswordStageWidget extends StatelessWidget {
         ),
         verticalSpace(50),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),

@@ -130,4 +130,14 @@ class DatabaseServices {
   void deleteCategoryFromDatabase(String categoryName) {
     _categoriesBox.delete(categoryName);
   }
+
+  // Resetting Password
+  bool checkCurrentPassword(String password) {
+    final userPin = _verBox.get(DatabaseConstants.verBox);
+    return userPin == password;
+  }
+
+  void resetPassword(String password) {
+    _verBox.put(DatabaseConstants.verBox, password);
+  }
 }
