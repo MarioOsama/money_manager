@@ -11,6 +11,7 @@ import 'package:money_manager/money_manager_app.dart';
 import 'package:path_provider/path_provider.dart' as path;
 
 void main() async {
+  //TODO: Remove all print statements
   WidgetsFlutterBinding.ensureInitialized();
   setupGetIt();
 

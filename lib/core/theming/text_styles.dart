@@ -196,6 +196,12 @@ class TextStyles {
     color: Colors.white,
   );
 
+  static TextStyle f14GreyRegular = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeights.regular,
+    color: const Color(0xFF646464),
+  );
+
   static TextStyle f14GreySemiBold = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeights.semiBold,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/theming/colors.dart';
@@ -16,6 +17,8 @@ class AppTextFormField extends StatelessWidget {
   final bool? obscure;
   final Color? borderColor;
   final TextStyle? textStyle;
+  final bool? enabled;
+  final bool? capitalization;
 
   const AppTextFormField({
     super.key,
@@ -30,6 +33,8 @@ class AppTextFormField extends StatelessWidget {
     this.obscure,
     this.borderColor,
     this.textStyle,
+    this.enabled,
+    this.capitalization,
   });
 
   @override
@@ -55,6 +60,7 @@ class AppTextFormField extends StatelessWidget {
               style: textStyle ?? TextStyles.f18LightPrimarySemiBold,
               onChanged: onChanged,
               decoration: InputDecoration(
+                counterText: '',
                 hintText: hintText,
                 suffixIcon: icon,
                 enabledBorder: OutlineInputBorder(
@@ -89,7 +95,11 @@ class AppTextFormField extends StatelessWidget {
               validator: isRequired! ? (value) => _validator(value) : null,
               maxLength: maxLength,
               obscureText: obscure ?? false,
+              enabled: enabled,
               cursorColor: borderColor,
+              textCapitalization: capitalization == true
+                  ? TextCapitalization.characters
+                  : TextCapitalization.none,
             ),
           ),
         ],
