@@ -4,7 +4,7 @@ import 'package:money_manager/core/database/database_constants.dart';
 import 'package:money_manager/core/models/transaction.dart';
 
 class DatabaseServices {
-  final _verBox = Hive.box(DatabaseConstants.verBox);
+  final _userBox = Hive.box(DatabaseConstants.userBox);
   final _transactionsBox = Hive.box(DatabaseConstants.transactionsBox);
   final _categoriesBox = Hive.box(DatabaseConstants.categoriesBox);
 
@@ -62,20 +62,45 @@ class DatabaseServices {
     ),
   ];
 
-  // Verification Database
+  // User Database
   bool isVerificationDatabaseInitialized() {
-    return _verBox.get(DatabaseConstants.verBox) != null;
+    return _userBox.get(DatabaseConstants.userBox) != null;
   }
 
   void initializUserAndData(String pin) {
-    _verBox.put(DatabaseConstants.verBox, pin);
+    // Save user pin code
+    _userBox.put(DatabaseConstants.userBox, pin);
+    // Initialize user preferences
+    _initializeUserPreferences();
+    // Initialize transactions and categories database
     _initializeTransactionsDatabase();
     _initializeCategoriesDatabase();
   }
 
+  void _initializeUserPreferences() {
+    _userBox.put(DatabaseConstants.currency, '\$');
+    _userBox.put(DatabaseConstants.dateFormat, 'DD/MM/YYYY');
+  }
+
+  Map<String, dynamic> getUserPreferences() {
+    final currency = _userBox.get(DatabaseConstants.currency);
+    final dateFormat = _userBox.get(DatabaseConstants.dateFormat);
+    return {
+      DatabaseConstants.currency: currency,
+      DatabaseConstants.dateFormat: dateFormat,
+    };
+  }
+
   bool isVerifiedUserPinCode(String pinCode) {
-    final storedPinCode = _verBox.get(DatabaseConstants.verBox);
+    final storedPinCode = _userBox.get(DatabaseConstants.userBox);
     return storedPinCode == pinCode;
+  }
+
+  void saveUserPreferences(Map<String, dynamic> newPreferences) {
+    newPreferences.forEach((key, preference) {
+      print('Key: $key, Value: $preference');
+      _userBox.put(key, preference);
+    });
   }
 
   // Transactions Database
@@ -133,11 +158,11 @@ class DatabaseServices {
 
   // Resetting Password
   bool checkCurrentPassword(String password) {
-    final userPin = _verBox.get(DatabaseConstants.verBox);
+    final userPin = _userBox.get(DatabaseConstants.userBox);
     return userPin == password;
   }
 
   void resetPassword(String password) {
-    _verBox.put(DatabaseConstants.verBox, password);
+    _userBox.put(DatabaseConstants.userBox, password);
   }
 }

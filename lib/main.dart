@@ -18,14 +18,14 @@ void main() async {
   final dir = await path.getApplicationDocumentsDirectory();
   Hive.init(dir.path);
   await Hive.initFlutter(DatabaseConstants.dbName);
-  // await Hive.deleteBoxFromDisk(DatabaseConstants.verBox);
+  // await Hive.deleteBoxFromDisk(DatabaseConstants.userBox);
   // await Hive.deleteBoxFromDisk(DatabaseConstants.transactionsBox);
   // await Hive.deleteBoxFromDisk(DatabaseConstants.categoriesBox);
   Hive.registerAdapter(TransactionAdapter());
   Hive.registerAdapter(TransactionTypeAdapter());
   Hive.registerAdapter(CategoryAdapter());
 
-  await Hive.openBox(DatabaseConstants.verBox);
+  await Hive.openBox(DatabaseConstants.userBox);
   await Hive.openBox(DatabaseConstants.transactionsBox);
   await Hive.openBox(DatabaseConstants.categoriesBox);
   runApp(

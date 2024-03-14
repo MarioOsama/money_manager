@@ -1,3 +1,4 @@
+import 'package:money_manager/core/database/database_constants.dart';
 import 'package:money_manager/core/database/database_services.dart';
 import 'package:money_manager/core/models/transaction.dart';
 
@@ -42,4 +43,7 @@ class BankCardRepo {
     }
     return incomesAmount;
   }
+
+  String get getCurrencyAbbreviation =>
+      _databaseServices.getUserPreferences()[DatabaseConstants.currency];
 }

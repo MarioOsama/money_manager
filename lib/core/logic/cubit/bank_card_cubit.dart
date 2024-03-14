@@ -74,4 +74,6 @@ class BankCardCubit extends Cubit<BankCardState> {
   void resetBankCardData() {
     emit(const BankCardInitial());
   }
+
+  String get getCurrencyAbbreviation => _bankCardRepo.getCurrencyAbbreviation;
 }

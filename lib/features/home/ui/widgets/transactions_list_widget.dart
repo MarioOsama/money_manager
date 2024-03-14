@@ -13,8 +13,7 @@ class _TransactionsListWidget extends StatelessWidget {
 
     final bool isExpanse = transactionType == TransactionType.expense;
     final String typeSign = isExpanse ? '-' : '+';
-    // TODO: implement periodic formate logic in settings
-    final bool isPeriodicFormate = false;
+    final bool isPeriodicFormat = homeCubit.getDateFormat == 'Periodic';
 
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
@@ -45,13 +44,15 @@ class _TransactionsListWidget extends StatelessWidget {
                       homeCubit.getTransactionCategory(categoryName);
                   final String title = currentTransaction.title;
                   final DateTime date = currentTransaction.date;
-                  final String formattedDate = isPeriodicFormate
+                  final String formattedDate = isPeriodicFormat
                       ? DateHelper.getPeriodicDate(date)
                       : DateHelper.toDateFormat(date.toString())!;
                   final double amount = currentTransaction.amount;
                   final int categoryColorCode =
                       currentTransactionCategory.colorCode;
                   final String createdAt = currentTransaction.createdAt;
+                  final String currencyAbbreviation =
+                      homeCubit.getCurrencyAbbreviation;
 
                   return Dismissible(
                     key: Key(currentTransaction.createdAt),
@@ -126,7 +127,7 @@ class _TransactionsListWidget extends StatelessWidget {
                                       ? TextStyles.f18RedSemiBold
                                       : TextStyles.f18LightGreenSemiBold,
                                   child: Text(
-                                    '$typeSign\$$amount',
+                                    '$typeSign$currencyAbbreviation $amount',
                                   ),
                                 ),
                               ),
@@ -169,23 +170,6 @@ class _TransactionsListWidget extends StatelessWidget {
                 },
               );
       },
-    );
-  }
-
-  //TODO: Delete this method if not used
-  Widget _buildEditDismissibleBackground() {
-    return Container(
-      padding: EdgeInsets.only(right: 20.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.r),
-        color: AppColors.lightPrimaryColor,
-      ),
-      alignment: Alignment.centerRight,
-      child: const Icon(
-        Icons.edit,
-        color: Colors.white,
-        size: 30,
-      ),
     );
   }
 

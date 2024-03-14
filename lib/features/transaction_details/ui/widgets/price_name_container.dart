@@ -11,12 +11,14 @@ class PriceNameContainer extends StatelessWidget {
   final String transactionTitle;
   final String transactionId;
   final bool isExpense;
+  final String currencyAbbreviation;
   const PriceNameContainer({
     super.key,
     required this.transactionAmount,
     required this.transactionTitle,
     required this.isExpense,
     required this.transactionId,
+    required this.currencyAbbreviation,
   });
 
   @override
@@ -46,7 +48,7 @@ class PriceNameContainer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '\$',
+                currencyAbbreviation,
                 style: TextStyle(
                     fontSize: 45.sp,
                     color: AppColors.primaryDarkColor,

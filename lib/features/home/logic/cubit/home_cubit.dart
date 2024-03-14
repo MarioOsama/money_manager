@@ -59,4 +59,8 @@ class HomeCubit extends Cubit<HomeState> {
   Category getTransactionCategory(String categoryName) {
     return _homeRepo.getTransactionCategory(categoryName);
   }
+
+  String get getCurrencyAbbreviation => _homeRepo.getCurrencyAbbreviation();
+
+  String get getDateFormat => _homeRepo.getDateFormat();
 }
