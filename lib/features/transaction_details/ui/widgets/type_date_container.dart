@@ -9,18 +9,21 @@ class TypeDateContainer extends StatelessWidget {
   final bool isExpense;
   final DateTime transactionDate;
   final String transactionId;
+  final bool isPeriodicFormat;
   const TypeDateContainer({
     super.key,
     required this.isExpense,
     required this.transactionDate,
     required this.transactionId,
+    required this.isPeriodicFormat,
   });
 
   @override
   Widget build(BuildContext context) {
     final String transactionType = isExpense ? 'Expense' : 'Income';
-    final transactionFormattedDate =
-        DateHelper.toDateFormat(transactionDate.toString());
+    final transactionFormattedDate = isPeriodicFormat
+        ? DateHelper.getPeriodicDate(transactionDate)
+        : DateHelper.toDateFormat(transactionDate.toString());
     return Positioned(
       bottom: 5,
       left: 20,

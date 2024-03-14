@@ -32,6 +32,9 @@ class TransactionDetailsScreen extends StatelessWidget {
 
     final transactionCategory =
         transactionDetailsRepo.getTransactionCategory(transactionCategoryName);
+    final currencyAbbreviation =
+        transactionDetailsRepo.getCurrencyAbbreviation();
+    final bool isPeriodicFormat = transactionDetailsRepo.isPeriodic;
 
     return Scaffold(
       appBar: AppBar(
@@ -68,12 +71,13 @@ class TransactionDetailsScreen extends StatelessWidget {
                         transactionAmount: transactionAmount,
                         transactionId: transactionId,
                         isExpense: isExpense,
+                        currencyAbbreviation: currencyAbbreviation,
                       ),
                       TypeDateContainer(
-                        isExpense: isExpense,
-                        transactionDate: transactionDate,
-                        transactionId: transactionId,
-                      ),
+                          isExpense: isExpense,
+                          transactionDate: transactionDate,
+                          transactionId: transactionId,
+                          isPeriodicFormat: isPeriodicFormat),
                     ],
                   ),
                   // Category, note and attachment container

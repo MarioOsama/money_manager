@@ -1,3 +1,4 @@
+import 'package:money_manager/core/database/database_constants.dart';
 import 'package:money_manager/core/database/database_services.dart';
 import 'package:money_manager/core/models/transaction.dart';
 
@@ -49,5 +50,17 @@ class HomeRepo {
 
   Category getTransactionCategory(categoryName) {
     return _databaseServices.getCategoryByName(categoryName);
+  }
+
+  String getCurrencyAbbreviation() {
+    return _databaseServices.getUserPreferences()[DatabaseConstants.currency];
+  }
+
+  String getDateFormat() {
+    final String dateFormat =
+        _databaseServices.getUserPreferences()[DatabaseConstants.dateFormat];
+    final String dateFormater =
+        dateFormat == 'D days ago' ? 'Periodic' : 'Specific Date';
+    return dateFormater;
   }
 }
