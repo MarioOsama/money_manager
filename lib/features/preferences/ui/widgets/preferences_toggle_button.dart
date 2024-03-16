@@ -32,7 +32,6 @@ class PreferencesToggleButton extends StatelessWidget {
             for (int i = 0; i < selectedItems.length; i++) {
               selectedItems[i] = i == index;
             }
-            ;
           },
           color: AppColors.lightPrimaryColor,
           selectedColor: Colors.white,

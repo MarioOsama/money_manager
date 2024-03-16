@@ -1,6 +1,8 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/features/statistics/ui/statistics_screen.dart';
 import 'package:money_manager/core/di/dependency_injection.dart';
 import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/routing/routes.dart';
@@ -23,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final Map<String, Widget> _bodiesList = {
     'Home': const HomeScreen(),
-    'Statistics': const Center(child: Text('Statistics Screen')),
+    'Statistics': const StatisticsScreen(),
     'Categories': BlocProvider(
       create: (context) => getIt<CategoriesCubit>(),
       child: const CategoriesScreen(),
@@ -134,4 +136,69 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
+}
+
+List<PieChartSectionData> showingSections() {
+  return List.generate(4, (i) {
+    // final isTouched = i == touchedIndex;
+    // final fontSize = isTouched ? 25.0 : 16.0;
+    // final radius = isTouched ? 60.0 : 50.0;
+    const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
+    switch (i) {
+      case 0:
+        return PieChartSectionData(
+          color: AppColors.primaryColor,
+          value: 40,
+          title: '40%',
+          radius: 16,
+          titleStyle: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            // color: AppColors.mainTextColor1,
+            shadows: shadows,
+          ),
+        );
+      case 1:
+        return PieChartSectionData(
+          color: AppColors.cyanColor,
+          value: 30,
+          title: '30%',
+          radius: 16,
+          titleStyle: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            // color: AppColors.mainTextColor1,
+            shadows: shadows,
+          ),
+        );
+      case 2:
+        return PieChartSectionData(
+          color: AppColors.redColor,
+          value: 15,
+          title: '15%',
+          radius: 16,
+          titleStyle: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            // color: AppColors.mainTextColor1,
+            shadows: shadows,
+          ),
+        );
+      case 3:
+        return PieChartSectionData(
+          color: AppColors.lightGreenColor,
+          value: 15,
+          title: '15%',
+          radius: 16,
+          titleStyle: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            // color: AppColors.mainTextColor1,
+            shadows: shadows,
+          ),
+        );
+      default:
+        throw Error();
+    }
+  });
 }
