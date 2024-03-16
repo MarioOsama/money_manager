@@ -6,9 +6,9 @@ import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/core/widgets/app_button.dart';
 import 'package:money_manager/core/widgets/app_text_form_field.dart';
 import 'package:money_manager/features/preferences/logic/cubit/preferences_cubit.dart';
-import 'package:money_manager/features/preferences/widgets/preferences_error_bloc_listener.dart';
-import 'package:money_manager/features/preferences/widgets/preferences_item.dart';
-import 'package:money_manager/features/preferences/widgets/preferences_toggle_button.dart';
+import 'package:money_manager/features/preferences/ui/widgets/preferences_error_bloc_listener.dart';
+import 'package:money_manager/features/preferences/ui/widgets/preferences_item.dart';
+import 'package:money_manager/features/preferences/ui/widgets/preferences_toggle_button.dart';
 
 class PreferencesScreen extends StatelessWidget {
   const PreferencesScreen({super.key});

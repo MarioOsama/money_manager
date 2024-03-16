@@ -154,16 +154,21 @@ class TextStyles {
     color: AppColors.lightPrimaryColor,
   );
 
-  static TextStyle f15GreyRegular = TextStyle(
-    fontSize: 15.sp,
-    fontWeight: FontWeights.regular,
-    color: const Color(0xFF646464),
-  );
-
   static TextStyle f16LightGreySemiBold = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeights.semiBold,
     color: const Color(0xFF989898),
+  );
+
+  static TextStyle f16WhiteMedium = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeights.medium,
+    color: Colors.white,
+  );
+  static TextStyle f15GreyRegular = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeights.regular,
+    color: const Color(0xFF646464),
   );
 
   static TextStyle f15GreySemiBold = TextStyle(
@@ -218,5 +223,11 @@ class TextStyles {
     fontSize: 12.sp,
     fontWeight: FontWeights.extraBold,
     color: Colors.black,
+  );
+
+  static TextStyle f12WhiteMedium = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeights.medium,
+    color: Colors.white,
   );
 }
