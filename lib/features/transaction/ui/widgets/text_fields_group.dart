@@ -71,7 +71,6 @@ class TextFieldsGroup extends StatelessWidget {
   }
 
   void _updateTotalBalanceInstantly(String value, BuildContext context) {
-    print('value: $value ');
     final double? transactionAmount = double.tryParse(value);
     final transactionCubit = context.read<TransactionCubit>();
     final backCardCubit = context.read<BankCardCubit>();
@@ -80,7 +79,6 @@ class TextFieldsGroup extends StatelessWidget {
         ? backCardCubit.instantlyUpdateBankCardValues(
             transactionAmount, transactionType)
         : backCardCubit.instantlyUpdateBankCardValues(0, transactionType);
-    print('transactionAmount: $transactionAmount');
   }
 
   Future<DateTime?> _showDatePickerDialog(BuildContext context) async {

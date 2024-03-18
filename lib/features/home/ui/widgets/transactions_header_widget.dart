@@ -17,9 +17,12 @@ class _TransactionsHeaderWidget extends StatelessWidget {
             'Recent $title',
             style: TextStyles.f18BlackSemiBold,
           ),
-          Text(
-            'See all',
-            style: TextStyles.f15GreyRegular,
+          TextButton(
+            onPressed: () {
+              context.pushNamed(Routes.allTransactionsScreen,
+                  arguments: transactionType);
+            },
+            child: Text('See all', style: TextStyles.f15GreyRegular),
           ),
         ],
       ),

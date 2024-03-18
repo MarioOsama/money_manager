@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_manager/core/di/dependency_injection.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/routing/routes.dart';
+import 'package:money_manager/features/all_transactions/logic/cubit/all_transactions_cubit.dart';
+import 'package:money_manager/features/all_transactions/ui/all_transactions_screen.dart';
 import 'package:money_manager/features/categories/logic/cubit/categories_cubit.dart';
 import 'package:money_manager/features/home/logic/cubit/home_cubit.dart';
 import 'package:money_manager/features/onboarding/on_boarding_screen.dart';
@@ -54,6 +56,15 @@ class AppRouter {
             ],
             child: TransactionScreen(
               transaction: args as Transaction?,
+            ),
+          ),
+        );
+      case Routes.allTransactionsScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider<AllTransactionsCubit>(
+            create: (context) => getIt<AllTransactionsCubit>(),
+            child: AllTransactionsScreen(
+              transactionType: args as TransactionType,
             ),
           ),
         );

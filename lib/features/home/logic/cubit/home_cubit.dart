@@ -24,7 +24,6 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void filterTransactionsByType() {
-    print('filterTransactionsByType');
     emit(HomeLoading());
     try {
       final List<Transaction> expenses;
