@@ -22,12 +22,8 @@ class PreferencesToggleButton extends StatelessWidget {
             height: 45,
           ),
           onPressed: (int index) {
-            final String selectedPreference = items[index]
-                .toStringShallow()
-                .split(',')[1]
-                .replaceAll('"', '')
-                .trim();
-            print(selectedPreference);
+            final String selectedPreference =
+                (items[index] as Text).data.toString();
             preferencesCubit.setUserPreferences(selectedPreference);
             for (int i = 0; i < selectedItems.length; i++) {
               selectedItems[i] = i == index;

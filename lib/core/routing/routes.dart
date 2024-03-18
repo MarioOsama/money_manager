@@ -2,6 +2,7 @@ class Routes {
   static const onBoardingScreen = '/onboarding';
   static const verificationScreen = '/verification';
   static const mainScreen = '/main';
+  static const allTransactionsScreen = '/allTransactions';
   static const transactionScreen = '/transaction';
   static const categoriesScreen = '/categories';
   static const transactionDetailsScreen = '/transactionDetails';

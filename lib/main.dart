@@ -11,16 +11,12 @@ import 'package:money_manager/money_manager_app.dart';
 import 'package:path_provider/path_provider.dart' as path;
 
 void main() async {
-  //TODO: Remove all print statements
   WidgetsFlutterBinding.ensureInitialized();
   setupGetIt();
 
   final dir = await path.getApplicationDocumentsDirectory();
   Hive.init(dir.path);
   await Hive.initFlutter(DatabaseConstants.dbName);
-  // await Hive.deleteBoxFromDisk(DatabaseConstants.userBox);
-  // await Hive.deleteBoxFromDisk(DatabaseConstants.transactionsBox);
-  // await Hive.deleteBoxFromDisk(DatabaseConstants.categoriesBox);
   Hive.registerAdapter(TransactionAdapter());
   Hive.registerAdapter(TransactionTypeAdapter());
   Hive.registerAdapter(CategoryAdapter());

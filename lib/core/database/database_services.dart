@@ -98,7 +98,6 @@ class DatabaseServices {
 
   void saveUserPreferences(Map<String, dynamic> newPreferences) {
     newPreferences.forEach((key, preference) {
-      print('Key: $key, Value: $preference');
       _userBox.put(key, preference);
     });
   }

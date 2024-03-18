@@ -40,18 +40,6 @@ class TextStyles {
     color: AppColors.primaryColor,
   );
 
-  static TextStyle f24whiteSemiBold = TextStyle(
-    fontSize: 24.sp,
-    fontWeight: FontWeights.semiBold,
-    color: Colors.white,
-  );
-
-  static TextStyle f23BlackRegular = TextStyle(
-    fontSize: 23.sp,
-    fontWeight: FontWeights.regular,
-    color: Colors.black,
-  );
-
   static TextStyle f20RedBold = TextStyle(
     fontSize: 20.sp,
     fontWeight: FontWeights.bold,
@@ -118,22 +106,10 @@ class TextStyles {
     color: AppColors.cyanColor,
   );
 
-  static TextStyle f18CyanRegular = TextStyle(
-    fontSize: 18.sp,
-    fontWeight: FontWeights.regular,
-    color: AppColors.cyanColor,
-  );
-
   static TextStyle f20LightGreySemiBold = TextStyle(
     fontSize: 20.sp,
     fontWeight: FontWeights.semiBold,
     color: const Color(0xFF989898),
-  );
-
-  static TextStyle f18GreySemiBold = TextStyle(
-    fontSize: 18.sp,
-    fontWeight: FontWeights.semiBold,
-    color: const Color(0xFF646464),
   );
 
   static TextStyle f16PrimaryMedium = TextStyle(
@@ -171,6 +147,7 @@ class TextStyles {
     fontWeight: FontWeights.medium,
     color: Colors.white,
   );
+
   static TextStyle f15GreyRegular = TextStyle(
     fontSize: 15.sp,
     fontWeight: FontWeights.regular,
@@ -183,22 +160,10 @@ class TextStyles {
     color: const Color(0xFF646464),
   );
 
-  static TextStyle f15PrimarySemiBold = TextStyle(
-    fontSize: 15.sp,
-    fontWeight: FontWeights.semiBold,
-    color: AppColors.primaryColor,
-  );
-
   static TextStyle f15PrimaryLightSemiBold = TextStyle(
     fontSize: 15.sp,
     fontWeight: FontWeights.semiBold,
     color: AppColors.lightPrimaryColor,
-  );
-
-  static TextStyle f14WhiteRegular = TextStyle(
-    fontSize: 14.sp,
-    fontWeight: FontWeights.regular,
-    color: Colors.white,
   );
 
   static TextStyle f14WhiteSemiBold = TextStyle(
@@ -219,12 +184,6 @@ class TextStyles {
     color: const Color(0xFF646464),
   );
 
-  static TextStyle f14BlackNormal = TextStyle(
-    fontSize: 14.sp,
-    fontWeight: FontWeights.regular,
-    color: Colors.black,
-  );
-
   static TextStyle f14PrimaryBold = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeights.bold,
@@ -235,11 +194,5 @@ class TextStyles {
     fontSize: 12.sp,
     fontWeight: FontWeights.extraBold,
     color: Colors.black,
-  );
-
-  static TextStyle f12WhiteMedium = TextStyle(
-    fontSize: 12.sp,
-    fontWeight: FontWeights.medium,
-    color: Colors.white,
   );
 }

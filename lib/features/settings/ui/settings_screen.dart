@@ -20,7 +20,6 @@ class SettingsScreen extends StatelessWidget {
               title: 'Reset PIN',
               icon: const Icon(Icons.fiber_pin),
               onTap: () {
-                print('pressed');
                 context.pushNamed(Routes.resetPasswordScreen);
               },
             ),
