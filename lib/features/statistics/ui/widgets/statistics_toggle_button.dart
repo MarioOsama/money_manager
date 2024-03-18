@@ -44,8 +44,6 @@ class _StatisticsToggleButtonState extends State<StatisticsToggleButton> {
           statisticsCubit.loadStatistics(selectedItems[0]
               ? TransactionType.expense
               : TransactionType.income);
-          print(
-              (statisticsCubit.state as StatisticsLoaded).transactions.length);
         },
         children: const [
           Text('Expense'),

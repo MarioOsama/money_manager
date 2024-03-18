@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:money_manager/core/database/database_constants.dart';
-import 'package:money_manager/features/preferences/data/repos.dart';
+import 'package:money_manager/features/preferences/data/repos/preferences_repo.dart';
 
 part 'preferences_state.dart';
 
@@ -41,7 +41,6 @@ class PreferencesCubit extends Cubit<PreferencesState> {
   }
 
   void saveUserPreferences() {
-    print(currencyController.text);
     // Prepare preferences
     final Map<String, dynamic> preferences = {
       DatabaseConstants.currency: state.currency,
@@ -54,8 +53,6 @@ class PreferencesCubit extends Cubit<PreferencesState> {
       }
       preferences[DatabaseConstants.currency] = currencyController.text;
     }
-
-    print('preferences $preferences');
 
     // Save preferences
     try {
