@@ -10,6 +10,8 @@ import 'package:money_manager/features/preferences/data/repos.dart';
 import 'package:money_manager/features/preferences/logic/cubit/preferences_cubit.dart';
 import 'package:money_manager/features/reset_password/data/repos/reset_password_repo.dart';
 import 'package:money_manager/features/reset_password/logic/cubit/reset_password_cubit.dart';
+import 'package:money_manager/features/statistics/cubit/statistics_cubit.dart';
+import 'package:money_manager/features/statistics/data/repos/statistics_repo.dart';
 import 'package:money_manager/features/transaction/data/repos/transaction_repo.dart';
 import 'package:money_manager/features/transaction/logic/cubit/transaction_cubit.dart';
 import 'package:money_manager/features/transaction_details/data/repos/transaction_details_repo.dart';
@@ -29,6 +31,7 @@ void setupGetIt() async {
   getIt.registerFactory<CategoriesCubit>(() => CategoriesCubit(getIt()));
   getIt.registerFactory<ResetPasswordCubit>(() => ResetPasswordCubit(getIt()));
   getIt.registerFactory<PreferencesCubit>(() => PreferencesCubit(getIt()));
+  getIt.registerFactory<StatisticsCubit>(() => StatisticsCubit(getIt()));
 
   // Repos
   getIt
@@ -42,4 +45,5 @@ void setupGetIt() async {
   getIt.registerLazySingleton<ResetPasswordRepo>(
       () => ResetPasswordRepo(getIt()));
   getIt.registerLazySingleton<PreferencesRepo>(() => PreferencesRepo(getIt()));
+  getIt.registerLazySingleton<StatisticsRepo>(() => StatisticsRepo(getIt()));
 }

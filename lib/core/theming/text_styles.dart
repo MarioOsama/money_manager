@@ -34,16 +34,22 @@ class TextStyles {
     color: Colors.white,
   );
 
-  static TextStyle f23BlackRegular = TextStyle(
-    fontSize: 23.sp,
-    fontWeight: FontWeights.regular,
-    color: Colors.black,
+  static TextStyle f24PrimaryBold = TextStyle(
+    fontSize: 24.sp,
+    fontWeight: FontWeights.bold,
+    color: AppColors.primaryColor,
   );
 
   static TextStyle f24whiteSemiBold = TextStyle(
     fontSize: 24.sp,
     fontWeight: FontWeights.semiBold,
     color: Colors.white,
+  );
+
+  static TextStyle f23BlackRegular = TextStyle(
+    fontSize: 23.sp,
+    fontWeight: FontWeights.regular,
+    color: Colors.black,
   );
 
   static TextStyle f20RedBold = TextStyle(
@@ -217,6 +223,12 @@ class TextStyles {
     fontSize: 14.sp,
     fontWeight: FontWeights.regular,
     color: Colors.black,
+  );
+
+  static TextStyle f14PrimaryBold = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeights.bold,
+    color: AppColors.primaryColor,
   );
 
   static TextStyle f12BlackSemiBold = TextStyle(

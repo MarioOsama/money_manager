@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
+import 'package:money_manager/features/statistics/cubit/statistics_cubit.dart';
 
 class StatisticsToggleButton extends StatefulWidget {
   const StatisticsToggleButton({super.key});
@@ -15,6 +18,7 @@ class _StatisticsToggleButtonState extends State<StatisticsToggleButton> {
 
   @override
   Widget build(BuildContext context) {
+    final StatisticsCubit statisticsCubit = context.read<StatisticsCubit>();
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -37,6 +41,11 @@ class _StatisticsToggleButtonState extends State<StatisticsToggleButton> {
               selectedItems[i] = i == index;
             });
           }
+          statisticsCubit.loadStatistics(selectedItems[0]
+              ? TransactionType.expense
+              : TransactionType.income);
+          print(
+              (statisticsCubit.state as StatisticsLoaded).transactions.length);
         },
         children: const [
           Text('Expense'),

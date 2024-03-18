@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
+import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/widgets/custom_app_bar.dart';
+import 'package:money_manager/features/statistics/cubit/statistics_cubit.dart';
 import 'package:money_manager/features/statistics/ui/widgets/line_chart.dart';
 import 'package:money_manager/features/statistics/ui/widgets/pie_chart.dart';
 import 'package:money_manager/features/statistics/ui/widgets/statistics_toggle_button.dart';
@@ -10,14 +13,17 @@ class StatisticsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final StatisticsCubit statisticsCubit = context.read<StatisticsCubit>();
+    statisticsCubit.loadStatistics(TransactionType.expense);
     return Column(
       children: <Widget>[
         const CustomAppBar(title: 'Financial Report'),
-        const StatisticsPieChart(),
-        verticalSpace(30),
+        verticalSpace(15),
         const StatisticsToggleButton(),
         verticalSpace(20),
-        const LineChartSample1(),
+        const StatisticsPieChart(),
+        verticalSpace(30),
+        const LineChartWidget(),
       ],
     );
   }

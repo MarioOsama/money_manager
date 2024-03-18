@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
+import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
 
 class Indicator extends StatelessWidget {
@@ -16,12 +17,20 @@ class Indicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: EdgeInsets.only(top: 10.h, right: 15.w),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(
-            title,
-            style: TextStyles.f12WhiteMedium,
+          SizedBox(
+            width: 100.w,
+            child: Text(
+              title,
+              textAlign: TextAlign.end,
+              style: TextStyles.f14PrimaryBold.copyWith(
+                color: AppColors.primaryColor,
+                overflow: TextOverflow.clip,
+              ),
+            ),
           ),
           horizontalSpace(5),
           Container(

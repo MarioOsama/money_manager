@@ -149,8 +149,7 @@ class _TransactionsListWidget extends StatelessWidget {
                                       style:
                                           TextStyles.f12BlackSemiBold.copyWith(
                                         color: Color(categoryColorCode +
-                                                categoryColorCode * 3)
-                                            .withOpacity(0.75),
+                                            categoryColorCode * 3),
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       child: Text(
