@@ -53,8 +53,7 @@ class TransactionDetails extends StatelessWidget {
                 ),
                 child: DefaultTextStyle(
                   style: TextStyles.f18BlackSemiBold.copyWith(
-                    color: Color(categoryColorCode + categoryColorCode * 3)
-                        .withOpacity(0.75),
+                    color: Color(categoryColorCode + categoryColorCode * 3),
                   ),
                   child: Text(
                     tarnsactionCategory.name,

@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/features/statistics/cubit/statistics_cubit.dart';
 import 'package:money_manager/features/statistics/ui/statistics_screen.dart';
 import 'package:money_manager/core/di/dependency_injection.dart';
 import 'package:money_manager/core/helpers/extensions.dart';
@@ -25,8 +26,11 @@ class _MainScreenState extends State<MainScreen> {
 
   final Map<String, Widget> _bodiesList = {
     'Home': const HomeScreen(),
-    'Statistics': const StatisticsScreen(),
-    'Categories': BlocProvider(
+    'Statistics': BlocProvider<StatisticsCubit>(
+      create: (context) => getIt<StatisticsCubit>(),
+      child: const StatisticsScreen(),
+    ),
+    'Categories': BlocProvider<CategoriesCubit>(
       create: (context) => getIt<CategoriesCubit>(),
       child: const CategoriesScreen(),
     ),

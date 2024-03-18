@@ -38,15 +38,30 @@ class CategoriesScreen extends StatelessWidget {
 
                 return CustomAppBar(
                   title: 'Categories',
-                  action: IconButton(
-                    onPressed: () async {
-                      onDeleteCategory(context);
-                    },
-                    icon: Icon(
-                      isCategoriesSelected ? Icons.delete : Icons.add,
-                      color: AppColors.primaryDarkColor,
-                      size: 27.sp,
+                  action: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    child: IconButton(
+                      onPressed: () async {
+                        onDeleteCategory(context);
+                      },
+                      icon: Icon(
+                        isCategoriesSelected ? Icons.delete : Icons.add,
+                        color: isCategoriesSelected
+                            ? AppColors.lightRedColor
+                            : AppColors.primaryDarkColor,
+                        size: 27.sp,
+                      ),
+                      key: ValueKey(isCategoriesSelected),
                     ),
+                    transitionBuilder: (child, animation) {
+                      return SlideTransition(
+                        position: Tween(
+                                begin: const Offset(1.5, 0),
+                                end: const Offset(0, 0))
+                            .animate(animation),
+                        child: child,
+                      );
+                    },
                   ),
                 );
               },
