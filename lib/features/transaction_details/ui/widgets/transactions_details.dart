@@ -73,12 +73,7 @@ class TransactionDetails extends StatelessWidget {
                     style: TextStyles.f20LightGreySemiBold,
                   ),
                   verticalSpace(5),
-                  Text(
-                    transactionNote ?? 'No Note Added',
-                    style: transactionNote == null
-                        ? TextStyles.f15GreyRegular
-                        : TextStyles.f16BlackMedium,
-                  ),
+                  noteWidget,
                 ],
               ),
             ),
@@ -160,5 +155,19 @@ class TransactionDetails extends StatelessWidget {
       ),
       child: attachmentWidget,
     );
+  }
+
+  Widget get noteWidget {
+    if (transactionNote != null && transactionNote!.trim().isNotEmpty) {
+      return Text(
+        transactionNote!,
+        style: TextStyles.f16BlackMedium,
+      );
+    } else {
+      return Text(
+        'No Note',
+        style: TextStyles.f15GreyRegular,
+      );
+    }
   }
 }
