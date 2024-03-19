@@ -115,6 +115,7 @@ class TransactionDetailsScreen extends StatelessWidget {
         context: context,
         builder: (ctx) {
           return AlertDialog(
+            surfaceTintColor: AppColors.lightPrimaryColor,
             title: const Text('Delete Transaction'),
             content:
                 const Text('Are you sure you want to delete this transaction?'),
@@ -123,7 +124,10 @@ class TransactionDetailsScreen extends StatelessWidget {
                 onPressed: () {
                   ctx.pop();
                 },
-                child: const Text('Cancel'),
+                child: Text(
+                  'Cancel',
+                  style: TextStyles.f14PrimaryBold,
+                ),
               ),
               TextButton(
                 onPressed: () {
@@ -131,7 +135,10 @@ class TransactionDetailsScreen extends StatelessWidget {
                   transactionDetailsRepo.deleteTransaction(transactionId);
                   context.pushReplacementNamed(Routes.mainScreen);
                 },
-                child: const Text('Delete'),
+                child: Text(
+                  'Delete',
+                  style: TextStyles.f14PrimaryBold,
+                ),
               ),
             ],
           );

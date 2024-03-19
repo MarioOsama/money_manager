@@ -24,6 +24,9 @@ void main() async {
   await Hive.openBox(DatabaseConstants.userBox);
   await Hive.openBox(DatabaseConstants.transactionsBox);
   await Hive.openBox(DatabaseConstants.categoriesBox);
+
+  await Future.delayed(const Duration(milliseconds: 1000));
+
   runApp(
     BlocProvider(
       create: (context) => getIt<BankCardCubit>(),

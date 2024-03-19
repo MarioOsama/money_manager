@@ -20,15 +20,7 @@ class TransactionErrorBlocListener extends StatelessWidget {
             context: context,
             builder: (context) => AlertDialog(
               backgroundColor: Colors.white,
-              surfaceTintColor: AppColors.primaryDarkColor,
-              // icon: const Align(
-              //   alignment: Alignment.topLeft,
-              //   child: Icon(
-              //     Icons.warning,
-              //     color: AppColors.orangeColor,
-              //     size: 32,
-              //   ),
-              // ),
+              surfaceTintColor: AppColors.lightPrimaryColor,
               title: Text(
                 'Error',
                 style: TextStyles.f20RedBold,
