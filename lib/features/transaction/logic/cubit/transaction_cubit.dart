@@ -184,9 +184,9 @@ class TransactionCubit extends Cubit<TransactionState> {
       transactionType: typeController.text == 'Expense'
           ? TransactionType.expense
           : TransactionType.income,
-      note: noteController.text.isEmpty ? null : noteController.text,
+      note: noteController.text.isEmpty ? '' : noteController.text,
       attachmentPath: attachmentPathController.text.isEmpty
-          ? null
+          ? ''
           : attachmentPathController.text,
     );
     try {
