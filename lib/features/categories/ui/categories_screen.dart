@@ -5,6 +5,7 @@ import 'package:money_manager/core/di/dependency_injection.dart';
 import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
+import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/core/widgets/custom_app_bar.dart';
 import 'package:money_manager/features/categories/logic/cubit/categories_cubit.dart';
 import 'package:money_manager/features/categories/ui/widgets/add_category_modal_bottom_sheet.dart';
@@ -138,22 +139,25 @@ class CategoriesScreen extends StatelessWidget {
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
+            surfaceTintColor: AppColors.lightPrimaryColor,
             title: const Text('Delete Category'),
             content: const Text(
                 'All categories belong to this category will be deleted, Are you sure about deleting this category'),
             actions: [
               TextButton(
-                  onPressed: () {
-                    isConfirmed = false;
-                    ctx.pop();
-                  },
-                  child: const Text('No')),
+                onPressed: () {
+                  isConfirmed = false;
+                  ctx.pop();
+                },
+                child: Text('No', style: TextStyles.f14PrimaryBold),
+              ),
               TextButton(
-                  onPressed: () {
-                    isConfirmed = true;
-                    ctx.pop();
-                  },
-                  child: const Text('Yes')),
+                onPressed: () {
+                  isConfirmed = true;
+                  ctx.pop();
+                },
+                child: Text('Yes', style: TextStyles.f14PrimaryBold),
+              ),
             ],
           );
         });

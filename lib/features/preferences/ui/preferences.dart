@@ -38,6 +38,7 @@ class PreferencesScreen extends StatelessWidget {
           'Preferences',
           style: TextStyles.f22PrimaryDarkSemiBold,
         ),
+        backgroundColor: Colors.white,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 20.0),
