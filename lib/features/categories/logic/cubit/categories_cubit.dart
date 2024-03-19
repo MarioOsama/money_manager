@@ -56,10 +56,10 @@ class CategoriesCubit extends Cubit<CategoriesState> {
       emit(const CategoriesError('Please enter the category name'));
       return false;
     }
-
+    setupCategoryControllers();
     final String categoryName = categoryNameController.text;
-    final int categoryColor =
-        _categoriesRepo.categoriesColors[categoryColorController.text]!;
+    final categoriesColors = _categoriesRepo.categoriesColors;
+    final int categoryColor = categoriesColors[categoryColorController.text]!;
     try {
       final newCategory =
           Category(name: categoryName, colorCode: categoryColor);
@@ -116,5 +116,9 @@ class CategoriesCubit extends Cubit<CategoriesState> {
       return updatedSelectedCategories;
     }
     return null;
+  }
+
+  void setupCategoryControllers() {
+    categoryColorController.text = categoriesColorsNames.first;
   }
 }

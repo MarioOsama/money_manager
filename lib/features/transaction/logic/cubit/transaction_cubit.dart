@@ -130,6 +130,7 @@ class TransactionCubit extends Cubit<TransactionState> {
 
   void saveTransaction() {
     emit(const TransactionSaving());
+    handleControllers();
     final attachmentPath = getAttachmentPath;
     final note = getNote;
     final categoryName = categoryController.text;
@@ -176,10 +177,11 @@ class TransactionCubit extends Cubit<TransactionState> {
   }
 
   void updateTransaction() {
+    handleControllers();
     final Transaction updatedTransaction = transactionToEdit!.copyWith(
       title: titleController.text,
       amount: double.parse(amountController.text),
-      date: DateTime.parse(dateController.text).toUtc(),
+      date: DateTime.parse(dateController.text).toLocal(),
       categoryName: categoryController.text,
       transactionType: typeController.text == 'Expense'
           ? TransactionType.expense
@@ -200,5 +202,12 @@ class TransactionCubit extends Cubit<TransactionState> {
       emit(const TransactionErrorState(
           error: 'Error Updating Transaction', errorCode: 500));
     }
+  }
+
+  void handleControllers() {
+    typeController.text = typeController.text.replaceFirst('(', '');
+    typeController.text = typeController.text.replaceFirst(')', '');
+    categoryController.text = categoryController.text.replaceFirst('(', '');
+    categoryController.text = categoryController.text.replaceFirst(')', '');
   }
 }

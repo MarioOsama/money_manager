@@ -6,6 +6,7 @@ class AppDropDownMenuItem extends StatefulWidget {
   final String title;
   final List<dynamic> items;
   final TextEditingController controller;
+  final String titleText;
   final List<Color>? itemColors;
   final bool? itemsHaveColorProperty;
   final double? width;
@@ -23,6 +24,7 @@ class AppDropDownMenuItem extends StatefulWidget {
     this.itemsHaveColorProperty,
     this.width,
     this.height,
+    required this.titleText,
   });
 
   @override
@@ -40,9 +42,9 @@ class _AppDropDownMenuItemState extends State<AppDropDownMenuItem> {
   }
 
   void _initializeControllerValue() {
-    if (!widget.items.contains(_controller.text)) {
-      _controller.text = widget.items.first.toString();
-    }
+    _controller.text = widget.items
+        .where((element) => element.toString() == _controller.text)
+        .toString();
   }
 
   @override
@@ -57,7 +59,7 @@ class _AppDropDownMenuItemState extends State<AppDropDownMenuItem> {
         child: _buildDropDownItemContainer(item, itemsHaveColor, colors),
       );
     }).toList();
-
+    print(_controller.text);
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
@@ -71,7 +73,7 @@ class _AppDropDownMenuItemState extends State<AppDropDownMenuItem> {
           dropdownColor: Colors.grey[200],
           isDense: true,
           isExpanded: true,
-          value: _controller.text,
+          value: widget.titleText,
           items: items,
           onChanged: (newValue) {
             setState(() {
