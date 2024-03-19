@@ -26,6 +26,7 @@ class DropDownMenuItemsRow extends StatelessWidget {
           title: 'Transaction Type',
           items: const [TransactionType.expense, TransactionType.income],
           controller: typeController,
+          titleText: typeController.text,
           onChanged: _onTransactionTypeChanged,
           itemColors: const [
             AppColors.lightRedColor,
@@ -35,6 +36,7 @@ class DropDownMenuItemsRow extends StatelessWidget {
         AppDropDownMenuItem(
           title: 'Transaction Category',
           items: categories,
+          titleText: categoryController.text,
           controller: categoryController,
           itemsHaveColorProperty: true,
         ),

@@ -136,6 +136,8 @@ class DatabaseServices {
   }
 
   Category getCategoryByName(String categoryName) {
+    categoryName = categoryName.replaceAll('(', '');
+    categoryName = categoryName.replaceAll(')', '');
     return _categoriesBox.get(categoryName);
   }
 

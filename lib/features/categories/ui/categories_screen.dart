@@ -26,7 +26,6 @@ class CategoriesScreen extends StatelessWidget {
         return Column(
           children: [
             BlocBuilder<CategoriesCubit, CategoriesState>(
-              buildWhen: (previous, current) => current is CategoriesSelected,
               builder: (context, state) {
                 bool isCategoriesSelected = false;
                 final isCategoriesSelectedState = state is CategoriesSelected;
@@ -43,7 +42,7 @@ class CategoriesScreen extends StatelessWidget {
                     duration: const Duration(milliseconds: 250),
                     child: IconButton(
                       onPressed: () async {
-                        onDeleteCategory(context);
+                        onIconPressed(context);
                       },
                       icon: Icon(
                         isCategoriesSelected ? Icons.delete : Icons.add,
@@ -100,7 +99,7 @@ class CategoriesScreen extends StatelessWidget {
     return savingProcessState;
   }
 
-  void onDeleteCategory(BuildContext context) async {
+  void onIconPressed(BuildContext context) async {
     final CategoriesCubit categoriesCubit = context.read<CategoriesCubit>();
     final state = categoriesCubit.state;
     bool isCategoriesSelected = false;

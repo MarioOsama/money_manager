@@ -40,7 +40,8 @@ class BankCardCubit extends Cubit<BankCardState> {
     double expensesAmount = getExpensesAmount();
     double incomesAmount = getIncomesAmount();
     double bankCardBalance = incomesAmount - expensesAmount;
-
+    transactionType = transactionType.replaceAll('(', '');
+    transactionType = transactionType.replaceAll(')', '');
     if (transactionType == 'Expense') {
       _refreshBankCardWithValues(bankCardBalance - newTransactionAmount,
           expensesAmount + newTransactionAmount, incomesAmount);

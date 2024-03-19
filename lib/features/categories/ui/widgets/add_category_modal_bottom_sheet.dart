@@ -23,6 +23,7 @@ class AddCategoryBottomSheet extends StatelessWidget {
     final List<String> categoriesColorsNames =
         categoriesCubit.categoriesColorsNames;
 
+    categoriesCubit.setupCategoryControllers();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -56,6 +57,7 @@ class AddCategoryBottomSheet extends StatelessWidget {
                 items: categoriesColorsNames,
                 title: 'Category Color',
                 controller: categoryColorController,
+                titleText: categoryColorController.text,
                 itemColors: [
                   for (var colorValue in categoriesColors) Color(colorValue)
                 ],
