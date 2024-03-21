@@ -137,7 +137,13 @@ class TransactionCubit extends Cubit<TransactionState> {
     final Transaction newTransaction = Transaction(
       title: titleController.text,
       amount: double.parse(amountController.text),
-      date: DateTime.parse(dateController.text).toUtc(),
+      date: DateTime.parse(dateController.text).toLocal().add(
+            Duration(
+              hours: DateTime.now().hour,
+              minutes: DateTime.now().minute,
+              seconds: DateTime.now().second,
+            ),
+          ),
       categoryName: categoryName,
       transactionType: typeController.text == 'Expense'
           ? TransactionType.expense
@@ -181,7 +187,13 @@ class TransactionCubit extends Cubit<TransactionState> {
     final Transaction updatedTransaction = transactionToEdit!.copyWith(
       title: titleController.text,
       amount: double.parse(amountController.text),
-      date: DateTime.parse(dateController.text).toLocal(),
+      date: DateTime.parse(dateController.text).toLocal().add(
+            Duration(
+              hours: DateTime.now().hour,
+              minutes: DateTime.now().minute,
+              seconds: DateTime.now().second,
+            ),
+          ),
       categoryName: categoryController.text,
       transactionType: typeController.text == 'Expense'
           ? TransactionType.expense

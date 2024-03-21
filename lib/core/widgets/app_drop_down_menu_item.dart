@@ -49,6 +49,7 @@ class _AppDropDownMenuItemState extends State<AppDropDownMenuItem> {
 
   @override
   Widget build(BuildContext context) {
+    _handleControllerText();
     final List<DropdownMenuItem<String>> items = widget.items.map((item) {
       final bool itemsHaveColor = widget.itemsHaveColorProperty ?? false;
       final List<Color> colors = widget.itemColors ??
@@ -59,7 +60,6 @@ class _AppDropDownMenuItemState extends State<AppDropDownMenuItem> {
         child: _buildDropDownItemContainer(item, itemsHaveColor, colors),
       );
     }).toList();
-    print(_controller.text);
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
@@ -73,7 +73,7 @@ class _AppDropDownMenuItemState extends State<AppDropDownMenuItem> {
           dropdownColor: Colors.grey[200],
           isDense: true,
           isExpanded: true,
-          value: widget.titleText,
+          value: _controller.text,
           items: items,
           onChanged: (newValue) {
             setState(() {
@@ -114,6 +114,11 @@ class _AppDropDownMenuItemState extends State<AppDropDownMenuItem> {
         ),
       ),
     );
+  }
+
+  void _handleControllerText() {
+    _controller.text = _controller.text.replaceAll('(', '');
+    _controller.text = _controller.text.replaceAll(')', '');
   }
 
   @override
