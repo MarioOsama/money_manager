@@ -51,18 +51,24 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   }
 
   bool saveCategory() {
-    if (categoryNameController.text.trim().isEmpty ||
-        categoryColorController.text.trim().isEmpty) {
-      emit(const CategoriesError('Please enter the category name'));
-      return false;
-    }
-    setupCategoryControllers();
-    final String categoryName = categoryNameController.text;
+    final String categoryName = categoryNameController.text.trim();
+    final List<String> categoryNameFragments = categoryName.split(' ');
+    final String capitalizedCategoryName =
+        capitalizeCategoryName(categoryNameFragments);
     final categoriesColors = _categoriesRepo.categoriesColors;
     final int categoryColor = categoriesColors[categoryColorController.text]!;
+    if (capitalizedCategoryName.isEmpty) {
+      emit(
+          const CategoriesError('Saving failed, please enter a category name'));
+      return false;
+    }
+    if (isCategoryExists(capitalizedCategoryName)) {
+      emit(const CategoriesError('Category already exists'));
+      return false;
+    }
     try {
       final newCategory =
-          Category(name: categoryName, colorCode: categoryColor);
+          Category(name: capitalizedCategoryName, colorCode: categoryColor);
       _categoriesRepo.saveNewCategory(newCategory);
       emit(const CategoriesSaved());
       clearControllers();
@@ -71,6 +77,20 @@ class CategoriesCubit extends Cubit<CategoriesState> {
       emit(CategoriesError(e.toString()));
       return false;
     }
+  }
+
+  String capitalizeCategoryName(List<String> categoryNameFragments) {
+    String capitalizedCategoryName = '';
+    for (var fragment in categoryNameFragments) {
+      capitalizedCategoryName +=
+          '${fragment[0].toUpperCase() + fragment.substring(1)} ';
+    }
+    return capitalizedCategoryName.trim();
+  }
+
+  bool isCategoryExists(String categoryName) {
+    final isCategoryExists = _categoriesRepo.isCategoryExists(categoryName);
+    return isCategoryExists;
   }
 
   void deleteCategory(String categoryName) {

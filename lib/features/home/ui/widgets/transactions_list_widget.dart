@@ -36,7 +36,7 @@ class TransactionsListWidget extends StatelessWidget {
         return listLength == 0
             ? Center(
                 child: Text(
-                  'There are no $transactionType, \n try saving new $transactionType',
+                  'There are no $transactionType, \n try to log new $transactionType',
                   style: TextStyles.f14GreySemiBold,
                   textAlign: TextAlign.center,
                 ),
