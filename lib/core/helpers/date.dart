@@ -2,33 +2,33 @@ class DateHelper {
   static String getPeriodicDate(DateTime date) {
     final now = DateTime.now().toLocal();
     final diff = now.difference(date);
-
-    switch (diff.inDays) {
-      case 1:
-        return 'Yesterday';
-      case > 1 && < 7:
-        return '${diff.inDays} days ago';
-      case > 7 && < 14:
-        return 'Last week';
-      case > 14 && < 21:
-        return '2 weeks ago';
-      case > 21 && < 28:
-        return '3 weeks ago';
-      case > 28 && < 31:
-        return 'Last month';
-      case > 31 && < 365:
-        return '${diff.inDays ~/ 30} months ago';
-      case > 365:
-        return '${diff.inDays ~/ 365} years ago';
-      default:
-        if (diff.inHours > 0) {
-          return '${diff.inHours} hours ago';
-        } else if (diff.inMinutes > 0) {
-          return '${diff.inMinutes} minutes ago';
-        } else {
-          return 'Just now';
-        }
+    if (diff.inDays > 0) {
+      switch (diff.inDays) {
+        case 1:
+          return 'Yesterday';
+        case > 1 && <= 7:
+          return '${diff.inDays} days ago';
+        case > 7 && <= 14:
+          return 'Last week';
+        case > 14 && <= 21:
+          return '2 weeks ago';
+        case > 21 && <= 28:
+          return '3 weeks ago';
+        case > 28 && <= 31:
+          return 'Last month';
+        case > 31 && <= 365:
+          return '${diff.inDays ~/ 30} months ago';
+        case > 365:
+          return '${diff.inDays ~/ 365} years ago';
+        default:
+          return 'Unknown';
+      }
+    } else if (diff.inHours > 0) {
+      return '${diff.inHours} hours ago';
+    } else if (diff.inMinutes > 0) {
+      return '${diff.inMinutes} minutes ago';
     }
+    return 'Just now';
   }
 
   static String? toDateFormat(String stringDate) {

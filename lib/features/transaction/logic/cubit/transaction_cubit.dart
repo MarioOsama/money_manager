@@ -22,7 +22,7 @@ class TransactionCubit extends Cubit<TransactionState> {
 
   void setupTransactionControllers() {
     typeController.text = 'Expense';
-    categoryController.text = 'Shopping';
+    categoryController.text = 'Others';
   }
 
   void processTransaction(bool isEditing) {

@@ -64,4 +64,9 @@ class CategoriesRepo {
     });
     _databaseServices.deleteCategoryFromDatabase(categoryName);
   }
+
+  isCategoryExists(String categoryName) {
+    final isCategoryExists = _databaseServices.isCategoryExist(categoryName);
+    return isCategoryExists;
+  }
 }
