@@ -52,16 +52,16 @@ class CategoriesCubit extends Cubit<CategoriesState> {
 
   bool saveCategory() {
     final String categoryName = categoryNameController.text.trim();
+    if (categoryName.isEmpty) {
+      emit(
+          const CategoriesError('Saving failed, please enter a category name'));
+      return false;
+    }
     final List<String> categoryNameFragments = categoryName.split(' ');
     final String capitalizedCategoryName =
         capitalizeCategoryName(categoryNameFragments);
     final categoriesColors = _categoriesRepo.categoriesColors;
     final int categoryColor = categoriesColors[categoryColorController.text]!;
-    if (capitalizedCategoryName.isEmpty) {
-      emit(
-          const CategoriesError('Saving failed, please enter a category name'));
-      return false;
-    }
     if (isCategoryExists(capitalizedCategoryName)) {
       emit(const CategoriesError('Category already exists'));
       return false;
