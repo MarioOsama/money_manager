@@ -40,9 +40,9 @@ class StatisticsPieChart extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(
-                flex: 4,
+                flex: 2,
                 child: AspectRatio(
-                  aspectRatio: 1,
+                  aspectRatio: 0.5,
                   child: PieChart(
                     PieChartData(
                       borderData: FlBorderData(
@@ -56,7 +56,7 @@ class StatisticsPieChart extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 2,
+                flex: 1,
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 10.0),

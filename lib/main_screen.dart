@@ -43,9 +43,7 @@ class _MainScreenState extends State<MainScreen> {
       body: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(12.0),
-          child: SingleChildScrollView(
-            child: _bodiesList.values.toList()[_tabIndex],
-          ),
+          child: _bodiesList.values.toList()[_tabIndex],
         ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
