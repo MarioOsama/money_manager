@@ -7,19 +7,26 @@ import 'package:money_manager/features/preferences/logic/cubit/preferences_cubit
 class PreferencesToggleButton extends StatelessWidget {
   final List<Widget> items;
   final List<bool> selectedItems;
+  final double? width;
+  final double? height;
   const PreferencesToggleButton(
-      {super.key, required this.items, required this.selectedItems});
+      {super.key,
+      required this.items,
+      required this.selectedItems,
+      this.width,
+      this.height});
 
   @override
   Widget build(BuildContext context) {
     final PreferencesCubit preferencesCubit = context.read<PreferencesCubit>();
+    final double contextWidth = MediaQuery.of(context).size.width;
     return BlocBuilder<PreferencesCubit, PreferencesState>(
       builder: (context, state) {
         return ToggleButtons(
           borderRadius: BorderRadius.circular(10),
-          constraints: const BoxConstraints.expand(
-            width: 80,
-            height: 45,
+          constraints: BoxConstraints(
+            minWidth: width ?? contextWidth * 0.22,
+            minHeight: height ?? 45.h,
           ),
           onPressed: (int index) {
             final String selectedPreference =

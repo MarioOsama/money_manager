@@ -13,6 +13,7 @@ class LineChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
     return BlocBuilder<StatisticsCubit, StatisticsState>(
       builder: (context, state) {
         state as StatisticsLoaded;
@@ -26,8 +27,6 @@ class LineChartWidget extends StatelessWidget {
 
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
-          width: double.infinity,
-          height: 300,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
             color: AppColors.cyanColor.withOpacity(0.50),
@@ -65,32 +64,33 @@ class LineChartWidget extends StatelessWidget {
                       show: true,
                       border: Border(
                         bottom: BorderSide(
-                            color: AppColors.primaryColor.withOpacity(0.2),
-                            width: 4),
+                          color: AppColors.primaryColor.withOpacity(0.2),
+                          width: 3,
+                        ),
                       ),
                     ),
                     titlesData: FlTitlesData(
                       leftTitles: AxisTitles(
-                        axisNameSize: 30,
+                        axisNameSize: width * 0.075,
                         axisNameWidget: Text(
                           'Amount',
                           style: TextStyles.f14PrimaryBold,
                         ),
                         sideTitles: SideTitles(
                           showTitles: true,
-                          reservedSize: 40,
+                          reservedSize: width * 0.125,
                           getTitlesWidget: buildLeftTitles,
                         ),
                       ),
                       bottomTitles: AxisTitles(
-                          axisNameSize: 20,
+                          axisNameSize: width * 0.05,
                           axisNameWidget: Text(
                             'Day',
                             style: TextStyles.f14PrimaryBold,
                           ),
                           sideTitles: SideTitles(
                             showTitles: true,
-                            reservedSize: 30,
+                            reservedSize: width * 0.065,
                             getTitlesWidget: buildBottomTitles,
                           )),
                       topTitles: const AxisTitles(
@@ -111,16 +111,6 @@ class LineChartWidget extends StatelessWidget {
                             ? AppColors.lightRedColor
                             : AppColors.lightGreenColor,
                       ),
-                      // LineChartBarData(
-                      //   preventCurveOverShooting: true,
-                      //   spots: chartData1,
-                      //   isCurved: true,
-                      //   barWidth: 4,
-                      //   dotData: const FlDotData(show: false),
-                      //   belowBarData: BarAreaData(show: false),
-                      //   isStrokeCapRound: true,
-                      //   color: AppColors.lightRedColor,
-                      // ),
                     ],
                   ),
                 ),

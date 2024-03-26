@@ -20,25 +20,31 @@ class OnBoardingScreen extends StatelessWidget {
         children: [
           _buildImageStack(),
           verticalSpace(20),
-          _buildSloganText(),
+          _buildSloganText(context),
           verticalSpace(20),
           AppButton(
             onPress: () {
               context.pushNamed(Routes.verificationScreen);
             },
             text: 'Get Started',
-            width: 365,
+            width: 365.w,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildSloganText() {
-    return Text(
-      "Spend Smarter\nSave More",
-      style: TextStyles.f36PrimaryMostBold,
-      textAlign: TextAlign.center,
+  Widget _buildSloganText(context) {
+    return SizedBox(
+      width: 0.75 * MediaQuery.of(context).size.width,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          "Spend Smarter\nSave More",
+          style: TextStyles.f36PrimaryMostBold,
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 

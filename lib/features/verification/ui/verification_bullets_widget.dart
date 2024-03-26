@@ -59,18 +59,21 @@ class _VerificationBulletsState extends State<_VerificationBullets> {
         height: isCodeVisible ? _visibleBulletsSize.h : _invisibleBulletsSize.h,
         width: isCodeVisible ? _visibleBulletsSize.h : _invisibleBulletsSize.h,
         curve: Curves.easeInBack,
-        padding: EdgeInsets.fromLTRB(_codeContainerPadding.w, 0,
-            _codeContainerPadding.w, _codeContainerPadding.h),
+        padding: EdgeInsets.fromLTRB(
+            _codeContainerPadding.w, 0, _codeContainerPadding.w, 0),
         decoration: BoxDecoration(
           color: isDone
               ? AppColors.cyanColor
               : AppColors.cyanColor.withOpacity(0.25),
           borderRadius: BorderRadius.circular(_codeContainerRadius),
         ),
-        child: Text(
-          isCodeVisible ? codeDigit : '',
-          textAlign: TextAlign.center,
-          style: TextStyles.f48PrimaryMostBlack,
+        child: FittedBox(
+          fit: BoxFit.contain,
+          child: Text(
+            isCodeVisible ? codeDigit : '',
+            textAlign: TextAlign.center,
+            style: TextStyles.f48PrimaryMostBlack,
+          ),
         ),
       ),
     );

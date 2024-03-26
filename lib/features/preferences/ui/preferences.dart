@@ -26,10 +26,22 @@ class PreferencesScreen extends StatelessWidget {
     final List<bool> dateFormatSelection =
         userPreferences['selectedDateFormat']!;
 
-    final List<Widget> dateFormatItems =
-        preferencesCubit.dateFormats.map((title) => Text(title)).toList();
-    final List<Widget> currencyItems =
-        preferencesCubit.currencies.map((title) => Text(title)).toList();
+    final List<Widget> dateFormatItems = preferencesCubit.dateFormats
+        .map(
+          (title) => FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(title),
+          ),
+        )
+        .toList();
+    final List<Widget> currencyItems = preferencesCubit.currencies
+        .map(
+          (title) => FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(title),
+          ),
+        )
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -46,9 +58,12 @@ class PreferencesScreen extends StatelessWidget {
           children: [
             PreferencesItem(
               title: 'Date Format',
-              subtitle: Text(
-                'Prefered date format.',
-                style: TextStyles.f14GreyRegular,
+              subtitle: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  'Prefered date format.',
+                  style: TextStyles.f14GreyRegular,
+                ),
               ),
               trailing: PreferencesToggleButton(
                 items: dateFormatItems,
@@ -58,12 +73,17 @@ class PreferencesScreen extends StatelessWidget {
             verticalSpace(15),
             PreferencesItem(
               title: 'Currency',
-              subtitle: Text(
-                'Your country currency.',
-                style: TextStyles.f14GreyRegular,
+              subtitle: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  'Your country currency.',
+                  style: TextStyles.f14GreyRegular,
+                ),
               ),
               trailing: PreferencesToggleButton(
-                  items: currencyItems, selectedItems: currenciesSelection),
+                items: currencyItems,
+                selectedItems: currenciesSelection,
+              ),
             ),
             BlocBuilder<PreferencesCubit, PreferencesState>(
               builder: (context, state) {

@@ -18,12 +18,22 @@ class StatisticsScreen extends StatelessWidget {
     return Column(
       children: <Widget>[
         const CustomAppBar(title: 'Financial Report'),
-        verticalSpace(15),
-        const StatisticsToggleButton(),
+        verticalSpace(10),
+        const Expanded(
+          flex: 1,
+          child: StatisticsToggleButton(),
+        ),
         verticalSpace(20),
-        const StatisticsPieChart(),
+        const Expanded(
+          flex: 6,
+          child: StatisticsPieChart(),
+        ),
         verticalSpace(30),
-        const LineChartWidget(),
+        const Expanded(
+          flex: 6,
+          child: LineChartWidget(),
+        ),
+        verticalSpace(30),
       ],
     );
   }

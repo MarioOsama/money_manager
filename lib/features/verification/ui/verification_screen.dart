@@ -26,14 +26,19 @@ class VerificationScreen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.fromLTRB(10.w, 90.h, 10.w, 50.h),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const _VerificationHeader(),
+            const Expanded(
+              child: _VerificationHeader(),
+            ),
             verticalSpace(80),
-            const _VerificationBullets(),
-            const Spacer(),
-            const _NumbersKeyPad(),
+            const Expanded(
+              flex: 2,
+              child: _VerificationBullets(),
+            ),
+            const Expanded(
+              flex: 3,
+              child: _NumbersKeyPad(),
+            ),
             const _VerificationBlocListener(),
           ],
         ),
