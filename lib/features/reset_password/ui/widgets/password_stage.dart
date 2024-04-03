@@ -25,7 +25,9 @@ class PasswordStageWidget extends StatelessWidget {
       children: [
         Text(
           stageTitle,
-          style: TextStyles.f20WhiteSemiBold,
+          style: TextStyles.f20WhiteSemiBold.copyWith(
+              fontSize:
+                  TextStyles.getResponsiveFontSize(context, baseFontSize: 20)),
         ),
         verticalSpace(50),
         AppTextFormField(
@@ -34,7 +36,9 @@ class PasswordStageWidget extends StatelessWidget {
           maxLength: 4,
           obscure: true,
           borderColor: Colors.white,
-          textStyle: TextStyles.f18WhiteSemiBold,
+          textStyle: TextStyles.f18WhiteSemiBold.copyWith(
+              fontSize:
+                  TextStyles.getResponsiveFontSize(context, baseFontSize: 18)),
         ),
         verticalSpace(50),
         ElevatedButton(
@@ -48,7 +52,9 @@ class PasswordStageWidget extends StatelessWidget {
           ),
           child: Text(
             buttonTitle,
-            style: TextStyles.f18PrimarySemiBold,
+            style: TextStyles.f18PrimarySemiBold.copyWith(
+                fontSize: TextStyles.getResponsiveFontSize(context,
+                    baseFontSize: 18)),
           ),
         ),
       ],

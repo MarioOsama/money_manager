@@ -29,6 +29,8 @@ class Indicator extends StatelessWidget {
               style: TextStyles.f14PrimaryBold.copyWith(
                 color: AppColors.primaryColor,
                 overflow: TextOverflow.clip,
+                fontSize:
+                    TextStyles.getResponsiveFontSize(context, baseFontSize: 12),
               ),
             ),
           ),

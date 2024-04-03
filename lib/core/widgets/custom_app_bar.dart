@@ -20,8 +20,10 @@ class CustomAppBar extends StatelessWidget {
           if (title != null)
             Text(
               title!,
-              style: TextStyles.f22PrimaryDarkSemiBold
-                  .copyWith(color: foregroundColor),
+              style: TextStyles.f22PrimaryDarkSemiBold.copyWith(
+                  color: foregroundColor,
+                  fontSize: TextStyles.getResponsiveFontSize(context,
+                      baseFontSize: 22)),
             ),
           action ??
               SizedBox(

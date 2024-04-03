@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
+import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/features/statistics/cubit/statistics_cubit.dart';
 import 'package:money_manager/features/statistics/ui/widgets/indicator.dart';
 
@@ -50,7 +51,7 @@ class StatisticsPieChart extends StatelessWidget {
                       ),
                       sectionsSpace: 5,
                       centerSpaceRadius: 60,
-                      sections: showingSections(categoriesPercentage),
+                      sections: showingSections(context, categoriesPercentage),
                     ),
                   ),
                 ),
@@ -82,7 +83,7 @@ class StatisticsPieChart extends StatelessWidget {
   }
 
   List<PieChartSectionData> showingSections(
-      Map<Category, double> categoriesPercentage) {
+      BuildContext context, Map<Category, double> categoriesPercentage) {
     List<PieChartSectionData> sections = [];
     categoriesPercentage.forEach((category, value) {
       sections.add(
@@ -91,11 +92,12 @@ class StatisticsPieChart extends StatelessWidget {
           value: value,
           title: '${value.toStringAsFixed(2)}%',
           radius: 50,
-          titleStyle: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w900,
+          titleStyle: TextStyle(
+            fontSize:
+                TextStyles.getResponsiveFontSize(context, baseFontSize: 12),
+            fontWeight: FontWeight.w700,
             color: AppColors.primaryDarkColor,
-            shadows: [Shadow(color: Colors.white, blurRadius: 2)],
+            shadows: const [Shadow(color: Colors.white, blurRadius: 2)],
           ),
         ),
       );

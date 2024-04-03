@@ -40,7 +40,9 @@ class SettingsItem extends StatelessWidget {
         title: Text(
           title,
           textAlign: TextAlign.left,
-          style: TextStyles.f18WhiteSemiBold,
+          style: TextStyles.f18WhiteSemiBold.copyWith(
+              fontSize:
+                  TextStyles.getResponsiveFontSize(context, baseFontSize: 18)),
         ),
         trailing: const Icon(Icons.chevron_right_sharp),
         iconColor: Colors.white,

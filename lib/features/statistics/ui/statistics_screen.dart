@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/models/transaction.dart';
+import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/core/widgets/custom_app_bar.dart';
 import 'package:money_manager/features/statistics/cubit/statistics_cubit.dart';
 import 'package:money_manager/features/statistics/ui/widgets/line_chart.dart';
@@ -29,6 +30,15 @@ class StatisticsScreen extends StatelessWidget {
           child: StatisticsPieChart(),
         ),
         verticalSpace(30),
+        Text(
+          'Last 30 Days Overview',
+          style: TextStyles.f18PrimaryBold.copyWith(
+              letterSpacing: 1.25,
+              wordSpacing: 1.75,
+              fontSize:
+                  TextStyles.getResponsiveFontSize(context, baseFontSize: 18)),
+        ),
+        verticalSpace(10),
         const Expanded(
           flex: 6,
           child: LineChartWidget(),

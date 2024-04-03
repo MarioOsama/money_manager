@@ -23,11 +23,15 @@ class TransactionErrorBlocListener extends StatelessWidget {
               surfaceTintColor: AppColors.lightPrimaryColor,
               title: Text(
                 'Error',
-                style: TextStyles.f20RedBold,
+                style: TextStyles.f20RedBold.copyWith(
+                    fontSize: TextStyles.getResponsiveFontSize(context,
+                        baseFontSize: 20)),
               ),
               content: Text(
                 error,
-                style: TextStyles.f16PrimaryMedium,
+                style: TextStyles.f16PrimaryMedium.copyWith(
+                    fontSize: TextStyles.getResponsiveFontSize(context,
+                        baseFontSize: 16)),
               ),
               actions: [
                 TextButton(
@@ -36,7 +40,9 @@ class TransactionErrorBlocListener extends StatelessWidget {
                   },
                   child: Text(
                     'Got it',
-                    style: TextStyles.f16LightPrimaryMedium,
+                    style: TextStyles.f16LightPrimaryMedium.copyWith(
+                        fontSize: TextStyles.getResponsiveFontSize(context,
+                            baseFontSize: 16)),
                   ),
                 ),
               ],

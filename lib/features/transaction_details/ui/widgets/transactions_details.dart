@@ -30,7 +30,7 @@ class TransactionDetails extends StatelessWidget {
             transactionAttachmentPath!.contains('.png')
         : false;
     Widget attachmentWidget =
-        buildAttachmentWidget(isAttachement, isPhotoAttachment);
+        buildAttachmentWidget(context, isAttachement, isPhotoAttachment);
     final int categoryColorCode = tarnsactionCategory.colorCode;
 
     return Flexible(
@@ -52,8 +52,10 @@ class TransactionDetails extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: DefaultTextStyle(
-                  style: TextStyles.f18BlackSemiBold.copyWith(
+                  style: TextStyles.f16BlackSemiBold.copyWith(
                     color: Color(categoryColorCode + categoryColorCode * 3),
+                    fontSize: TextStyles.getResponsiveFontSize(context,
+                        baseFontSize: 14),
                   ),
                   child: Text(
                     tarnsactionCategory.name,
@@ -70,10 +72,12 @@ class TransactionDetails extends StatelessWidget {
                 children: [
                   Text(
                     'Note',
-                    style: TextStyles.f20LightGreySemiBold,
+                    style: TextStyles.f20LightGreySemiBold.copyWith(
+                        fontSize: TextStyles.getResponsiveFontSize(context,
+                            baseFontSize: 20)),
                   ),
                   verticalSpace(5),
-                  noteWidget,
+                  getNoteWidget(context),
                 ],
               ),
             ),
@@ -81,7 +85,9 @@ class TransactionDetails extends StatelessWidget {
             verticalSpace(10),
             Text(
               'Attachment',
-              style: TextStyles.f20LightGreySemiBold,
+              style: TextStyles.f20LightGreySemiBold.copyWith(
+                  fontSize: TextStyles.getResponsiveFontSize(context,
+                      baseFontSize: 20)),
             ),
             verticalSpace(10),
             attachmentWidget,
@@ -91,7 +97,8 @@ class TransactionDetails extends StatelessWidget {
     );
   }
 
-  buildAttachmentWidget(bool isAttachement, bool isPhotoAttachment) {
+  buildAttachmentWidget(
+      BuildContext context, bool isAttachement, bool isPhotoAttachment) {
     Widget toOpenAttachmentWidget = isPhotoAttachment
         ? GestureDetector(
             onTap: () {
@@ -140,7 +147,9 @@ class TransactionDetails extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 18.0.h),
             child: Text(
               'No Attachment',
-              style: TextStyles.f14GreySemiBold,
+              style: TextStyles.f14GreySemiBold.copyWith(
+                  fontSize: TextStyles.getResponsiveFontSize(context,
+                      baseFontSize: 14)),
               textAlign: TextAlign.center,
             ),
           );
@@ -157,16 +166,20 @@ class TransactionDetails extends StatelessWidget {
     );
   }
 
-  Widget get noteWidget {
+  Widget getNoteWidget(BuildContext context) {
     if (transactionNote != null && transactionNote!.trim().isNotEmpty) {
       return Text(
         transactionNote!,
-        style: TextStyles.f16BlackMedium,
+        style: TextStyles.f16BlackMedium.copyWith(
+            fontSize:
+                TextStyles.getResponsiveFontSize(context, baseFontSize: 16)),
       );
     } else {
       return Text(
         'No Note',
-        style: TextStyles.f15GreyRegular,
+        style: TextStyles.f15GreyRegular.copyWith(
+            fontSize:
+                TextStyles.getResponsiveFontSize(context, baseFontSize: 15)),
       );
     }
   }

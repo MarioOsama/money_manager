@@ -109,6 +109,8 @@ class _AppDropDownMenuItemState extends State<AppDropDownMenuItem> {
             color: itemsHaveColor
                 ? Color(item.colorCode + item.colorCode * 3)
                 : Colors.indigo,
+            fontSize:
+                TextStyles.getResponsiveFontSize(context, baseFontSize: 16),
           ),
           textAlign: TextAlign.center,
         ),

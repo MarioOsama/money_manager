@@ -34,15 +34,15 @@ class AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isBorder = borderWidth != null;
-    return _buildContainer(isBorder);
+    return _buildContainer(context, isBorder);
   }
 
-  Widget _buildContainer(bool isBorder) {
+  Widget _buildContainer(BuildContext context, bool isBorder) {
     return Container(
       width: width?.w ?? double.maxFinite,
       height: height?.h ?? 67.h,
       decoration: _buildDecoration(isBorder),
-      child: _buildTextButton(isBorder),
+      child: _buildTextButton(context, isBorder),
     );
   }
 
@@ -72,7 +72,7 @@ class AppButton extends StatelessWidget {
     );
   }
 
-  Widget _buildTextButton(bool isBorder) {
+  Widget _buildTextButton(BuildContext context, bool isBorder) {
     return TextButton(
       onPressed: onPress,
       style: ButtonStyle(
@@ -98,7 +98,9 @@ class AppButton extends StatelessWidget {
           text,
           style: TextStyles.f18WhiteSemiBold.copyWith(
             color: isBorder ? AppColors.primaryColor : Colors.white,
-            fontSize: fontSize ?? 18.sp,
+            fontSize: TextStyles.getResponsiveFontSize(context,
+                baseFontSize: fontSize ?? 18.sp),
+            letterSpacing: 1.5,
           ),
           textAlign: TextAlign.center,
         ),

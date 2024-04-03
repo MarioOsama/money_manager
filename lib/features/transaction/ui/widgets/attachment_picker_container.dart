@@ -25,7 +25,9 @@ class AttachmentPickerContainer extends StatelessWidget {
           children: [
             Text(
               'Attachment (Optional)',
-              style: TextStyles.f15GreySemiBold,
+              style: TextStyles.f15GreySemiBold.copyWith(
+                  fontSize: TextStyles.getResponsiveFontSize(context,
+                      baseFontSize: 15)),
             ),
             verticalSpace(5),
             DottedBorder(
@@ -66,7 +68,9 @@ class AttachmentPickerContainer extends StatelessWidget {
           ),
           Text(
             'Add attachment (Image, PDF, etc.)',
-            style: TextStyles.f15GreySemiBold,
+            style: TextStyles.f15GreySemiBold.copyWith(
+                fontSize: TextStyles.getResponsiveFontSize(context,
+                    baseFontSize: 15)),
           ),
         ],
       ),
@@ -91,7 +95,9 @@ class AttachmentPickerContainer extends StatelessWidget {
           ),
           Text(
             'Remove attachment',
-            style: TextStyles.f15PrimaryLightSemiBold,
+            style: TextStyles.f15PrimaryLightSemiBold.copyWith(
+                fontSize: TextStyles.getResponsiveFontSize(context,
+                    baseFontSize: 15)),
           ),
         ],
       ),

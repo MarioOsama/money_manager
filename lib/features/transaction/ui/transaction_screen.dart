@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
@@ -6,7 +7,7 @@ import 'package:money_manager/core/logic/cubit/bank_card_cubit.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
-import 'package:money_manager/core/widgets/animated_bank_card_container.dart';
+import 'package:money_manager/core/widgets/bank_card_widget.dart';
 import 'package:money_manager/features/transaction/logic/cubit/transaction_cubit.dart';
 import 'package:money_manager/features/transaction/ui/widgets/drop_down_menu_items_row.dart';
 import 'package:money_manager/features/transaction/ui/widgets/attachment_picker_container.dart';
@@ -32,6 +33,8 @@ class TransactionScreen extends StatelessWidget {
     final transactionState = transactionCubit.state;
     final isEditing = transactionState is TransactionEditing;
 
+    final double height = MediaQuery.of(context).size.height;
+
     return PopScope(
       onPopInvoked: (didPop) {
         bankCardCubit.updateBankCardData();
@@ -43,6 +46,8 @@ class TransactionScreen extends StatelessWidget {
             isEditing ? 'Edit Transaction' : 'New Transaction',
             style: TextStyles.f20PrimaryDarkSemiBold.copyWith(
               color: isEditing ? Colors.white : AppColors.primaryDarkColor,
+              fontSize:
+                  TextStyles.getResponsiveFontSize(context, baseFontSize: 20),
             ),
             textAlign: TextAlign.center,
           ),
@@ -55,8 +60,14 @@ class TransactionScreen extends StatelessWidget {
             children: [
               isEditing
                   ? const SizedBox.shrink()
-                  : const AnimatedBankCardContainer(
-                      padding: EdgeInsets.all(12),
+                  : SizedBox(
+                      height: height * 0.30,
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: BankCardWidget(
+                          padding: EdgeInsets.all(25),
+                        ),
+                      ),
                     ),
               Padding(
                 padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 30.h),

@@ -15,7 +15,9 @@ class CategoriesErrorBlocListener extends StatelessWidget {
           context.clearSnackBar();
           context.showSnackBar(
             message: state.message,
-            textStyle: TextStyles.f14WhiteSemiBold,
+            textStyle: TextStyles.f14WhiteSemiBold.copyWith(
+                fontSize: TextStyles.getResponsiveFontSize(context,
+                    baseFontSize: 14)),
           );
         }
       },

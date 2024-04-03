@@ -37,7 +37,9 @@ class AddCategoryBottomSheet extends StatelessWidget {
           height: 60.h,
           child: Text(
             'New Custom Category',
-            style: TextStyles.f20WhiteSemiBold,
+            style: TextStyles.f20WhiteSemiBold.copyWith(
+                fontSize: TextStyles.getResponsiveFontSize(context,
+                    baseFontSize: 20)),
             textAlign: TextAlign.center,
           ),
         ),

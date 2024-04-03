@@ -68,11 +68,15 @@ class _CategoriesListItemState extends State<CategoriesListItem> {
         // Category Name
         title: Text(
           currentCategoryName,
-          style: TextStyles.f18BlackSemiBold,
+          style: TextStyles.f16BlackSemiBold.copyWith(
+              fontSize:
+                  TextStyles.getResponsiveFontSize(context, baseFontSize: 16)),
         ),
         // Number of Transactions in this category
         subtitle: Text('$numberOfTransactions Transactions',
-            style: TextStyles.f14GreySemiBold),
+            style: TextStyles.f14GreySemiBold.copyWith(
+                fontSize: TextStyles.getResponsiveFontSize(context,
+                    baseFontSize: 14))),
         trailing: Container(
           width: 100.w,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -83,7 +87,9 @@ class _CategoriesListItemState extends State<CategoriesListItem> {
           // Total Amount of Transaction in this category
           child: Text(
             '\$ $totalAmount',
-            style: TextStyles.f14WhiteSemiBold,
+            style: TextStyles.f14WhiteSemiBold.copyWith(
+                fontSize: TextStyles.getResponsiveFontSize(context,
+                    baseFontSize: 14)),
             textAlign: TextAlign.center,
           ),
         ),

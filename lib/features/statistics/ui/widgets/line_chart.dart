@@ -19,7 +19,13 @@ class LineChartWidget extends StatelessWidget {
         state as StatisticsLoaded;
         final double maxY = state.lineChartData
                 .reduce((value, element) => value > element ? value : element) *
-            2;
+            1.5;
+        final int numberLength = maxY.toString().length - 2;
+        final double doubleMaxY =
+            maxY / int.parse('1${'0' * (numberLength - 1)}');
+        final double maxYInt =
+            doubleMaxY.ceil() * double.parse('1${'0' * (numberLength - 1)}');
+
         final chartData = [
           for (int i = 0; i < 30; i++)
             FlSpot(i.toDouble(), state.lineChartData[i])
@@ -39,96 +45,89 @@ class LineChartWidget extends StatelessWidget {
               ],
             ),
           ),
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: Text(
-                  'Last 30 Days Overview',
-                  style: TextStyles.f24PrimaryBold
-                      .copyWith(letterSpacing: 1.5, wordSpacing: 2),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              AspectRatio(
-                aspectRatio: 1.8,
-                child: LineChart(
-                  LineChartData(
-                    gridData: const FlGridData(show: true),
-                    maxY: maxY,
-                    maxX: 30,
-                    minY: 0,
-                    minX: 1,
-                    borderData: FlBorderData(
-                      show: true,
-                      border: Border(
-                        bottom: BorderSide(
-                          color: AppColors.primaryColor.withOpacity(0.2),
-                          width: 3,
-                        ),
-                      ),
-                    ),
-                    titlesData: FlTitlesData(
-                      leftTitles: AxisTitles(
-                        axisNameSize: width * 0.075,
-                        axisNameWidget: Text(
-                          'Amount',
-                          style: TextStyles.f14PrimaryBold,
-                        ),
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: width * 0.125,
-                          getTitlesWidget: buildLeftTitles,
-                        ),
-                      ),
-                      bottomTitles: AxisTitles(
-                          axisNameSize: width * 0.05,
-                          axisNameWidget: Text(
-                            'Day',
-                            style: TextStyles.f14PrimaryBold,
-                          ),
-                          sideTitles: SideTitles(
-                            showTitles: true,
-                            reservedSize: width * 0.065,
-                            getTitlesWidget: buildBottomTitles,
-                          )),
-                      topTitles: const AxisTitles(
-                          sideTitles: SideTitles(showTitles: false)),
-                      rightTitles: const AxisTitles(
-                          sideTitles: SideTitles(showTitles: false)),
-                    ),
-                    lineBarsData: [
-                      LineChartBarData(
-                        preventCurveOverShooting: true,
-                        spots: chartData,
-                        isCurved: true,
-                        barWidth: 4,
-                        dotData: const FlDotData(show: false),
-                        belowBarData: BarAreaData(show: false),
-                        isStrokeCapRound: true,
-                        color: state.isExpense
-                            ? AppColors.lightRedColor
-                            : AppColors.lightGreenColor,
-                      ),
-                    ],
+          child: LineChart(
+            LineChartData(
+              gridData: const FlGridData(show: true),
+              maxY: maxYInt,
+              maxX: 30,
+              minY: 0,
+              minX: 1,
+              borderData: FlBorderData(
+                show: true,
+                border: Border(
+                  bottom: BorderSide(
+                    color: AppColors.primaryColor.withOpacity(0.2),
+                    width: 3,
                   ),
                 ),
               ),
-            ],
+              titlesData: FlTitlesData(
+                leftTitles: AxisTitles(
+                  axisNameSize: width * 0.075,
+                  axisNameWidget: Text(
+                    'Amount',
+                    style: TextStyles.f14PrimaryBold.copyWith(
+                        fontSize: TextStyles.getResponsiveFontSize(context,
+                            baseFontSize: 14)),
+                  ),
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    reservedSize: width * 0.125,
+                    getTitlesWidget: (value, meta) =>
+                        buildLeftTitles(context, value, meta),
+                  ),
+                ),
+                bottomTitles: AxisTitles(
+                    axisNameSize: width * 0.05,
+                    axisNameWidget: Text(
+                      'Day',
+                      style: TextStyles.f14PrimaryBold.copyWith(
+                          fontSize: TextStyles.getResponsiveFontSize(context,
+                              baseFontSize: 14)),
+                    ),
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: width * 0.065,
+                      getTitlesWidget: (value, meta) =>
+                          buildBottomTitles(context, value, meta),
+                    )),
+                topTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                rightTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              ),
+              lineBarsData: [
+                LineChartBarData(
+                  preventCurveOverShooting: true,
+                  spots: chartData,
+                  isCurved: true,
+                  barWidth: 4,
+                  dotData: const FlDotData(show: false),
+                  belowBarData: BarAreaData(show: true),
+                  isStrokeCapRound: true,
+                  color: state.isExpense
+                      ? AppColors.lightRedColor
+                      : AppColors.lightGreenColor,
+                ),
+              ],
+            ),
           ),
         );
       },
     );
   }
 
-  Widget buildLeftTitles(value, meta) => Text(
+  Widget buildLeftTitles(context, value, meta) => Text(
         value.toInt().toString(),
-        style: TextStyles.f14PrimaryBold,
+        style: TextStyles.f14PrimaryBold.copyWith(
+            fontSize:
+                TextStyles.getResponsiveFontSize(context, baseFontSize: 12)),
       );
 
-  Widget buildBottomTitles(value, meta) => Text(
+  Widget buildBottomTitles(context, value, meta) => Text(
         value.toInt().toString(),
-        style: TextStyles.f14PrimaryBold,
+        style: TextStyles.f14PrimaryBold.copyWith(
+            fontSize:
+                TextStyles.getResponsiveFontSize(context, baseFontSize: 12)),
       );
 }
