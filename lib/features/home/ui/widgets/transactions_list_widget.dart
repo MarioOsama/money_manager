@@ -37,7 +37,9 @@ class TransactionsListWidget extends StatelessWidget {
             ? Center(
                 child: Text(
                   'There are no $transactionType, \n try to log new $transactionType',
-                  style: TextStyles.f14GreySemiBold,
+                  style: TextStyles.f14GreySemiBold.copyWith(
+                      fontSize: TextStyles.getResponsiveFontSize(context,
+                          baseFontSize: 14)),
                   textAlign: TextAlign.center,
                 ),
               )

@@ -28,18 +28,12 @@ class PreferencesScreen extends StatelessWidget {
 
     final List<Widget> dateFormatItems = preferencesCubit.dateFormats
         .map(
-          (title) => FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(title),
-          ),
+          (title) => Text(title),
         )
         .toList();
     final List<Widget> currencyItems = preferencesCubit.currencies
         .map(
-          (title) => FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(title),
-          ),
+          (title) => Text(title),
         )
         .toList();
 
@@ -48,7 +42,9 @@ class PreferencesScreen extends StatelessWidget {
         foregroundColor: AppColors.primaryDarkColor,
         title: Text(
           'Preferences',
-          style: TextStyles.f22PrimaryDarkSemiBold,
+          style: TextStyles.f22PrimaryDarkSemiBold.copyWith(
+              fontSize:
+                  TextStyles.getResponsiveFontSize(context, baseFontSize: 22)),
         ),
         backgroundColor: Colors.white,
       ),
@@ -62,7 +58,9 @@ class PreferencesScreen extends StatelessWidget {
                 fit: BoxFit.scaleDown,
                 child: Text(
                   'Prefered date format.',
-                  style: TextStyles.f14GreyRegular,
+                  style: TextStyles.f14GreyRegular.copyWith(
+                      fontSize: TextStyles.getResponsiveFontSize(context,
+                          baseFontSize: 14)),
                 ),
               ),
               trailing: PreferencesToggleButton(
@@ -77,7 +75,9 @@ class PreferencesScreen extends StatelessWidget {
                 fit: BoxFit.scaleDown,
                 child: Text(
                   'Your country currency.',
-                  style: TextStyles.f14GreyRegular,
+                  style: TextStyles.f14GreyRegular.copyWith(
+                      fontSize: TextStyles.getResponsiveFontSize(context,
+                          baseFontSize: 14)),
                 ),
               ),
               trailing: PreferencesToggleButton(
@@ -94,7 +94,9 @@ class PreferencesScreen extends StatelessWidget {
                   hintText: isCustomCurrency ? '€, £, GBP, JPY, etc.' : '',
                   keyboardType: TextInputType.name,
                   maxLength: 3,
-                  textStyle: TextStyles.f18PrimarySemiBold,
+                  textStyle: TextStyles.f18PrimarySemiBold.copyWith(
+                      fontSize: TextStyles.getResponsiveFontSize(context,
+                          baseFontSize: 18)),
                   enabled: currenciesSelection[1],
                   capitalization: isCustomCurrency,
                 );

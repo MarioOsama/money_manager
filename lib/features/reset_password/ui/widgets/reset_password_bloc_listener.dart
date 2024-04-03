@@ -20,7 +20,9 @@ class ResetPasswordBlocListener extends StatelessWidget {
               SnackBar(
                 content: Text(
                   state.message,
-                  style: TextStyles.f14WhiteSemiBold,
+                  style: TextStyles.f14WhiteSemiBold.copyWith(
+                      fontSize: TextStyles.getResponsiveFontSize(context,
+                          baseFontSize: 14)),
                 ),
                 backgroundColor: Colors.red,
               ),
@@ -49,7 +51,10 @@ class ResetPasswordBlocListener extends StatelessWidget {
                           verticalSpace(25),
                           Text(
                             'Password reset successfully',
-                            style: TextStyles.f16PrimaryMedium,
+                            style: TextStyles.f16PrimaryMedium.copyWith(
+                                fontSize: TextStyles.getResponsiveFontSize(
+                                    context,
+                                    baseFontSize: 16)),
                           ),
                         ],
                       ),

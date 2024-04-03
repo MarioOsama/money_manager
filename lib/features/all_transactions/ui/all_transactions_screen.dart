@@ -30,7 +30,9 @@ class AllTransactionsScreen extends StatelessWidget {
         foregroundColor: AppColors.primaryDarkColor,
         title: Text(
           'All $titleType Transactions',
-          style: TextStyles.f22PrimaryDarkSemiBold,
+          style: TextStyles.f22PrimaryDarkSemiBold.copyWith(
+              fontSize:
+                  TextStyles.getResponsiveFontSize(context, baseFontSize: 22)),
         ),
       ),
       body: Padding(

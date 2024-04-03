@@ -49,7 +49,8 @@ class PriceNameContainer extends StatelessWidget {
               Text(
                 currencyAbbreviation,
                 style: TextStyle(
-                    fontSize: 45.sp,
+                    fontSize: TextStyles.getResponsiveFontSize(context,
+                        baseFontSize: 38),
                     color: AppColors.primaryDarkColor,
                     fontWeight: FontWeight.w900,
                     shadows: [
@@ -64,8 +65,11 @@ class PriceNameContainer extends StatelessWidget {
               Hero(
                 tag: '$transactionId+$transactionAmount',
                 child: DefaultTextStyle(
-                  style: TextStyles.f42WhiteBold
-                      .copyWith(color: priceColor)
+                  style: TextStyles.f38WhiteBold
+                      .copyWith(
+                          color: priceColor,
+                          fontSize: TextStyles.getResponsiveFontSize(context,
+                              baseFontSize: 38))
                       .copyWith(shadows: [
                     Shadow(
                       color: Colors.black.withOpacity(0.25),
@@ -84,7 +88,9 @@ class PriceNameContainer extends StatelessWidget {
           Hero(
             tag: '$transactionId+$transactionTitle',
             child: DefaultTextStyle(
-              style: TextStyles.f22WhiteRegular,
+              style: TextStyles.f22WhiteRegular.copyWith(
+                  fontSize: TextStyles.getResponsiveFontSize(context,
+                      baseFontSize: 22)),
               child: Text(
                 transactionTitle,
               ),

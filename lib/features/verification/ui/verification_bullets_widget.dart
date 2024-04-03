@@ -36,9 +36,11 @@ class _VerificationBulletsState extends State<_VerificationBullets> {
                   final pinCode =
                       context.read<VerificationCubit>().state.getValue ?? '';
                   final codeLength = pinCode.length;
-                  return _buildVerificationBullet(
-                    isDone: codeLength > i,
-                    codeDigit: i < codeLength ? pinCode[i] : '',
+                  return Expanded(
+                    child: _buildVerificationBullet(
+                      isDone: codeLength > i,
+                      codeDigit: i < codeLength ? pinCode[i] : '',
+                    ),
                   );
                 },
               ),
@@ -53,7 +55,7 @@ class _VerificationBulletsState extends State<_VerificationBullets> {
   Widget _buildVerificationBullet(
       {required bool isDone, required String codeDigit}) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: _codeContainerPadding.w),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: AnimatedContainer(
         duration: _codeContainerAnimationDuration,
         height: isCodeVisible ? _visibleBulletsSize.h : _invisibleBulletsSize.h,
@@ -72,7 +74,9 @@ class _VerificationBulletsState extends State<_VerificationBullets> {
           child: Text(
             isCodeVisible ? codeDigit : '',
             textAlign: TextAlign.center,
-            style: TextStyles.f48PrimaryMostBlack,
+            style: TextStyles.f48PrimaryMostBlack.copyWith(
+                fontSize: TextStyles.getResponsiveFontSize(context,
+                    baseFontSize: 48)),
           ),
         ),
       ),

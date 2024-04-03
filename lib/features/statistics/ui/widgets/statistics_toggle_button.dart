@@ -29,7 +29,9 @@ class _StatisticsToggleButtonState extends State<StatisticsToggleButton> {
         color: Colors.black,
         fillColor: AppColors.primaryColor,
         selectedColor: Colors.white,
-        textStyle: TextStyles.f16WhiteMedium,
+        textStyle: TextStyles.f16WhiteMedium.copyWith(
+            fontSize:
+                TextStyles.getResponsiveFontSize(context, baseFontSize: 16)),
         isSelected: selectedItems,
         constraints: BoxConstraints.expand(
           width: 195.w,

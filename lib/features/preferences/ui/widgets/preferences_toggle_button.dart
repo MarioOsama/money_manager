@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/theming/colors.dart';
+import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/features/preferences/logic/cubit/preferences_cubit.dart';
 
 class PreferencesToggleButton extends StatelessWidget {
@@ -41,7 +42,8 @@ class PreferencesToggleButton extends StatelessWidget {
           fillColor: AppColors.primaryColor,
           selectedBorderColor: AppColors.primaryDarkColor,
           textStyle: TextStyle(
-            fontSize: 12.sp,
+            fontSize:
+                TextStyles.getResponsiveFontSize(context, baseFontSize: 11),
             fontWeight: FontWeight.w600,
           ),
           isSelected: selectedItems,

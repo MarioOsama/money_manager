@@ -40,7 +40,9 @@ class TransactionDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Transaction Details'),
-        titleTextStyle: TextStyles.f20WhiteSemiBold,
+        titleTextStyle: TextStyles.f20WhiteSemiBold.copyWith(
+            fontSize:
+                TextStyles.getResponsiveFontSize(context, baseFontSize: 20)),
         backgroundColor: AppColors.primaryColor,
         shadowColor: AppColors.lightPrimaryColor,
         foregroundColor: Colors.white,
@@ -126,7 +128,9 @@ class TransactionDetailsScreen extends StatelessWidget {
                 },
                 child: Text(
                   'Cancel',
-                  style: TextStyles.f14PrimaryBold,
+                  style: TextStyles.f14PrimaryBold.copyWith(
+                      fontSize: TextStyles.getResponsiveFontSize(context,
+                          baseFontSize: 14)),
                 ),
               ),
               TextButton(
@@ -137,7 +141,9 @@ class TransactionDetailsScreen extends StatelessWidget {
                 },
                 child: Text(
                   'Delete',
-                  style: TextStyles.f14PrimaryBold,
+                  style: TextStyles.f14PrimaryBold.copyWith(
+                      fontSize: TextStyles.getResponsiveFontSize(context,
+                          baseFontSize: 14)),
                 ),
               ),
             ],

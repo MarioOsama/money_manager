@@ -15,14 +15,19 @@ class _TransactionsHeaderWidget extends StatelessWidget {
         children: [
           Text(
             'Recent $title',
-            style: TextStyles.f18BlackSemiBold,
+            style: TextStyles.f16BlackSemiBold.copyWith(
+                fontSize: TextStyles.getResponsiveFontSize(context,
+                    baseFontSize: 16)),
           ),
           TextButton(
             onPressed: () {
               context.pushNamed(Routes.allTransactionsScreen,
                   arguments: transactionType);
             },
-            child: Text('See all', style: TextStyles.f15GreyRegular),
+            child: Text('See all',
+                style: TextStyles.f15GreyRegular.copyWith(
+                    fontSize: TextStyles.getResponsiveFontSize(context,
+                        baseFontSize: 15))),
           ),
         ],
       ),

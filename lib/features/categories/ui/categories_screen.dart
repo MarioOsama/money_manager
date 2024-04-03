@@ -148,14 +148,20 @@ class CategoriesScreen extends StatelessWidget {
                   isConfirmed = false;
                   ctx.pop();
                 },
-                child: Text('No', style: TextStyles.f14PrimaryBold),
+                child: Text('No',
+                    style: TextStyles.f14PrimaryBold.copyWith(
+                        fontSize: TextStyles.getResponsiveFontSize(context,
+                            baseFontSize: 14))),
               ),
               TextButton(
                 onPressed: () {
                   isConfirmed = true;
                   ctx.pop();
                 },
-                child: Text('Yes', style: TextStyles.f14PrimaryBold),
+                child: Text('Yes',
+                    style: TextStyles.f14PrimaryBold.copyWith(
+                        fontSize: TextStyles.getResponsiveFontSize(context,
+                            baseFontSize: 14))),
               ),
             ],
           );

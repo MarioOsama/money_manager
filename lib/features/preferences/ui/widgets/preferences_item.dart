@@ -24,7 +24,9 @@ class PreferencesItem extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: TextStyles.f16BlackMedium,
+                style: TextStyles.f16BlackMedium.copyWith(
+                    fontSize: TextStyles.getResponsiveFontSize(context,
+                        baseFontSize: 16)),
               ),
               verticalSpace(5),
               subtitle,

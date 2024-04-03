@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/helpers/date.dart';
 import 'package:money_manager/core/helpers/extensions.dart';
+import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/core/theming/colors.dart';
@@ -65,14 +66,16 @@ class TransactionItemCard extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.r),
           ),
-          titleAlignment: ListTileTitleAlignment.top,
+          titleAlignment: ListTileTitleAlignment.center,
           contentPadding: const EdgeInsets.symmetric(horizontal: 5),
           title: Padding(
             padding: const EdgeInsets.only(left: 15.0),
             child: Hero(
               tag: '$createdAt+$title',
               child: DefaultTextStyle(
-                style: TextStyles.f18BlackSemiBold,
+                style: TextStyles.f16BlackSemiBold.copyWith(
+                    fontSize: TextStyles.getResponsiveFontSize(context,
+                        baseFontSize: 16)),
                 child: Text(
                   title,
                 ),
@@ -80,11 +83,13 @@ class TransactionItemCard extends StatelessWidget {
             ),
           ),
           subtitle: Padding(
-            padding: const EdgeInsets.only(left: 15.0),
+            padding: const EdgeInsets.only(left: 15.0, top: 5.0),
             child: Hero(
               tag: '$createdAt+$formattedDate',
               child: DefaultTextStyle(
-                style: TextStyles.f15GreySemiBold,
+                style: TextStyles.f15GreySemiBold.copyWith(
+                    fontSize: TextStyles.getResponsiveFontSize(context,
+                        baseFontSize: 13)),
                 child: Text(
                   formattedDate,
                 ),
@@ -94,38 +99,58 @@ class TransactionItemCard extends StatelessWidget {
           trailing: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Hero(
-                tag: '$createdAt+$amount',
-                child: DefaultTextStyle(
-                  style: isExpense
-                      ? TextStyles.f18RedSemiBold
-                      : TextStyles.f18LightGreenSemiBold,
-                  child: Text(
-                    '$typeSign$currencyAbbreviation $amount',
+              Expanded(
+                child: Hero(
+                  tag: '$createdAt+$amount',
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: DefaultTextStyle(
+                      style: isExpense
+                          ? TextStyles.f18RedSemiBold.copyWith(
+                              fontSize: TextStyles.getResponsiveFontSize(
+                                  context,
+                                  baseFontSize: 16))
+                          : TextStyles.f18LightGreenSemiBold.copyWith(
+                              fontSize: TextStyles.getResponsiveFontSize(
+                                  context,
+                                  baseFontSize: 16)),
+                      child: Text(
+                        '$typeSign$currencyAbbreviation $amount',
+                      ),
+                    ),
                   ),
                 ),
               ),
-              const Spacer(),
-              Hero(
-                tag: '$createdAt+$categoryColorCode',
-                child: Container(
-                  width: 100.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.r),
-                    color: Color(categoryColorCode).withOpacity(0.50),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 3.0,
+              // const Spacer(),
+              verticalSpace(10),
+              Expanded(
+                child: Hero(
+                  tag: '$createdAt+$categoryColorCode',
+                  child: Container(
+                    width: 100.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.r),
+                      color: Color(categoryColorCode).withOpacity(0.50),
                     ),
-                    child: DefaultTextStyle(
-                      style: TextStyles.f12BlackSemiBold.copyWith(
-                        color: Color(categoryColorCode + categoryColorCode * 3),
-                        overflow: TextOverflow.ellipsis,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 3.0,
                       ),
-                      child: Text(
-                        categoryName,
-                        textAlign: TextAlign.center,
+                      child: DefaultTextStyle(
+                        style: TextStyles.f12BlackSemiBold.copyWith(
+                            color: Color(
+                                categoryColorCode + categoryColorCode * 3),
+                            overflow: TextOverflow.ellipsis,
+                            fontSize: TextStyles.getResponsiveFontSize(context,
+                                baseFontSize: 12),
+                            fontWeight: FontWeight.w600),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            categoryName,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       ),
                     ),
                   ),

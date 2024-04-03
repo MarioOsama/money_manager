@@ -53,7 +53,9 @@ class TypeDateContainer extends StatelessWidget {
               children: [
                 Text(
                   'Type',
-                  style: TextStyles.f16LightGreySemiBold,
+                  style: TextStyles.f16LightGreySemiBold.copyWith(
+                      fontSize: TextStyles.getResponsiveFontSize(context,
+                          baseFontSize: 16)),
                 ),
                 Row(
                   children: [
@@ -72,7 +74,9 @@ class TypeDateContainer extends StatelessWidget {
                     horizontalSpace(5),
                     Text(
                       transactionType,
-                      style: TextStyles.f18BlackSemiBold,
+                      style: TextStyles.f16BlackSemiBold.copyWith(
+                          fontSize: TextStyles.getResponsiveFontSize(context,
+                              baseFontSize: 16)),
                     ),
                   ],
                 ),
@@ -90,12 +94,16 @@ class TypeDateContainer extends StatelessWidget {
               children: [
                 Text(
                   'Date',
-                  style: TextStyles.f16LightGreySemiBold,
+                  style: TextStyles.f16LightGreySemiBold.copyWith(
+                      fontSize: TextStyles.getResponsiveFontSize(context,
+                          baseFontSize: 16)),
                 ),
                 Hero(
                   tag: '$transactionId+$transactionFormattedDate',
                   child: DefaultTextStyle(
-                    style: TextStyles.f18BlackSemiBold,
+                    style: TextStyles.f16BlackSemiBold.copyWith(
+                        fontSize: TextStyles.getResponsiveFontSize(context,
+                            baseFontSize: 16)),
                     child: Text(
                       transactionFormattedDate!,
                     ),

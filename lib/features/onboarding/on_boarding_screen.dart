@@ -41,7 +41,9 @@ class OnBoardingScreen extends StatelessWidget {
         fit: BoxFit.scaleDown,
         child: Text(
           "Spend Smarter\nSave More",
-          style: TextStyles.f36PrimaryMostBold,
+          style: TextStyles.f36PrimaryMostBold.copyWith(
+              fontSize:
+                  TextStyles.getResponsiveFontSize(context, baseFontSize: 36)),
           textAlign: TextAlign.center,
         ),
       ),

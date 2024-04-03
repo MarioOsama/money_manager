@@ -47,7 +47,9 @@ class AppTextFormField extends StatelessWidget {
           isTitle
               ? Text(
                   title!,
-                  style: TextStyles.f15GreySemiBold,
+                  style: TextStyles.f15GreySemiBold.copyWith(
+                      fontSize: TextStyles.getResponsiveFontSize(context,
+                          baseFontSize: 15)),
                 )
               : const SizedBox.shrink(),
           verticalSpace(5),
