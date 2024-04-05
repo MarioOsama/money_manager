@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
@@ -27,7 +26,10 @@ class TransactionScreen extends StatelessWidget {
     if (transaction != null) {
       transactionCubit.setupEditingTransactionEnvironment(transaction!);
     } else {
-      transactionCubit.setupTransactionControllers();
+      if (transactionCubit.categoryController.text.isEmpty ||
+          transactionCubit.typeController.text.isEmpty) {
+        transactionCubit.setupTransactionControllers();
+      }
     }
 
     final transactionState = transactionCubit.state;
