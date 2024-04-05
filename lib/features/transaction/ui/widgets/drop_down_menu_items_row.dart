@@ -46,8 +46,9 @@ class DropDownMenuItemsRow extends StatelessWidget {
 
   void _onTransactionTypeChanged(
       BuildContext context, TextEditingController controller) {
+    final TransactionCubit transactionCubit = context.read<TransactionCubit>();
     final double? newTransactionAmount =
-        double.tryParse(context.read<TransactionCubit>().amountController.text);
+        double.tryParse(transactionCubit.amountController.text);
     final bankCardCubit = context.read<BankCardCubit>();
     newTransactionAmount != null
         ? bankCardCubit.instantlyUpdateBankCardValues(
