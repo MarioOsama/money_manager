@@ -19,5 +19,6 @@ class AllTransactionsLoadedState extends AllTransactionsState {
 }
 
 class AllTransactionsErrorState extends AllTransactionsState {
-  const AllTransactionsErrorState();
+  final String error;
+  const AllTransactionsErrorState(this.error);
 }

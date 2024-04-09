@@ -8,13 +8,12 @@ import 'package:money_manager/features/transaction/logic/cubit/transaction_cubit
 import 'package:money_manager/features/transaction/ui/widgets/date_icon.dart';
 
 class TextFieldsGroup extends StatelessWidget {
-  const TextFieldsGroup({super.key});
+  final bool isEditing;
+  const TextFieldsGroup({super.key, required this.isEditing});
 
   @override
   Widget build(BuildContext context) {
     final transactionCubit = context.read<TransactionCubit>();
-    final currentState = transactionCubit.state;
-    final isEditing = currentState is TransactionEditing;
     return Column(
       children: [
         AppTextFormField(

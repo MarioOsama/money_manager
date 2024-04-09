@@ -10,9 +10,6 @@ import 'package:money_manager/core/widgets/app_button.dart';
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
 
-  //TODO: Add carousel to onboarding screen
-  //TODO: Update the splash screen
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

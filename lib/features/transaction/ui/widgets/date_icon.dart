@@ -15,21 +15,21 @@ class DateIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isValidDate = false;
-    return BlocBuilder<TransactionCubit, TransactionState>(
-      builder: (context, state) {
+    return BlocSelector<TransactionCubit, TransactionState, bool?>(
+      selector: (state) {
         if (state is TransactionComposing) {
-          isValidDate = state.isValidDate ?? false;
+          return state.isValidDate;
         } else if (state is TransactionEditing) {
           final String? validatedDate =
               DateHelper.toDateFormat(dateController.text);
-          isValidDate = validatedDate != null ? true : false;
+          return validatedDate != null ? true : false;
         } else {
-          isValidDate = false;
+          return false;
         }
-
+      },
+      builder: (context, isValidDate) {
         return Icon(
-          isValidDate ? Icons.calendar_month : Icons.calendar_today_outlined,
+          isValidDate! ? Icons.calendar_month : Icons.calendar_today_outlined,
           size: size,
           color: isValidDate ? color : null,
         );
