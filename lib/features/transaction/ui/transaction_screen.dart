@@ -35,8 +35,6 @@ class TransactionScreen extends StatelessWidget {
     final transactionState = transactionCubit.state;
     final isEditing = transactionState is TransactionEditing;
 
-    final double height = MediaQuery.of(context).size.height;
-
     return PopScope(
       onPopInvoked: (didPop) {
         bankCardCubit.updateBankCardData();
@@ -62,13 +60,11 @@ class TransactionScreen extends StatelessWidget {
             children: [
               isEditing
                   ? const SizedBox.shrink()
-                  : SizedBox(
-                      height: height * 0.30,
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        child: BankCardWidget(
-                          padding: EdgeInsets.all(25),
-                        ),
+                  : const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: BankCardWidget(
+                        padding: EdgeInsets.all(25),
+                        margin: EdgeInsets.symmetric(vertical: 10),
                       ),
                     ),
               Padding(
@@ -80,7 +76,9 @@ class TransactionScreen extends StatelessWidget {
                     children: [
                       verticalSpace(20),
                       const DropDownMenuItemsRow(),
-                      const TextFieldsGroup(),
+                      TextFieldsGroup(
+                        isEditing: isEditing,
+                      ),
                       verticalSpace(20),
                       const AttachmentPickerContainer(),
                       verticalSpace(35),

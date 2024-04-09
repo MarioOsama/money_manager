@@ -8,12 +8,12 @@ import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
 
-class TransactionItemCard extends StatelessWidget {
+class TransactionItemCardHero extends StatelessWidget {
   final Transaction transactionData;
   final Category transactionCategory;
   final String currencyAbbreviation;
   final bool isPeriodicDate;
-  const TransactionItemCard({
+  const TransactionItemCardHero({
     super.key,
     required this.transactionData,
     required this.transactionCategory,
@@ -31,6 +31,7 @@ class TransactionItemCard extends StatelessWidget {
         : DateHelper.toDateFormat(date.toString())!;
     final double amount = transactionData.amount;
     final int categoryColorCode = transactionCategory.colorCode;
+    final String createdAt = transactionData.createdAt;
     final bool isExpense =
         transactionData.transactionType == TransactionType.expense;
     final String typeSign = isExpense ? '-' : '+';
@@ -69,23 +70,29 @@ class TransactionItemCard extends StatelessWidget {
           contentPadding: const EdgeInsets.symmetric(horizontal: 5),
           title: Padding(
             padding: const EdgeInsets.only(left: 15.0),
-            child: DefaultTextStyle(
-              style: TextStyles.f16BlackSemiBold.copyWith(
-                  fontSize: TextStyles.getResponsiveFontSize(context,
-                      baseFontSize: 16)),
-              child: Text(
-                title,
+            child: Hero(
+              tag: '$createdAt+$title',
+              child: DefaultTextStyle(
+                style: TextStyles.f16BlackSemiBold.copyWith(
+                    fontSize: TextStyles.getResponsiveFontSize(context,
+                        baseFontSize: 16)),
+                child: Text(
+                  title,
+                ),
               ),
             ),
           ),
           subtitle: Padding(
             padding: const EdgeInsets.only(left: 15.0, top: 5.0),
-            child: DefaultTextStyle(
-              style: TextStyles.f15GreySemiBold.copyWith(
-                  fontSize: TextStyles.getResponsiveFontSize(context,
-                      baseFontSize: 13)),
-              child: Text(
-                formattedDate,
+            child: Hero(
+              tag: '$createdAt+$formattedDate',
+              child: DefaultTextStyle(
+                style: TextStyles.f15GreySemiBold.copyWith(
+                    fontSize: TextStyles.getResponsiveFontSize(context,
+                        baseFontSize: 13)),
+                child: Text(
+                  formattedDate,
+                ),
               ),
             ),
           ),
@@ -93,47 +100,55 @@ class TransactionItemCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: DefaultTextStyle(
-                    style: isExpense
-                        ? TextStyles.f18RedSemiBold.copyWith(
-                            fontSize: TextStyles.getResponsiveFontSize(context,
-                                baseFontSize: 16))
-                        : TextStyles.f18LightGreenSemiBold.copyWith(
-                            fontSize: TextStyles.getResponsiveFontSize(context,
-                                baseFontSize: 16)),
-                    child: Text(
-                      '$typeSign$currencyAbbreviation $amount',
+                child: Hero(
+                  tag: '$createdAt+$amount',
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: DefaultTextStyle(
+                      style: isExpense
+                          ? TextStyles.f18RedSemiBold.copyWith(
+                              fontSize: TextStyles.getResponsiveFontSize(
+                                  context,
+                                  baseFontSize: 16))
+                          : TextStyles.f18LightGreenSemiBold.copyWith(
+                              fontSize: TextStyles.getResponsiveFontSize(
+                                  context,
+                                  baseFontSize: 16)),
+                      child: Text(
+                        '$typeSign$currencyAbbreviation $amount',
+                      ),
                     ),
                   ),
                 ),
               ),
               verticalSpace(10),
               Expanded(
-                child: Container(
-                  width: 100.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.r),
-                    color: Color(categoryColorCode).withOpacity(0.50),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 3.0,
+                child: Hero(
+                  tag: '$createdAt+$categoryColorCode',
+                  child: Container(
+                    width: 100.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.r),
+                      color: Color(categoryColorCode).withOpacity(0.50),
                     ),
-                    child: DefaultTextStyle(
-                      style: TextStyles.f12BlackSemiBold.copyWith(
-                          color:
-                              Color(categoryColorCode + categoryColorCode * 3),
-                          overflow: TextOverflow.ellipsis,
-                          fontSize: TextStyles.getResponsiveFontSize(context,
-                              baseFontSize: 12),
-                          fontWeight: FontWeight.w600),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          categoryName,
-                          textAlign: TextAlign.center,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 3.0,
+                      ),
+                      child: DefaultTextStyle(
+                        style: TextStyles.f12BlackSemiBold.copyWith(
+                            color: Color(
+                                categoryColorCode + categoryColorCode * 3),
+                            overflow: TextOverflow.ellipsis,
+                            fontSize: TextStyles.getResponsiveFontSize(context,
+                                baseFontSize: 12),
+                            fontWeight: FontWeight.w600),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            categoryName,
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
                     ),

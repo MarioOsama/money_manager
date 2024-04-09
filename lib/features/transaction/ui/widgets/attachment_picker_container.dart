@@ -15,11 +15,17 @@ class AttachmentPickerContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TransactionCubit, TransactionState>(
-      builder: (context, state) {
-        final transactionCubit = context.read<TransactionCubit>();
-        final isAttachmentPicked =
-            transactionCubit.attachmentPathController.text.isNotEmpty;
+    return BlocSelector<TransactionCubit, TransactionState, bool?>(
+      selector: (state) {
+        if (state is TransactionComposing) {
+          return state.isAttachmentPicked ?? false;
+        } else if (state is TransactionEditing) {
+          return state.transaction.attachmentPath.toString().trim().isNotEmpty;
+        } else {
+          return false;
+        }
+      },
+      builder: (context, isAttachmentPicked) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -39,7 +45,7 @@ class AttachmentPickerContainer extends StatelessWidget {
               child: SizedBox(
                 height: 65.h,
                 width: double.infinity,
-                child: isAttachmentPicked
+                child: isAttachmentPicked!
                     ? _buildAttachmentPreviewButton(context)
                     : _buildAttachmentPickerButton(context),
               ),

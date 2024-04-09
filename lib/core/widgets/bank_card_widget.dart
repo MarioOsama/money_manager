@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
@@ -10,8 +9,9 @@ import 'package:money_manager/core/theming/text_styles.dart';
 class BankCardWidget extends StatelessWidget {
   final double? radius;
   final EdgeInsets? padding;
+  final EdgeInsets? margin;
 
-  const BankCardWidget({super.key, this.radius, this.padding});
+  const BankCardWidget({super.key, this.radius, this.padding, this.margin});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +19,18 @@ class BankCardWidget extends StatelessWidget {
     bankCardCubit.updateBankCardData();
     return BlocBuilder<BankCardCubit, BankCardState>(
       builder: (context, state) {
-        double totalBalance =
+        final double totalBalance =
             state is BankCardLoaded ? state.bankCardBalance : 0.0;
-        double income = state is BankCardLoaded ? state.bankCardIncomes : 0.0;
-        double expense = state is BankCardLoaded ? state.bankCardExpenses : 0.0;
-        String currencyAbbreviation = bankCardCubit.getCurrencyAbbreviation;
+        final double income =
+            state is BankCardLoaded ? state.bankCardIncomes : 0.0;
+        final double expense =
+            state is BankCardLoaded ? state.bankCardExpenses : 0.0;
+        final String currencyAbbreviation =
+            bankCardCubit.getCurrencyAbbreviation;
+        final double height = MediaQuery.of(context).size.height;
         return Container(
-          margin: const EdgeInsets.only(top: 35),
+          height: height * 0.26,
+          margin: margin ?? const EdgeInsets.only(top: 35),
           padding: padding ?? const EdgeInsets.all(25),
           decoration: BoxDecoration(
             color: AppColors.primaryColor,

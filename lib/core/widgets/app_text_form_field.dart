@@ -38,13 +38,12 @@ class AppTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isTitle = title != null;
     return Padding(
       padding: EdgeInsets.only(top: 20.0.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          isTitle
+          title != null
               ? Text(
                   title!,
                   style: TextStyles.f15GreySemiBold.copyWith(

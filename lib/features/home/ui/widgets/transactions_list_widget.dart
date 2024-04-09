@@ -5,7 +5,7 @@ import 'package:money_manager/core/logic/cubit/bank_card_cubit.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/core/widgets/dismissible_background.dart';
-import 'package:money_manager/core/widgets/transaction_item_card.dart';
+import 'package:money_manager/core/widgets/transaction_item_card_hero.dart';
 import 'package:money_manager/features/home/logic/cubit/home_cubit.dart';
 
 class TransactionsListWidget extends StatelessWidget {
@@ -60,7 +60,7 @@ class TransactionsListWidget extends StatelessWidget {
                     onDismissed: (direction) => onDismissed(context, createdAt),
                     background: const DismissibleBackground(),
                     direction: DismissDirection.endToStart,
-                    child: TransactionItemCard(
+                    child: TransactionItemCardHero(
                       transactionData: currentTransaction,
                       transactionCategory: currentTransactionCategory,
                       isPeriodicDate: isPeriodicFormat,
