@@ -86,12 +86,13 @@ class TransactionCubit extends Cubit<TransactionState> {
 
   void changeAttachmentState() {
     if (state is TransactionEditing) {
-      emit(TransactionEditing(
+      emit(
+        TransactionEditing(
           transaction: (state as TransactionEditing).transaction.copyWith(
-                attachmentPath: attachmentPathController.text.isEmpty
-                    ? null
-                    : attachmentPathController.text,
-              )));
+                attachmentPath: attachmentPathController.text,
+              ),
+        ),
+      );
       return;
     }
     if (attachmentPathController.text.isEmpty) {
