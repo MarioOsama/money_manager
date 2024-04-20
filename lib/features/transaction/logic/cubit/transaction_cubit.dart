@@ -119,10 +119,10 @@ class TransactionCubit extends Cubit<TransactionState> {
         attachmentPathController.text.isNotEmpty;
   }
 
-  String? get getAttachmentPath {
+  String get getAttachmentPath {
     return attachmentPathController.text.isNotEmpty
         ? attachmentPathController.text
-        : null;
+        : '';
   }
 
   String? get getNote {
