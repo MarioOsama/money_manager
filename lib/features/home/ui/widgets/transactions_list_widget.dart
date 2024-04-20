@@ -47,7 +47,8 @@ class TransactionsListWidget extends StatelessWidget {
                 padding: EdgeInsets.only(top: 5.h),
                 itemCount: listLength > 5 ? 5 : listLength,
                 itemBuilder: (context, index) {
-                  final Transaction currentTransaction = transactions[index];
+                  final Transaction currentTransaction =
+                      transactions[transactions.length - index - 1];
                   final String categoryName = currentTransaction.categoryName;
                   final Category currentTransactionCategory =
                       homeCubit.getTransactionCategory(categoryName);
