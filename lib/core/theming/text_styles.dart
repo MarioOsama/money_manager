@@ -165,6 +165,12 @@ class TextStyles {
     color: Color(0xFF646464),
   );
 
+  static TextStyle f18GreySemiBold = const TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeights.semiBold,
+    color: Color.fromARGB(255, 83, 83, 83),
+  );
+
   static TextStyle f15PrimaryLightSemiBold = const TextStyle(
     fontSize: 15,
     fontWeight: FontWeights.semiBold,
