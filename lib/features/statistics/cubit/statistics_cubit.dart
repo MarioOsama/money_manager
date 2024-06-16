@@ -22,7 +22,8 @@ class StatisticsCubit extends Cubit<StatisticsState> {
           _statisticsRepo.calculateCategoriesPercentage(
               categoriesTransactionsMap,
               transactionsType == TransactionType.expense);
-      final amountOverTime = getLineChartData(transactions, 31);
+      final lineChartData = getLineChartData(transactions, 31);
+      final historyAmounts = getHistoryTransactionsAmounts(transactionsType);
 
       emit(StatisticsLoaded(
         isExpense: transactionsType == TransactionType.expense,
@@ -32,7 +33,8 @@ class StatisticsCubit extends Cubit<StatisticsState> {
         balance: balance,
         categoriesTransactionsMap: categoriesTransactionsMap,
         pieChartData: categoriesPercentage,
-        lineChartData: amountOverTime,
+        lineChartData: lineChartData,
+        historyAmountData: historyAmounts,
       ));
     } catch (e) {
       emit(StatisticsError(e.toString()));
@@ -41,5 +43,23 @@ class StatisticsCubit extends Cubit<StatisticsState> {
 
   List<double> getLineChartData(List<Transaction> transactions, int period) {
     return _statisticsRepo.calculateAmountOverTime(transactions, period);
+  }
+
+  Map<String, double> getHistoryTransactionsAmounts(
+      TransactionType transactionsType) {
+    final transactions =
+        _statisticsRepo.getTransactionsByType(transactionsType);
+    final Map<String, List<Transaction>> historyMapTransactions =
+        _statisticsRepo.getTransactionsByDate(transactions);
+    final Map<String, double> historyMapTransactionsAmount = {};
+    historyMapTransactionsAmount['today'] = historyMapTransactions['today']!
+        .fold(0,
+            (previousValue, transaction) => previousValue + transaction.amount);
+    historyMapTransactionsAmount['week'] = historyMapTransactions['week']!.fold(
+        0, (previousValue, transaction) => previousValue + transaction.amount);
+    historyMapTransactionsAmount['month'] = historyMapTransactions['month']!
+        .fold(0,
+            (previousValue, transaction) => previousValue + transaction.amount);
+    return historyMapTransactionsAmount;
   }
 }

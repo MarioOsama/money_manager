@@ -21,6 +21,7 @@ class StatisticsLoaded extends StatisticsState {
   final Map<Category, List<Transaction>> categoriesTransactionsMap;
   final Map<Category, double> pieChartData;
   final List<double> lineChartData;
+  final Map<String, double> historyAmountData;
 
   const StatisticsLoaded({
     required this.isExpense,
@@ -31,6 +32,7 @@ class StatisticsLoaded extends StatisticsState {
     required this.categoriesTransactionsMap,
     required this.pieChartData,
     required this.lineChartData,
+    required this.historyAmountData,
   });
 }
 

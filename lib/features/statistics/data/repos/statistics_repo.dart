@@ -91,4 +91,29 @@ class StatisticsRepo {
 
     return amountOverTime;
   }
+
+  Map<String, List<Transaction>> getTransactionsByDate(
+      List<Transaction> transactions) {
+    final List<Transaction> todayTransactions = [];
+    final List<Transaction> weekTransactions = [];
+    final List<Transaction> monthTransations = [];
+
+    for (var transaction in transactions) {
+      if (transaction.date.difference(DateTime.now()).inDays == 0) {
+        todayTransactions.add(transaction);
+      }
+      if (transaction.date.difference(DateTime.now()).inDays.abs() <= 7) {
+        weekTransactions.add(transaction);
+      }
+      if (transaction.date.difference(DateTime.now()).inDays.abs() <= 30) {
+        monthTransations.add(transaction);
+      }
+    }
+
+    return {
+      'today': todayTransactions,
+      'week': weekTransactions,
+      'month': monthTransations,
+    };
+  }
 }
