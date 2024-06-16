@@ -1,7 +1,7 @@
-// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_manager/core/data/repos/bank_card_repo.dart';
+import 'package:money_manager/core/models/transaction.dart';
 
 part 'bank_card_state.dart';
 
@@ -18,6 +18,60 @@ class BankCardCubit extends Cubit<BankCardState> {
       _setBankCardValues();
     } catch (e) {
       _emitError(e);
+    }
+  }
+
+  void updateBankCardDataOnDeleteTransaction(Transaction transaction) {
+    final transactionType = transaction.transactionType;
+    if (transactionType == TransactionType.expense) {
+      emit(
+        BankCardLoaded(
+            bankCardExpenses: ((state as BankCardLoaded).bankCardExpenses -
+                    transaction.amount)
+                .abs(),
+            bankCardIncomes: (state as BankCardLoaded).bankCardIncomes,
+            bankCardBalance: (state as BankCardLoaded).bankCardIncomes -
+                (state as BankCardLoaded).bankCardExpenses +
+                transaction.amount),
+      );
+    } else {
+      emit(
+        BankCardLoaded(
+            bankCardExpenses: (state as BankCardLoaded).bankCardExpenses,
+            bankCardIncomes:
+                ((state as BankCardLoaded).bankCardIncomes - transaction.amount)
+                    .abs(),
+            bankCardBalance: (state as BankCardLoaded).bankCardIncomes -
+                transaction.amount -
+                (state as BankCardLoaded).bankCardExpenses),
+      );
+    }
+  }
+
+  void updateBankCardDataOnRestoreTransaction(Transaction transaction) {
+    final transactionType = transaction.transactionType;
+    if (transactionType == TransactionType.expense) {
+      emit(
+        BankCardLoaded(
+            bankCardExpenses: ((state as BankCardLoaded).bankCardExpenses +
+                    transaction.amount)
+                .abs(),
+            bankCardIncomes: (state as BankCardLoaded).bankCardIncomes,
+            bankCardBalance: (state as BankCardLoaded).bankCardIncomes -
+                (state as BankCardLoaded).bankCardExpenses -
+                transaction.amount),
+      );
+    } else {
+      emit(
+        BankCardLoaded(
+            bankCardExpenses: (state as BankCardLoaded).bankCardExpenses,
+            bankCardIncomes:
+                ((state as BankCardLoaded).bankCardIncomes + transaction.amount)
+                    .abs(),
+            bankCardBalance: (state as BankCardLoaded).bankCardIncomes +
+                transaction.amount -
+                (state as BankCardLoaded).bankCardExpenses),
+      );
     }
   }
 
