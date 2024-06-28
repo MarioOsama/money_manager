@@ -20,9 +20,14 @@ class TransactionCubit extends Cubit<TransactionState> {
   final formKey = GlobalKey<FormState>();
   Transaction? transactionToEdit;
 
-  void setupTransactionControllers() {
+  void setupNewTransactionControllers() {
     typeController.text = 'Expense';
     categoryController.text = 'Others';
+    dateController.text = getFormattedStringDate;
+  }
+
+  String get getFormattedStringDate {
+    return DateTime.now().toLocal().toString().split(' ')[0];
   }
 
   void processTransaction(bool isEditing) {
