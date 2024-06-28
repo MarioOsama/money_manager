@@ -28,7 +28,7 @@ class TransactionScreen extends StatelessWidget {
     } else {
       if (transactionCubit.categoryController.text.isEmpty ||
           transactionCubit.typeController.text.isEmpty) {
-        transactionCubit.setupTransactionControllers();
+        transactionCubit.setupNewTransactionControllers();
       }
     }
 
