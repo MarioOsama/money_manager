@@ -21,7 +21,7 @@ import 'package:money_manager/features/verification/logic/cubit/verification_cub
 import 'package:money_manager/main_screen.dart';
 
 class AppRouter {
-  Route onGenerateRoute(RouteSettings settings) {
+  Route? onGenerateRoute(RouteSettings settings) {
     final args = settings.arguments;
 
     switch (settings.name) {
@@ -90,14 +90,7 @@ class AppRouter {
           ),
         );
       default:
-        return MaterialPageRoute(
-          // return no route found message
-          builder: (_) => Scaffold(
-            body: Center(
-              child: Text('No route defined for ${settings.name}'),
-            ),
-          ),
-        );
+        return null;
     }
   }
 }
