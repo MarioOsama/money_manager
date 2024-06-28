@@ -44,8 +44,6 @@ dependencies:
   get_it: ^7.6.6
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  json_annotation: ^4.8.1
-  json_serializable: ^6.7.1
   onscreen_num_keyboard: ^1.0.4
   open_file: ^3.3.2
   path_provider: ^2.1.2
