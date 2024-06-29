@@ -31,7 +31,7 @@ class SaveTransactionButton extends StatelessWidget {
       final isSavedSuccessfuly =
           context.read<TransactionCubit>().state is TransactionSaved;
       if (isSavedSuccessfuly) {
-        context.pushReplacementNamed(Routes.mainScreen);
+        context.pushAndRemoveUntil(Routes.mainScreen, (route) => false);
       }
     }
   }
@@ -43,7 +43,7 @@ class SaveTransactionButton extends StatelessWidget {
       final isSavedSuccessfuly =
           context.read<TransactionCubit>().state is TransactionSaved;
       if (isSavedSuccessfuly) {
-        context.pushReplacementNamed(Routes.mainScreen);
+        context.pushAndRemoveUntil(Routes.mainScreen, (route) => false);
       }
     }
   }

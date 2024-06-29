@@ -9,15 +9,17 @@ class AllTransactionsCubit extends Cubit<AllTransactionsState> {
   AllTransactionsCubit(this._allTransactionsRepo)
       : super(const AllTransactionsInitialState());
 
+  List<Transaction> transactionsList = [];
+
   void loadAllTransactions(TransactionType transactionType) {
-    emit(AllTransactionsLoadingState(transactionType));
-    final List<Transaction> allTransactions = _getAllTransactionsList;
-    emit(AllTransactionsLoadedState(allTransactions));
+    emit(const AllTransactionsLoadingState());
+    transactionsList = _getAllTypeTransactionsList(transactionType);
+    emit(AllTransactionsLoadedState(transactionsList));
   }
 
-  List<Transaction> get _getAllTransactionsList =>
-      _allTransactionsRepo.getFilteredTransactions(
-          (state as AllTransactionsLoadingState).transactionType);
+  List<Transaction> _getAllTypeTransactionsList(
+          TransactionType transactionType) =>
+      _allTransactionsRepo.getFilteredTransactions(transactionType);
 
   Category getTransactionCategory(String categoryName) {
     return _allTransactionsRepo.getTransactionCategory(categoryName);
@@ -27,4 +29,37 @@ class AllTransactionsCubit extends Cubit<AllTransactionsState> {
       _allTransactionsRepo.getCurrencyAbbreviation();
 
   String get getDateFormat => _allTransactionsRepo.getDateFormat();
+
+  void sortTransactions(String sortingType) {
+    switch (sortingType) {
+      case 'Lowest Price':
+        lowestSorting();
+      case 'Highest Price':
+        highestSorting();
+      case 'Newest Date':
+        newestSorting();
+      case 'Oldest Date':
+        oldestSorting();
+    }
+  }
+
+  void lowestSorting() {
+    transactionsList.sort((a, b) => a.amount.compareTo(b.amount));
+    emit(AllTransactionsLoadedState(transactionsList));
+  }
+
+  void highestSorting() {
+    transactionsList.sort((a, b) => b.amount.compareTo(a.amount));
+    emit(AllTransactionsLoadedState(transactionsList));
+  }
+
+  void newestSorting() {
+    transactionsList.sort((a, b) => b.date.compareTo(a.date));
+    emit(AllTransactionsLoadedState(transactionsList));
+  }
+
+  void oldestSorting() {
+    transactionsList.sort((a, b) => a.date.compareTo(b.date));
+    emit(AllTransactionsLoadedState(transactionsList));
+  }
 }

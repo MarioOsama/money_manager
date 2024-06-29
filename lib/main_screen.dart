@@ -39,7 +39,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(child: Container()),
       body: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(12.0),
