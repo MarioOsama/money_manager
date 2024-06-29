@@ -9,8 +9,7 @@ class AllTransactionsInitialState extends AllTransactionsState {
 }
 
 class AllTransactionsLoadingState extends AllTransactionsState {
-  final TransactionType transactionType;
-  const AllTransactionsLoadingState(this.transactionType);
+  const AllTransactionsLoadingState();
 }
 
 class AllTransactionsLoadedState extends AllTransactionsState {

@@ -153,6 +153,12 @@ class TextStyles {
     color: Colors.white,
   );
 
+  static TextStyle f16PrimaryDarkBold = const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeights.bold,
+    color: AppColors.primaryDarkColor,
+  );
+
   static TextStyle f15GreyRegular = const TextStyle(
     fontSize: 15,
     fontWeight: FontWeights.regular,

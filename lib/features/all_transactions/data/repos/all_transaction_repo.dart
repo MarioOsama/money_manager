@@ -12,6 +12,8 @@ class AllTransactionsRepo {
   List<Transaction> getFilteredTransactions(TransactionType transactionType) {
     return _getAllTransactions
         .where((transaction) => transaction.transactionType == transactionType)
+        .toList()
+        .reversed
         .toList();
   }
 
