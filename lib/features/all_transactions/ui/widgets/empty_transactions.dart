@@ -35,7 +35,7 @@ class EmptyTransactions extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                 )),
             child: Text(
-              'Add New $transactionType Transactions',
+              'Add New Transaction',
               style: TextStyles.f16WhiteMedium,
             ),
           ),
