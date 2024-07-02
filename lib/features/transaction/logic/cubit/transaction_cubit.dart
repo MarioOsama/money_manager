@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:money_manager/core/helpers/date.dart';
@@ -159,6 +161,11 @@ class TransactionCubit extends Cubit<TransactionState> {
     );
     try {
       _transactionRepo.saveTransaction(newTransaction);
+      // Update transaction category total amount
+      final Category transactionCategory =
+          _transactionRepo.getCategoryByName(categoryName);
+      transactionCategory.updateAmount(double.parse(amountController.text));
+      log(transactionCategory.totalAmount.toString());
       emit(
         TransactionSaved(
             message:

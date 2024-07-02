@@ -30,6 +30,7 @@ class AllTransactionsCubit extends Cubit<AllTransactionsState> {
 
   String get getDateFormat => _allTransactionsRepo.getDateFormat();
 
+  /// Call the specific [sortingType] sorting function then emit loaded state to update the list ordering in UI
   void sortTransactions(String sortingType) {
     switch (sortingType) {
       case 'Lowest Price':
@@ -40,26 +41,40 @@ class AllTransactionsCubit extends Cubit<AllTransactionsState> {
         newestSorting();
       case 'Oldest Date':
         oldestSorting();
+      case 'By Category':
+        categorySorting();
     }
+    emit(AllTransactionsLoadedState(transactionsList));
   }
 
+  /// Sorting the transactions list by price with ascending ordering
   void lowestSorting() {
     transactionsList.sort((a, b) => a.amount.compareTo(b.amount));
-    emit(AllTransactionsLoadedState(transactionsList));
   }
 
+  /// Sorting the transactions list by price with descending ordering
   void highestSorting() {
     transactionsList.sort((a, b) => b.amount.compareTo(a.amount));
-    emit(AllTransactionsLoadedState(transactionsList));
   }
 
+  /// Sorting the transactions list by date with descending ordering
   void newestSorting() {
     transactionsList.sort((a, b) => b.date.compareTo(a.date));
-    emit(AllTransactionsLoadedState(transactionsList));
   }
 
+  /// Sorting the transactions list by date with ascending ordering
   void oldestSorting() {
     transactionsList.sort((a, b) => a.date.compareTo(b.date));
-    emit(AllTransactionsLoadedState(transactionsList));
+  }
+
+  /// Sorting the transactions list by the highst amount category
+  void categorySorting() {
+    transactionsList.sort((a, b) {
+      final double firstCategoryTotalAmount =
+          _allTransactionsRepo.getCategoryByName(a.categoryName).totalAmount;
+      final double secondCategoryTotalAmount =
+          _allTransactionsRepo.getCategoryByName(b.categoryName).totalAmount;
+      return secondCategoryTotalAmount.compareTo(firstCategoryTotalAmount);
+    });
   }
 }

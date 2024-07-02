@@ -67,8 +67,10 @@ class CategoriesCubit extends Cubit<CategoriesState> {
       return false;
     }
     try {
-      final newCategory =
-          Category(name: capitalizedCategoryName, colorCode: categoryColor);
+      final newCategory = Category(
+          name: capitalizedCategoryName,
+          colorCode: categoryColor,
+          totalAmount: 0.0);
       _categoriesRepo.saveNewCategory(newCategory);
       emit(const CategoriesSaved());
       clearControllers();

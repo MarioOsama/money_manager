@@ -13,4 +13,8 @@ class TransactionRepo {
   void updateTransaction(Transaction updatedTransaction) {
     _databaseServices.saveTransactionToDatabase(updatedTransaction);
   }
+
+  Category getCategoryByName(String categoryName) {
+    return _databaseServices.getCategoryByName(categoryName);
+  }
 }

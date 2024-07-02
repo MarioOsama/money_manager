@@ -122,6 +122,21 @@ class AllTransactionsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(
+                  width: double.infinity,
+                  child: TextButton(
+                    onPressed: () {
+                      allTransactionsCubit.sortTransactions('By Category');
+                      ctx.pop();
+                    },
+                    style:
+                        TextButton.styleFrom(alignment: Alignment.centerLeft),
+                    child: Text(
+                      'By Category',
+                      style: TextStyles.f16PrimaryDarkBold,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

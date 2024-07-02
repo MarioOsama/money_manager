@@ -22,8 +22,6 @@ class _CategoriesListItemState extends State<CategoriesListItem> {
     final CategoriesCubit categoriesCubit = context.read<CategoriesCubit>();
     final int numberOfTransactions =
         categoriesCubit.getCategoryTransactionsCount(widget.currentCategory);
-    final double totalAmount =
-        categoriesCubit.getCategoryTransactionsAmount(widget.currentCategory);
 
     final String currentCategoryName = widget.currentCategory.name;
 
@@ -86,7 +84,7 @@ class _CategoriesListItemState extends State<CategoriesListItem> {
           ),
           // Total Amount of Transaction in this category
           child: Text(
-            '\$ $totalAmount',
+            '\$ ${widget.currentCategory.totalAmount}',
             style: TextStyles.f14WhiteSemiBold.copyWith(
                 fontSize: TextStyles.getResponsiveFontSize(context,
                     baseFontSize: 14)),

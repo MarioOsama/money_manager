@@ -43,22 +43,27 @@ class DatabaseServices {
     Category(
       name: 'Super Market',
       colorCode: const Color(0xFFE1E6C3).value,
+      totalAmount: 175.00,
     ),
     Category(
       name: 'Salary',
       colorCode: const Color(0xFFC3E6C8).value,
+      totalAmount: 1000.00,
     ),
     Category(
       name: 'Shopping',
       colorCode: const Color(0xFFC3C7E6).value,
+      totalAmount: 100.00,
     ),
     Category(
       name: 'Renting',
       colorCode: const Color(0xFFDFC3E6).value,
+      totalAmount: 400.00,
     ),
     Category(
       name: 'Others',
       colorCode: const Color(0xFFECD1D1).value,
+      totalAmount: 0.0,
     ),
   ];
 

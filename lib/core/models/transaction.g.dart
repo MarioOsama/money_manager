@@ -73,6 +73,7 @@ class CategoryAdapter extends TypeAdapter<Category> {
     return Category(
       name: fields[1] as String,
       colorCode: fields[2] as int,
+      totalAmount: fields[3] as double,
     );
   }
 
@@ -85,7 +86,9 @@ class CategoryAdapter extends TypeAdapter<Category> {
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.colorCode);
+      ..write(obj.colorCode)
+      ..writeByte(3)
+      ..write(obj.totalAmount);
   }
 
   @override
