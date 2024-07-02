@@ -122,6 +122,7 @@ class DatabaseServices {
 
   void saveTransactionToDatabase(Transaction newTransaction) {
     _transactionsBox.put(newTransaction.createdAt, newTransaction);
+    updateCategoryAmount(newTransaction.categoryName);
   }
 
   void deleteTransactionFromDatabase(String transactionId) {
@@ -156,6 +157,11 @@ class DatabaseServices {
 
   void saveNewCategoryToDatabase(Category newCategory) {
     _categoriesBox.put(newCategory.name, newCategory);
+  }
+
+  void updateCategoryAmount(String categoryName) {
+    final transactionCategory = getCategoryByName(categoryName);
+    saveNewCategoryToDatabase(transactionCategory);
   }
 
   void deleteCategoryFromDatabase(String categoryName) {
