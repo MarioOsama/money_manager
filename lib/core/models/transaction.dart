@@ -64,17 +64,23 @@ class Category {
   final String name;
   @HiveField(2)
   final int colorCode;
+  @HiveField(3)
+  double totalAmount;
 
-  Category({
-    required this.name,
-    required this.colorCode,
-  }) : id = _uuid.v4();
+  Category(
+      {required this.name, required this.colorCode, required this.totalAmount})
+      : id = _uuid.v4();
 
-  Category copyWith({String? name, int? colorCode}) {
+  Category copyWith({String? name, int? colorCode, double? totalAmount}) {
     return Category(
       name: name ?? this.name,
       colorCode: colorCode ?? this.colorCode,
+      totalAmount: totalAmount ?? this.totalAmount,
     );
+  }
+
+  void updateAmount(double value) {
+    this.totalAmount = totalAmount + value;
   }
 
   @override

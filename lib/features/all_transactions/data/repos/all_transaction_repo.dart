@@ -32,4 +32,8 @@ class AllTransactionsRepo {
         dateFormat == 'D days ago' ? 'Periodic' : 'Specific Date';
     return dateFormater;
   }
+
+  Category getCategoryByName(String categoryName) {
+    return _databaseServices.getCategoryByName(categoryName);
+  }
 }
