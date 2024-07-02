@@ -59,7 +59,7 @@ class Transaction {
 @HiveType(typeId: 2)
 class Category {
   @HiveField(0)
-  final String id;
+  String id;
   @HiveField(1)
   final String name;
   @HiveField(2)
@@ -76,11 +76,11 @@ class Category {
       name: name ?? this.name,
       colorCode: colorCode ?? this.colorCode,
       totalAmount: totalAmount ?? this.totalAmount,
-    );
+    )..id = this.id;
   }
 
   void updateAmount(double value) {
-    this.totalAmount = totalAmount + value;
+    this.totalAmount = this.totalAmount + value;
   }
 
   @override
