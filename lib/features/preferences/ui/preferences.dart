@@ -22,20 +22,10 @@ class PreferencesScreen extends StatelessWidget {
 
     final Map<String, List<bool>> userPreferences =
         preferencesCubit.getUserPreferences();
+    final List<bool> languagesSelection = userPreferences['selectedLanguage']!;
     final List<bool> currenciesSelection = userPreferences['selectedCurrency']!;
     final List<bool> dateFormatSelection =
         userPreferences['selectedDateFormat']!;
-
-    final List<Widget> dateFormatItems = preferencesCubit.dateFormats
-        .map(
-          (title) => Text(title),
-        )
-        .toList();
-    final List<Widget> currencyItems = preferencesCubit.currencies
-        .map(
-          (title) => Text(title),
-        )
-        .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -49,9 +39,26 @@ class PreferencesScreen extends StatelessWidget {
         backgroundColor: Colors.white,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 30.0),
         child: Column(
           children: [
+            PreferencesItem(
+              title: 'Language',
+              subtitle: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  'Your native language.',
+                  style: TextStyles.f14GreyRegular.copyWith(
+                      fontSize: TextStyles.getResponsiveFontSize(context,
+                          baseFontSize: 14)),
+                ),
+              ),
+              trailing: PreferencesToggleButton(
+                items: _getLanguageItems(preferencesCubit),
+                selectedItems: languagesSelection,
+              ),
+            ),
+            verticalSpace(30),
             PreferencesItem(
               title: 'Date Format',
               subtitle: FittedBox(
@@ -64,11 +71,11 @@ class PreferencesScreen extends StatelessWidget {
                 ),
               ),
               trailing: PreferencesToggleButton(
-                items: dateFormatItems,
+                items: _getDateFormatItems(preferencesCubit),
                 selectedItems: dateFormatSelection,
               ),
             ),
-            verticalSpace(15),
+            verticalSpace(30),
             PreferencesItem(
               title: 'Currency',
               subtitle: FittedBox(
@@ -81,24 +88,26 @@ class PreferencesScreen extends StatelessWidget {
                 ),
               ),
               trailing: PreferencesToggleButton(
-                items: currencyItems,
+                items: _getCurrencyAbbreviationItems(preferencesCubit),
                 selectedItems: currenciesSelection,
               ),
             ),
             BlocBuilder<PreferencesCubit, PreferencesState>(
               builder: (context, state) {
                 final isCustomCurrency = state.currency != '\$';
-                return AppTextFormField(
-                  controller: currencyController,
-                  title: isCustomCurrency ? 'Currency' : '',
-                  hintText: isCustomCurrency ? '€, £, GBP, JPY, etc.' : '',
-                  keyboardType: TextInputType.name,
-                  maxLength: 3,
-                  textStyle: TextStyles.f18PrimarySemiBold.copyWith(
-                      fontSize: TextStyles.getResponsiveFontSize(context,
-                          baseFontSize: 18)),
-                  enabled: currenciesSelection[1],
-                  capitalization: isCustomCurrency,
+                return Visibility(
+                  visible: isCustomCurrency,
+                  child: AppTextFormField(
+                    controller: currencyController,
+                    title: 'Currency',
+                    hintText: '€, £, GBP, JPY, etc.',
+                    keyboardType: TextInputType.name,
+                    maxLength: 3,
+                    textStyle: TextStyles.f18PrimarySemiBold.copyWith(
+                        fontSize: TextStyles.getResponsiveFontSize(context,
+                            baseFontSize: 18)),
+                    capitalization: true,
+                  ),
                 );
               },
             ),
@@ -113,5 +122,29 @@ class PreferencesScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<Text> _getDateFormatItems(PreferencesCubit preferencesCubit) {
+    return preferencesCubit.dateFormats
+        .map(
+          (title) => Text(title),
+        )
+        .toList();
+  }
+
+  List<Text> _getCurrencyAbbreviationItems(PreferencesCubit preferencesCubit) {
+    return preferencesCubit.currencies
+        .map(
+          (title) => Text(title),
+        )
+        .toList();
+  }
+
+  List<Text> _getLanguageItems(PreferencesCubit preferencesCubit) {
+    return preferencesCubit.languages
+        .map(
+          (title) => Text(title),
+        )
+        .toList();
   }
 }

@@ -85,14 +85,17 @@ class DatabaseServices {
   void _initializeUserPreferences() {
     _userBox.put(DatabaseConstants.currency, '\$');
     _userBox.put(DatabaseConstants.dateFormat, 'DD/MM/YYYY');
+    _userBox.put(DatabaseConstants.language, 'English');
   }
 
   Map<String, dynamic> getUserPreferences() {
     final currency = _userBox.get(DatabaseConstants.currency);
     final dateFormat = _userBox.get(DatabaseConstants.dateFormat);
+    final language = _userBox.get(DatabaseConstants.language);
     return {
       DatabaseConstants.currency: currency,
       DatabaseConstants.dateFormat: dateFormat,
+      DatabaseConstants.language: language,
     };
   }
 
