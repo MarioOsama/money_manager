@@ -20,23 +20,34 @@ class PreferencesCubit extends Cubit<PreferencesState> {
     'Custom',
   ];
 
+  final List<String> languages = <String>[
+    'English',
+    'العربية',
+  ];
+
   TextEditingController currencyController = TextEditingController();
 
   void loadUserPreferences() {
     final Map<String, dynamic> userPreferences =
         _preferencesRepo.getUserPreferences();
-    emit(PreferencesLoadingState(
+    emit(PreferencesLoadedState(
       userPreferences[DatabaseConstants.dateFormat],
       userPreferences[DatabaseConstants.currency],
+      userPreferences[DatabaseConstants.language],
     ));
+    currencyController.text = userPreferences[DatabaseConstants.currency];
   }
 
   void setUserPreferences(String preference) {
     if (dateFormats.contains(preference)) {
-      emit(PreferencesEditingState(preference, state.currency));
-    } else {
+      emit(PreferencesEditingState(preference, state.currency, state.language));
+    } else if (currencies.contains(preference)) {
       currencyController.clear();
-      emit(PreferencesEditingState(state.dateFormat, preference));
+      emit(PreferencesEditingState(
+          state.dateFormat, preference, state.language));
+    } else if (languages.contains(preference)) {
+      emit(PreferencesEditingState(
+          state.dateFormat, state.currency, preference));
     }
   }
 
@@ -45,6 +56,7 @@ class PreferencesCubit extends Cubit<PreferencesState> {
     final Map<String, dynamic> preferences = {
       DatabaseConstants.currency: state.currency,
       DatabaseConstants.dateFormat: state.dateFormat,
+      DatabaseConstants.language: state.language
     };
     if (state.currency != '\$') {
       final bool isCurrency = isCurrencyEntered();
@@ -60,6 +72,7 @@ class PreferencesCubit extends Cubit<PreferencesState> {
       emit(PreferencesSavedState(
         preferences[DatabaseConstants.dateFormat],
         preferences[DatabaseConstants.currency],
+        preferences[DatabaseConstants.language],
       ));
     } catch (e) {
       emit(PreferencesErrorState(e.toString()));
@@ -70,11 +83,15 @@ class PreferencesCubit extends Cubit<PreferencesState> {
     if (currencyController.text.trim().isEmpty) {
       final String currentCurrency = state.currency;
       final String currentDateFormat = state.dateFormat;
+      final String language = state.language;
+
       emit(const PreferencesErrorState('Please enter a currency'));
-      emit(PreferencesEditingState(currentDateFormat, currentCurrency));
+      emit(PreferencesEditingState(
+          currentDateFormat, currentCurrency, language));
       return false;
     } else {
-      emit(PreferencesEditingState(state.dateFormat, currencyController.text));
+      emit(PreferencesEditingState(
+          state.dateFormat, currencyController.text, state.language));
       return true;
     }
   }
@@ -84,24 +101,24 @@ class PreferencesCubit extends Cubit<PreferencesState> {
         _preferencesRepo.getUserPreferences();
 
     final List<bool> dateFormatSelection = dateFormats
-        .map((title) => title == userPreferences[DatabaseConstants.dateFormat])
+        .map((dateFormat) =>
+            dateFormat == userPreferences[DatabaseConstants.dateFormat])
         .toList();
 
-    final List<bool> currencySelection = currencies
-        .map((title) => title == userPreferences[DatabaseConstants.currency])
+    final List<bool> currencySelection =
+        userPreferences[DatabaseConstants.currency] == '\$'
+            ? [true, false]
+            : [false, true];
+
+    final List<bool> languageSelection = languages
+        .map((language) =>
+            language == userPreferences[DatabaseConstants.language])
         .toList();
 
-    if (!currencySelection.contains(true)) {
-      currencyController.text = userPreferences[DatabaseConstants.currency];
-      return {
-        'selectedDateFormat': dateFormatSelection,
-        'selectedCurrency': [false, true],
-      };
-    } else {
-      return {
-        'selectedDateFormat': dateFormatSelection,
-        'selectedCurrency': currencySelection,
-      };
-    }
+    return {
+      'selectedDateFormat': dateFormatSelection,
+      'selectedCurrency': currencySelection,
+      'selectedLanguage': languageSelection,
+    };
   }
 }

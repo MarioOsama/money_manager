@@ -5,4 +5,5 @@ class DatabaseConstants {
   static const String categoriesBox = "categoriesBox";
   static const String currency = 'currency';
   static const String dateFormat = 'dateFormat';
+  static const String language = 'language';
 }
