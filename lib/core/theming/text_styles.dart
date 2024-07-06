@@ -81,6 +81,12 @@ class TextStyles {
     color: Colors.white,
   );
 
+  static TextStyle f18WhiteMedium = const TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeights.medium,
+    color: Colors.white,
+  );
+
   static TextStyle f16BlackSemiBold = const TextStyle(
     fontSize: 16,
     fontWeight: FontWeights.semiBold,

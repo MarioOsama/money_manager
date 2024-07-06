@@ -14,7 +14,7 @@ import 'package:money_manager/features/transaction/ui/widgets/drop_down_menu_ite
 import 'package:money_manager/features/transaction/ui/widgets/attachment_picker_container.dart';
 import 'package:money_manager/features/transaction/ui/widgets/save_transaction_button.dart';
 import 'package:money_manager/features/transaction/ui/widgets/text_fields_group.dart';
-import 'package:money_manager/features/transaction/ui/widgets/transaction_error_bloc_listener.dart';
+import 'package:money_manager/features/transaction/ui/widgets/transaction_bloc_listener.dart';
 
 class TransactionScreen extends StatelessWidget {
   final Transaction? transaction;
@@ -89,7 +89,7 @@ class TransactionScreen extends StatelessWidget {
                       SaveTransactionButton(
                         isEditing: isEditing,
                       ),
-                      const TransactionErrorBlocListener(),
+                      const TransactionBlocListener(),
                     ],
                   ),
                 ),

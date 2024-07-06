@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:money_manager/core/database/database_constants.dart';
-import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/features/preferences/data/repos/preferences_repo.dart';
 import 'package:restart_app/restart_app.dart';
 
