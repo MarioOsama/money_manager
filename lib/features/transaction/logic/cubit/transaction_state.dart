@@ -50,6 +50,12 @@ class TransactionSaved extends TransactionState {
   const TransactionSaved({required this.message});
 }
 
+class TransactionUpdated extends TransactionState {
+  final String message;
+
+  const TransactionUpdated({required this.message});
+}
+
 class TransactionErrorState extends TransactionState {
   final String error;
   final int errorCode;

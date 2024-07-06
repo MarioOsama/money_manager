@@ -27,12 +27,12 @@ class StatisticsHistory extends StatelessWidget {
               children: [
                 Expanded(
                     child: StatisticsHistoryItem(
-                        title: AppString.lastWeek.tr(),
+                        title: AppString.lastWeekStats.tr(),
                         amount: (state).historyAmountData['week'] ?? 0)),
                 horizontalSpace(20),
                 Expanded(
                   child: StatisticsHistoryItem(
-                      title: AppString.lastMonth.tr(),
+                      title: AppString.lastMonthStats.tr(),
                       amount: (state).historyAmountData['month'] ?? 0),
                 ),
               ],

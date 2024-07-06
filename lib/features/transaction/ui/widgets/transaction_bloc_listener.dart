@@ -15,7 +15,8 @@ class TransactionBlocListener extends StatelessWidget {
     return BlocListener<TransactionCubit, TransactionState>(
       listenWhen: (previous, current) =>
           previous != current && current is TransactionErrorState ||
-          current is TransactionSaved,
+          current is TransactionSaved ||
+          current is TransactionUpdated,
       listener: (context, state) {
         if (state is TransactionErrorState) {
           final error = state.error;
@@ -54,7 +55,16 @@ class TransactionBlocListener extends StatelessWidget {
         }
         if (state is TransactionSaved) {
           final languageCode = context.locale.languageCode;
-          final message = _getLanguageMessage(languageCode, state.message);
+          final message = _getSavedMessage(languageCode, state.message);
+          context.clearSnackBar();
+          context.showSnackBar(
+            message: message,
+            color: AppColors.lightPrimaryColor,
+          );
+        }
+        if (state is TransactionUpdated) {
+          final languageCode = context.locale.languageCode;
+          final message = _getUpdatedMessage(languageCode, state.message);
           context.clearSnackBar();
           context.showSnackBar(
             message: message,
@@ -66,11 +76,20 @@ class TransactionBlocListener extends StatelessWidget {
     );
   }
 
-  _getLanguageMessage(String languageCode, String message) {
+  // Get the saved message based on the language code
+  _getSavedMessage(String languageCode, String message) {
     if (languageCode == 'ar') {
-      return 'تم حفظ $message بنجاح';
+      return 'تم حفظ "$message" بنجاح';
     } else if (languageCode == 'en') {
-      return '$message saved successfully';
+      return '"$message" saved successfully';
+    }
+  }
+
+  _getUpdatedMessage(String languageCode, String message) {
+    if (languageCode == 'ar') {
+      return 'تم تحديث "$message" بنجاح';
+    } else if (languageCode == 'en') {
+      return '"$message" updated successfully';
     }
   }
 }

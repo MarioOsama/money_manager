@@ -1,3 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
+
 class DateHelper {
   static String getPeriodicDate(DateTime date) {
     final now = DateTime.now().toLocal();
@@ -5,30 +8,30 @@ class DateHelper {
     if (diff.inDays > 0) {
       switch (diff.inDays) {
         case 1:
-          return 'Yesterday';
+          return AppString.yesterday.tr();
         case > 1 && <= 7:
-          return '${diff.inDays} days ago';
+          return '${diff.inDays} ${AppString.daysAgo.tr()}';
         case > 7 && <= 14:
-          return 'Last week';
+          return AppString.lastWeek.tr();
         case > 14 && <= 21:
-          return '2 weeks ago';
+          return '2 ${AppString.weeksAgo.tr()}';
         case > 21 && <= 28:
-          return '3 weeks ago';
+          return '3 ${AppString.weeksAgo.tr()}';
         case > 28 && <= 31:
-          return 'Last month';
+          return AppString.lastMonth.tr();
         case > 31 && <= 365:
-          return '${diff.inDays ~/ 30} months ago';
+          return '${diff.inDays ~/ 30} ${AppString.monthsAgo.tr()}';
         case > 365:
-          return '${diff.inDays ~/ 365} years ago';
+          return '${diff.inDays ~/ 365} ${AppString.yearsAgo.tr()}';
         default:
           return 'Unknown';
       }
     } else if (diff.inHours > 0) {
-      return '${diff.inHours} hours ago';
+      return '${diff.inHours} ${AppString.hoursAgo.tr()}';
     } else if (diff.inMinutes > 0) {
-      return '${diff.inMinutes} minutes ago';
+      return '${diff.inMinutes} ${AppString.minutesAgo.tr()}';
     }
-    return 'Just now';
+    return AppString.justNow.tr();
   }
 
   static String? toDateFormat(String stringDate) {

@@ -45,8 +45,8 @@
     "Categories Percentage":"نسبة الاقسام",
     "History Overview":"نظرة عامة على السجل",
     "Today":"اليوم",
-    "Last Week":"اخر اسبوع",
-    "Last Month":"اخر شهر",
+    "Last Week Stats":"اخر اسبوع",
+    "Last Month Stats":"اخر شهر",
     "Categories":"الاقسام",
     "New Custom Category":"قسم جديد",
     "Category Name":"اسم القسم",
@@ -86,5 +86,15 @@
     "Please enter date":"الرجاء ادخال التاريخ",
     "Amount must be numerical":"يجب ان يكون المبلغ رقم",
     "Invalid Date, Please enter a valid date or pick a corrected date directly":"تاريخ غير صالح، الرجاء ادخال تاريخ صالح او اختيار تاريخ",
-    "Got it":"حسنا"
+    "Got it":"حسنا",
+    "Yesterday":"امس",
+    "days ago":"ايام مضت",
+    "Last Week":"الاسبوع الماضي",
+    "weeks ago":"اسابيع مضت",
+    "Last Month":"الشهر الماضي",
+    "months ago":"اشهر مضت",
+    "years ago":"سنين مضت",
+    "hours ago":"ساعات مضت",
+    "minutes ago":"دقائق مضت",
+    "Just now":"الان"
 }

@@ -45,7 +45,7 @@ class SaveTransactionButton extends StatelessWidget {
     if (form!.validate()) {
       context.read<TransactionCubit>().processTransaction(true);
       final isSavedSuccessfuly =
-          context.read<TransactionCubit>().state is TransactionSaved;
+          context.read<TransactionCubit>().state is TransactionUpdated;
       if (isSavedSuccessfuly) {
         context.pushAndRemoveUntil(Routes.mainScreen, (route) => false);
       }

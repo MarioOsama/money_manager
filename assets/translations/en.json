@@ -45,8 +45,8 @@
     "Categories Percentage":"Categories Percentage",
     "History Overview":"History Overview",
     "Today":"Today",
-    "Last Week":"Last Week",
-    "Last Month":"Last Month",
+    "Last Week Stats":"Last Week",
+    "Last Month Stats":"Last Month",
     "Categories":"Categories",
     "New Custom Category":"New Custom Category",
     "Category Name":"Category Name",
@@ -86,5 +86,15 @@
     "Please enter date":"Please enter date",
     "Amount must be numerical":"Amount must be numerical",
     "Invalid Date, Please enter a valid date or pick a corrected date directly":"Invalid Date, Please enter a valid date or pick a corrected date directly",
-    "Got it":"Got it"
+    "Got it":"Got it",
+    "Yesterday":"Yesterday",
+    "days ago":"days ago",
+    "Last Week":"Last Week",
+    "weeks ago":"weeks ago",
+    "Last Month":"Last Month",
+    "months ago":"months ago",
+    "years ago":"years ago",
+    "hours ago":"hours ago",
+    "minutes ago":"minutes ago",
+    "Just now":"Just now"
 }
