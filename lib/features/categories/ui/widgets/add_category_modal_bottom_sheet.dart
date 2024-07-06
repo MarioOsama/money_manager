@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
@@ -36,7 +38,7 @@ class AddCategoryBottomSheet extends StatelessWidget {
           width: double.infinity,
           height: 60.h,
           child: Text(
-            'New Custom Category',
+            AppString.newCustomCategory.tr(),
             style: TextStyles.f20WhiteSemiBold.copyWith(
                 fontSize: TextStyles.getResponsiveFontSize(context,
                     baseFontSize: 20)),
@@ -51,14 +53,14 @@ class AddCategoryBottomSheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               AppTextFormField(
-                title: 'Category Name',
-                hintText: 'Entertainment, Food, etc.',
+                title: AppString.categoryName.tr(),
+                hintText: AppString.categoryNameExample.tr(),
                 controller: categoryNameController,
               ),
               verticalSpace(20),
               AppDropDownMenuItem(
                 items: categoriesColorsNames,
-                title: 'Category Color',
+                title: AppString.categoryColor.tr(),
                 controller: categoryColorController,
                 titleText: categoryColorController.text,
                 itemColors: [
@@ -76,7 +78,7 @@ class AddCategoryBottomSheet extends StatelessWidget {
               final bool isSaved = categoriesCubit.saveCategory();
               Navigator.of(context).pop(isSaved);
             },
-            text: 'Add Category',
+            text: AppString.addCategory.tr(),
           ),
         ),
         const CategoriesErrorBlocListener(),

@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/di/dependency_injection.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
@@ -37,7 +39,7 @@ class CategoriesScreen extends StatelessWidget {
                 }
 
                 return CustomAppBar(
-                  title: 'Categories',
+                  title: AppString.categories.tr(),
                   action: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 250),
                     child: IconButton(
@@ -139,16 +141,15 @@ class CategoriesScreen extends StatelessWidget {
         builder: (BuildContext ctx) {
           return AlertDialog(
             surfaceTintColor: AppColors.lightPrimaryColor,
-            title: const Text('Delete Category'),
-            content: const Text(
-                'All categories belong to this category will be deleted, Are you sure about deleting this category'),
+            title: Text(AppString.deleteCategory.tr()),
+            content: Text(AppString.deleteCategoryMessage.tr()),
             actions: [
               TextButton(
                 onPressed: () {
                   isConfirmed = false;
                   ctx.pop();
                 },
-                child: Text('No',
+                child: Text(AppString.no.tr(),
                     style: TextStyles.f14PrimaryBold.copyWith(
                         fontSize: TextStyles.getResponsiveFontSize(context,
                             baseFontSize: 14))),
@@ -158,7 +159,7 @@ class CategoriesScreen extends StatelessWidget {
                   isConfirmed = true;
                   ctx.pop();
                 },
-                child: Text('Yes',
+                child: Text(AppString.yes.tr(),
                     style: TextStyles.f14PrimaryBold.copyWith(
                         fontSize: TextStyles.getResponsiveFontSize(context,
                             baseFontSize: 14))),

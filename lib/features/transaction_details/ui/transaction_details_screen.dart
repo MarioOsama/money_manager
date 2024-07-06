@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/routing/routes.dart';
@@ -39,7 +41,7 @@ class TransactionDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Transaction Details'),
+        title: Text(AppString.transactionDetails.tr()),
         titleTextStyle: TextStyles.f20WhiteSemiBold.copyWith(
             fontSize:
                 TextStyles.getResponsiveFontSize(context, baseFontSize: 20)),
@@ -103,7 +105,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                   arguments: transaction,
                 );
               },
-              text: 'Edit',
+              text: AppString.edit.tr(),
             ),
           ),
         ],
@@ -118,16 +120,15 @@ class TransactionDetailsScreen extends StatelessWidget {
         builder: (ctx) {
           return AlertDialog(
             surfaceTintColor: AppColors.lightPrimaryColor,
-            title: const Text('Delete Transaction'),
-            content:
-                const Text('Are you sure you want to delete this transaction?'),
+            title: Text(AppString.deleteTransaction.tr()),
+            content: Text(AppString.deleteTransactionMessage.tr()),
             actions: [
               TextButton(
                 onPressed: () {
                   ctx.pop();
                 },
                 child: Text(
-                  'Cancel',
+                  AppString.cancel.tr(),
                   style: TextStyles.f14PrimaryBold.copyWith(
                       fontSize: TextStyles.getResponsiveFontSize(context,
                           baseFontSize: 14)),
@@ -140,7 +141,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                   context.pushReplacementNamed(Routes.mainScreen);
                 },
                 child: Text(
-                  'Delete',
+                  AppString.delete.tr(),
                   style: TextStyles.f14PrimaryBold.copyWith(
                       fontSize: TextStyles.getResponsiveFontSize(context,
                           baseFontSize: 14)),

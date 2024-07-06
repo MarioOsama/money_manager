@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:money_manager/core/database/database_constants.dart';
+import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/features/preferences/data/repos/preferences_repo.dart';
+import 'package:restart_app/restart_app.dart';
 
 part 'preferences_state.dart';
 
@@ -68,12 +70,18 @@ class PreferencesCubit extends Cubit<PreferencesState> {
 
     // Save preferences
     try {
+      final String storedLanguage =
+          _preferencesRepo.getUserPreferences()[DatabaseConstants.language];
       _preferencesRepo.saveUserPreferences(preferences);
       emit(PreferencesSavedState(
         preferences[DatabaseConstants.dateFormat],
         preferences[DatabaseConstants.currency],
         preferences[DatabaseConstants.language],
       ));
+      // Restart the app to apply the new language
+      if (storedLanguage != state.language) {
+        Restart.restartApp();
+      }
     } catch (e) {
       emit(PreferencesErrorState(e.toString()));
     }

@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/theming/colors.dart';
@@ -19,7 +21,7 @@ class ResetPasswordBlocListener extends StatelessWidget {
             ..showSnackBar(
               SnackBar(
                 content: Text(
-                  state.message,
+                  state.message.tr(),
                   style: TextStyles.f14WhiteSemiBold.copyWith(
                       fontSize: TextStyles.getResponsiveFontSize(context,
                           baseFontSize: 14)),
@@ -32,7 +34,7 @@ class ResetPasswordBlocListener extends StatelessWidget {
           showDialog(
               context: context,
               builder: (BuildContext ctx) {
-                Future.delayed(const Duration(seconds: 1), () {
+                Future.delayed(const Duration(seconds: 2), () {
                   ctx.pop();
                 });
                 return SimpleDialog(
@@ -50,7 +52,7 @@ class ResetPasswordBlocListener extends StatelessWidget {
                           ),
                           verticalSpace(25),
                           Text(
-                            'Password reset successfully',
+                            AppString.passwordResetedSuccessfully.tr(),
                             style: TextStyles.f16PrimaryMedium.copyWith(
                                 fontSize: TextStyles.getResponsiveFontSize(
                                     context,

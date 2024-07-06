@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
@@ -71,7 +73,7 @@ class TransactionDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Note',
+                    AppString.note.tr(),
                     style: TextStyles.f20LightGreySemiBold.copyWith(
                         fontSize: TextStyles.getResponsiveFontSize(context,
                             baseFontSize: 20)),
@@ -84,7 +86,7 @@ class TransactionDetails extends StatelessWidget {
             // Attachment
             verticalSpace(10),
             Text(
-              'Attachment',
+              AppString.attachment.tr(),
               style: TextStyles.f20LightGreySemiBold.copyWith(
                   fontSize: TextStyles.getResponsiveFontSize(context,
                       baseFontSize: 20)),
@@ -132,8 +134,8 @@ class TransactionDetails extends StatelessWidget {
                 foregroundColor:
                     isAttachement ? AppColors.lightPrimaryColor : Colors.grey,
               ),
-              label: const Text(
-                'OpenAttachment',
+              label: Text(
+                AppString.openAttachment.tr(),
               ),
               icon: const Icon(
                 Icons.file_open_outlined,
@@ -146,7 +148,7 @@ class TransactionDetails extends StatelessWidget {
         : Padding(
             padding: EdgeInsets.symmetric(vertical: 18.0.h),
             child: Text(
-              'No Attachment',
+              AppString.noAttachment.tr(),
               style: TextStyles.f14GreySemiBold.copyWith(
                   fontSize: TextStyles.getResponsiveFontSize(context,
                       baseFontSize: 14)),
@@ -176,7 +178,7 @@ class TransactionDetails extends StatelessWidget {
       );
     } else {
       return Text(
-        'No Note',
+        AppString.noNote.tr(),
         style: TextStyles.f15GreyRegular.copyWith(
             fontSize:
                 TextStyles.getResponsiveFontSize(context, baseFontSize: 15)),

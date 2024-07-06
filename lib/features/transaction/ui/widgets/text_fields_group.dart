@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/date.dart';
 import 'package:money_manager/core/logic/cubit/bank_card_cubit.dart';
 import 'package:money_manager/core/theming/colors.dart';
@@ -17,12 +19,12 @@ class TextFieldsGroup extends StatelessWidget {
     return Column(
       children: [
         AppTextFormField(
-          title: 'Title',
+          title: AppString.title.tr(),
           controller: transactionCubit.titleController,
-          hintText: 'Shopping, Salary, etc.',
+          hintText: AppString.titleExample.tr(),
         ),
         AppTextFormField(
-            title: 'Amount',
+            title: AppString.amount.tr(),
             keyboardType: TextInputType.number,
             controller: transactionCubit.amountController,
             hintText: '0.00',
@@ -30,10 +32,10 @@ class TextFieldsGroup extends StatelessWidget {
               isEditing ? null : _updateTotalBalanceInstantly(value, context);
             }),
         AppTextFormField(
-          title: 'Date',
+          title: AppString.date.tr(),
           keyboardType: TextInputType.datetime,
           controller: transactionCubit.dateController,
-          hintText: 'YYYY-MM-DD',
+          hintText: AppString.dMYFormat.tr(),
           icon: GestureDetector(
             onTap: () async {
               final DateTime? picked = await _showDatePickerDialog(context);
@@ -50,9 +52,9 @@ class TextFieldsGroup extends StatelessWidget {
           },
         ),
         AppTextFormField(
-          title: 'Note (Optional)',
+          title: AppString.noteOptional.tr(),
           controller: transactionCubit.noteController,
-          hintText: 'To be remembered',
+          hintText: AppString.noteExample.tr(),
           keyboardType: TextInputType.multiline,
           isRequired: false,
         )

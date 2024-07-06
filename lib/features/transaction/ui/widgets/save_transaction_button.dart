@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/routing/routes.dart';
 import 'package:money_manager/core/widgets/app_button.dart';
@@ -20,7 +22,9 @@ class SaveTransactionButton extends StatelessWidget {
             ? _validateAndSaveChanges(context)
             : _validateAndSaveTransaction(context);
       },
-      text: isEditing ? 'Save Changes' : 'Save Transaction',
+      text: isEditing
+          ? AppString.saveChanges.tr()
+          : AppString.saveTransaction.tr(),
     );
   }
 

@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/logic/cubit/bank_card_cubit.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
@@ -32,12 +34,13 @@ class TransactionsListWidget extends StatelessWidget {
             : [];
 
         final int listLength = transactions.length;
-        final String transactionType = isExpanse ? 'Expense' : 'Income';
 
         return listLength == 0
             ? Center(
                 child: Text(
-                  'There are no ${transactionType}s, \n try to log new $transactionType',
+                  isExpanse
+                      ? AppString.emptyExpenseMessage.tr()
+                      : AppString.emptyIncomeMessage.tr(),
                   style: TextStyles.f14GreySemiBold.copyWith(
                       fontSize: TextStyles.getResponsiveFontSize(context,
                           baseFontSize: 14)),
@@ -86,10 +89,10 @@ class TransactionsListWidget extends StatelessWidget {
     final BankCardCubit bankCardCubit = context.read<BankCardCubit>();
     final snackBar = ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text('Transaction deleted successfully'),
+        content: Text(AppString.deletedTransactionMessage.tr()),
         backgroundColor: AppColors.redColor,
         action: SnackBarAction(
-          label: 'Undo',
+          label: AppString.undo.tr(),
           onPressed: () {},
           textColor: Colors.white,
         ),

@@ -1,13 +1,14 @@
 import 'package:bloc/bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/features/reset_password/data/repos/reset_password_repo.dart';
 
 part 'reset_password_state.dart';
 
 class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   final ResetPasswordRepo _resetPasswordRepo;
-  ResetPasswordCubit(this._resetPasswordRepo)
-      : super(const ResetPasswordInitial());
+  ResetPasswordCubit(this._resetPasswordRepo) : super(ResetPasswordInitial());
 
   TextEditingController passwordController = TextEditingController();
 
@@ -15,7 +16,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     if (passwordController.text.trim().isEmpty ||
         passwordController.text.length < 4) {
       final stateBeforeError = state;
-      emit(const ResetPasswordError('Please enter a 4-digit PIN'));
+      emit(ResetPasswordError(AppString.incompletePIN.tr()));
       emit(stateBeforeError);
       return false;
     } else {
@@ -31,11 +32,11 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
       final bool isCorrectPassword =
           _resetPasswordRepo.checkCurrentPassword(password);
       if (isCorrectPassword) {
-        emit(const ResetPasswordNewPassword());
+        emit(ResetPasswordNewPassword());
         return true;
       } else {
-        emit(const ResetPasswordError('Incorrect PIN'));
-        emit(const ResetPasswordInitial());
+        emit(ResetPasswordError(AppString.incorrectPIN.tr()));
+        emit(ResetPasswordInitial());
         return false;
       }
     }
@@ -45,7 +46,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     final String password = passwordController.text;
     final bool isPasswordCorrect = checkCurrentPassword(password);
     if (isPasswordCorrect) {
-      emit(const ResetPasswordNewPassword());
+      emit(ResetPasswordNewPassword());
     }
     passwordController.clear();
   }
@@ -69,8 +70,8 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
         emit(const ResetPasswordSuccessflly());
         _resetPasswordRepo.resetPassword(password);
       } else {
-        emit(const ResetPasswordError('PINs do not match'));
-        emit(const ResetPasswordNewPassword());
+        emit(ResetPasswordError(AppString.pinNotMatch.tr()));
+        emit(ResetPasswordNewPassword());
       }
     }
     passwordController.clear();
