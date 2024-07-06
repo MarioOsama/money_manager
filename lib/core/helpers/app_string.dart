@@ -64,8 +64,8 @@ class AppString {
   static const String categoriesPercentage = 'Categories Percentage';
   static const String historyOverview = 'History Overview';
   static const String today = 'Today';
-  static const String lastWeek = 'Last Week';
-  static const String lastMonth = 'Last Month';
+  static const String lastWeekStats = 'Last Week Stats';
+  static const String lastMonthStats = 'Last Month Stats';
 
   // Categories Screen
   static const String categories = 'Categories';
@@ -95,7 +95,7 @@ class AppString {
   static const String languageDescription = 'Choose your native language';
   static const String dateFormat = 'Date Format';
   static const String dateFormatDescription = 'Choose prefered date format';
-  static const String daysAgo = 'D days ago';
+  static const String dDaysAgo = 'D days ago';
   static const String dMYFormat = 'DD/MM/YYYY';
   static const String currency = 'Currency';
   static const String custom = "Custom";
@@ -125,4 +125,16 @@ class AppString {
   static const String save = 'Save';
   static const String yes = 'Yes';
   static const String no = 'No';
+
+  // Date
+  static const String yesterday = 'Yesterday';
+  static const String daysAgo = 'days ago';
+  static const String lastWeek = 'Last Week';
+  static const String weeksAgo = 'weeks ago';
+  static const String lastMonth = 'Last Month';
+  static const String monthsAgo = 'months ago';
+  static const String yearsAgo = 'years ago';
+  static const String hoursAgo = 'hours ago';
+  static const String minutesAgo = 'minutes ago';
+  static const String justNow = 'Just now';
 }

@@ -216,9 +216,7 @@ class TransactionCubit extends Cubit<TransactionState> {
     try {
       _transactionRepo.updateTransaction(updatedTransaction);
       emit(
-        TransactionSaved(
-            message:
-                "${updatedTransaction.title} Transaction Updated in Your ${updatedTransaction.transactionType}!"),
+        TransactionUpdated(message: updatedTransaction.title),
       );
     } catch (e) {
       emit(const TransactionErrorState(
