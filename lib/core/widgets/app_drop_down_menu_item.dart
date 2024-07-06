@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
@@ -103,7 +104,7 @@ class _AppDropDownMenuItemState extends State<AppDropDownMenuItem> {
         ),
         padding: const EdgeInsets.all(3.0),
         child: Text(
-          item.toString(),
+          item.toString().tr(),
           overflow: TextOverflow.ellipsis,
           style: TextStyles.f16LightPrimaryMedium.copyWith(
             color: itemsHaveColor

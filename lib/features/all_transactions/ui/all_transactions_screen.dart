@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
@@ -18,14 +20,17 @@ class AllTransactionsScreen extends StatelessWidget {
     final AllTransactionsCubit allTransactionsCubit =
         context.read<AllTransactionsCubit>();
     allTransactionsCubit.loadAllTransactions(transactionType);
-    final String titleType =
-        transactionType == TransactionType.expense ? 'Expense' : 'Income';
+    final String titleType = transactionType == TransactionType.expense
+        ? AppString.expense.tr()
+        : AppString.income.tr();
 
     final bool noTransactions = allTransactionsCubit.transactionsList.isEmpty;
 
+    final String languageCode = context.locale.languageCode;
+
     return Scaffold(
       appBar: CustomAppBar(
-        title: '$titleType Transactions',
+        title: _getHeaderTitle(languageCode, titleType),
         withBackButton: true,
         foregroundColor: AppColors.primaryDarkColor,
         action: IconButton(
@@ -72,7 +77,7 @@ class AllTransactionsScreen extends StatelessWidget {
                     style:
                         TextButton.styleFrom(alignment: Alignment.centerLeft),
                     child: Text(
-                      'Lowest Price',
+                      AppString.lowToHigh.tr(),
                       style: TextStyles.f16PrimaryDarkBold,
                     ),
                   ),
@@ -87,7 +92,7 @@ class AllTransactionsScreen extends StatelessWidget {
                     style:
                         TextButton.styleFrom(alignment: Alignment.centerLeft),
                     child: Text(
-                      'Highest Price',
+                      AppString.highToLow.tr(),
                       style: TextStyles.f16PrimaryDarkBold,
                     ),
                   ),
@@ -102,7 +107,7 @@ class AllTransactionsScreen extends StatelessWidget {
                     style:
                         TextButton.styleFrom(alignment: Alignment.centerLeft),
                     child: Text(
-                      'Newest Date',
+                      AppString.newToOld.tr(),
                       style: TextStyles.f16PrimaryDarkBold,
                     ),
                   ),
@@ -117,7 +122,7 @@ class AllTransactionsScreen extends StatelessWidget {
                     style:
                         TextButton.styleFrom(alignment: Alignment.centerLeft),
                     child: Text(
-                      'Oldest Date',
+                      AppString.oldToNew.tr(),
                       style: TextStyles.f16PrimaryDarkBold,
                     ),
                   ),
@@ -132,7 +137,7 @@ class AllTransactionsScreen extends StatelessWidget {
                     style:
                         TextButton.styleFrom(alignment: Alignment.centerLeft),
                     child: Text(
-                      'By Category',
+                      AppString.byCategory.tr(),
                       style: TextStyles.f16PrimaryDarkBold,
                     ),
                   ),
@@ -143,5 +148,13 @@ class AllTransactionsScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  _getHeaderTitle(String languageCode, String titleType) {
+    if (languageCode == 'ar') {
+      return 'كل $titleType';
+    } else {
+      return '$titleType Transactions';
+    }
   }
 }

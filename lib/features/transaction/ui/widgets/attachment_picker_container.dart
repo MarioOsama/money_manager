@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
@@ -30,7 +32,7 @@ class AttachmentPickerContainer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Attachment (Optional)',
+              AppString.attachmentOptional.tr(),
               style: TextStyles.f15GreySemiBold.copyWith(
                   fontSize: TextStyles.getResponsiveFontSize(context,
                       baseFontSize: 15)),
@@ -73,7 +75,7 @@ class AttachmentPickerContainer extends StatelessWidget {
             width: 10,
           ),
           Text(
-            'Add attachment (Image, PDF, etc.)',
+            AppString.addAttachment.tr(),
             style: TextStyles.f15GreySemiBold.copyWith(
                 fontSize: TextStyles.getResponsiveFontSize(context,
                     baseFontSize: 15)),
@@ -100,7 +102,7 @@ class AttachmentPickerContainer extends StatelessWidget {
             width: 10,
           ),
           Text(
-            'Remove attachment',
+            AppString.removeAttachment.tr(),
             style: TextStyles.f15PrimaryLightSemiBold.copyWith(
                 fontSize: TextStyles.getResponsiveFontSize(context,
                     baseFontSize: 15)),

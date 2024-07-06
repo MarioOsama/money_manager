@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/date.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/features/transaction/data/repos/transaction_repo.dart';
@@ -41,18 +43,15 @@ class TransactionCubit extends Cubit<TransactionState> {
     if (!isValidatedDate || !isValidatedAmount) {
       final currentState = state;
       if (!isValidatedAmount) {
-        emit(const TransactionErrorState(
-            error: 'Invalid Amount, Please enter a numerical amount',
-            errorCode: 400));
+        emit(TransactionErrorState(
+            error: AppString.numericalAmountError.tr(), errorCode: 400));
         emit(const TransactionComposing()
             .copyWith(currentState, isValidAmount: false));
         return;
       }
 
-      emit(const TransactionErrorState(
-          error:
-              'Invalid Date, Please enter a valid date or pick corrected date directly',
-          errorCode: 400));
+      emit(TransactionErrorState(
+          error: AppString.invalidDateError.tr(), errorCode: 400));
       emit(const TransactionComposing()
           .copyWith(currentState, isValidDate: false));
       return;

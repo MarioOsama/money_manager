@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
@@ -71,7 +73,7 @@ class _CategoriesListItemState extends State<CategoriesListItem> {
                   TextStyles.getResponsiveFontSize(context, baseFontSize: 16)),
         ),
         // Number of Transactions in this category
-        subtitle: Text('$numberOfTransactions Transactions',
+        subtitle: Text('$numberOfTransactions ${AppString.transactions.tr()}',
             style: TextStyles.f14GreySemiBold.copyWith(
                 fontSize: TextStyles.getResponsiveFontSize(context,
                     baseFontSize: 14))),

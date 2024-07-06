@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:money_manager/core/routing/app_router.dart';
@@ -23,6 +24,9 @@ class MoneyManagerApp extends StatelessWidget {
       splitScreenMode: true,
       child: MaterialApp(
         title: "Moneyist",
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: AppColors.primaryColor,

@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/logic/cubit/bank_card_cubit.dart';
 import 'package:money_manager/core/theming/colors.dart';
@@ -72,7 +74,7 @@ class BankCardWidget extends StatelessWidget {
                           ),
                           horizontalSpace(7),
                           Text(
-                            'Total Balance',
+                            AppString.totalBalance.tr(),
                             style: TextStyles.f18CyanMedium.copyWith(
                                 fontSize: TextStyles.getResponsiveFontSize(
                                     context,
@@ -98,7 +100,7 @@ class BankCardWidget extends StatelessWidget {
                 children: [
                   _buildBalanceCard(
                       context: context,
-                      title: 'Income',
+                      title: AppString.income.tr(),
                       amount: '$currencyAbbreviation $income',
                       icon: const Icon(
                         Icons.download_sharp,
@@ -107,7 +109,7 @@ class BankCardWidget extends StatelessWidget {
                       )),
                   _buildBalanceCard(
                       context: context,
-                      title: 'Expense',
+                      title: AppString.expense.tr(),
                       amount: '$currencyAbbreviation $expense',
                       icon: const Icon(
                         Icons.file_upload,

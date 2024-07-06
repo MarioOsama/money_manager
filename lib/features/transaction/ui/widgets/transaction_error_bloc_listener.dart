@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
@@ -22,7 +24,7 @@ class TransactionErrorBlocListener extends StatelessWidget {
               backgroundColor: Colors.white,
               surfaceTintColor: AppColors.lightPrimaryColor,
               title: Text(
-                'Error',
+                AppString.error.tr(),
                 style: TextStyles.f20RedBold.copyWith(
                     fontSize: TextStyles.getResponsiveFontSize(context,
                         baseFontSize: 20)),
@@ -39,7 +41,7 @@ class TransactionErrorBlocListener extends StatelessWidget {
                     context.pop();
                   },
                   child: Text(
-                    'Got it',
+                    AppString.gotIt.tr(),
                     style: TextStyles.f16LightPrimaryMedium.copyWith(
                         fontSize: TextStyles.getResponsiveFontSize(context,
                             baseFontSize: 16)),

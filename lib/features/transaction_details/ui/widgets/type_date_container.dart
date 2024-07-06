@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/date.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/theming/colors.dart';
@@ -20,7 +22,8 @@ class TypeDateContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String transactionType = isExpense ? 'Expense' : 'Income';
+    final String transactionType =
+        isExpense ? AppString.expense.tr() : AppString.income.tr();
     final transactionFormattedDate = isPeriodicFormat
         ? DateHelper.getPeriodicDate(transactionDate)
         : DateHelper.toDateFormat(transactionDate.toString());
@@ -52,7 +55,7 @@ class TypeDateContainer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  'Type',
+                  AppString.type.tr(),
                   style: TextStyles.f16LightGreySemiBold.copyWith(
                       fontSize: TextStyles.getResponsiveFontSize(context,
                           baseFontSize: 16)),
@@ -93,7 +96,7 @@ class TypeDateContainer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  'Date',
+                  AppString.date.tr(),
                   style: TextStyles.f16LightGreySemiBold.copyWith(
                       fontSize: TextStyles.getResponsiveFontSize(context,
                           baseFontSize: 16)),

@@ -8,17 +8,19 @@ abstract class ResetPasswordState {
 }
 
 class ResetPasswordInitial extends ResetPasswordState {
-  const ResetPasswordInitial() : super('Enter your current PIN', 'Next');
+  ResetPasswordInitial()
+      : super(AppString.enterYourCurrentPIN.tr(), AppString.next.tr());
 }
 
 class ResetPasswordNewPassword extends ResetPasswordState {
-  const ResetPasswordNewPassword() : super('Enter your new PIN', 'Confirm');
+  ResetPasswordNewPassword()
+      : super(AppString.enterNewPIN.tr(), AppString.confirm.tr());
 }
 
 class ResetPasswordConfirmPassword extends ResetPasswordState {
   final String passwordToConfirm;
-  const ResetPasswordConfirmPassword(this.passwordToConfirm)
-      : super('Re-enter new PIN', 'Done');
+  ResetPasswordConfirmPassword(this.passwordToConfirm)
+      : super(AppString.reEnterYourNewPIN.tr(), AppString.done.tr());
 }
 
 class ResetPasswordSuccessflly extends ResetPasswordState {

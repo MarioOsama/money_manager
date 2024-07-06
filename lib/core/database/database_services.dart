@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:money_manager/core/database/database_constants.dart';
@@ -99,6 +101,15 @@ class DatabaseServices {
     };
   }
 
+  String getLanguageCode() {
+    final String? language = _userBox.get(DatabaseConstants.language);
+    if (language == 'العربية') {
+      return 'ar';
+    } else {
+      return 'en';
+    }
+  }
+
   bool isVerifiedUserPinCode(String pinCode) {
     final storedPinCode = _userBox.get(DatabaseConstants.userBox);
     return storedPinCode == pinCode;
@@ -106,6 +117,7 @@ class DatabaseServices {
 
   void saveUserPreferences(Map<String, dynamic> newPreferences) {
     newPreferences.forEach((key, preference) {
+      log(preference.toString());
       _userBox.put(key, preference);
     });
   }

@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/features/statistics/cubit/statistics_cubit.dart';
 import 'package:money_manager/features/statistics/ui/widgets/statistics_history_item.dart';
@@ -16,7 +18,7 @@ class StatisticsHistory extends StatelessWidget {
         return Column(
           children: [
             StatisticsHistoryItem(
-                title: 'Today',
+                title: AppString.today.tr(),
                 amount:
                     (state as StatisticsLoaded).historyAmountData['today'] ??
                         0),
@@ -25,12 +27,12 @@ class StatisticsHistory extends StatelessWidget {
               children: [
                 Expanded(
                     child: StatisticsHistoryItem(
-                        title: 'Last Week',
+                        title: AppString.lastWeek.tr(),
                         amount: (state).historyAmountData['week'] ?? 0)),
                 horizontalSpace(20),
                 Expanded(
                   child: StatisticsHistoryItem(
-                      title: 'Last Month',
+                      title: AppString.lastMonth.tr(),
                       amount: (state).historyAmountData['month'] ?? 0),
                 ),
               ],

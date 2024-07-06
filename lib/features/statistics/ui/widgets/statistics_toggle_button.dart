@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
@@ -47,9 +49,9 @@ class _StatisticsToggleButtonState extends State<StatisticsToggleButton> {
               ? TransactionType.expense
               : TransactionType.income);
         },
-        children: const [
-          Text('Expense'),
-          Text('Income'),
+        children: [
+          Text(AppString.expense.tr()),
+          Text(AppString.income.tr()),
         ],
       ),
     );
