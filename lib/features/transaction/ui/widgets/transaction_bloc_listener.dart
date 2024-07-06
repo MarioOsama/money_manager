@@ -7,14 +7,15 @@ import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/features/transaction/logic/cubit/transaction_cubit.dart';
 
-class TransactionErrorBlocListener extends StatelessWidget {
-  const TransactionErrorBlocListener({super.key});
+class TransactionBlocListener extends StatelessWidget {
+  const TransactionBlocListener({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<TransactionCubit, TransactionState>(
       listenWhen: (previous, current) =>
-          previous != current && current is TransactionErrorState,
+          previous != current && current is TransactionErrorState ||
+          current is TransactionSaved,
       listener: (context, state) {
         if (state is TransactionErrorState) {
           final error = state.error;
@@ -51,8 +52,25 @@ class TransactionErrorBlocListener extends StatelessWidget {
             ),
           );
         }
+        if (state is TransactionSaved) {
+          final languageCode = context.locale.languageCode;
+          final message = _getLanguageMessage(languageCode, state.message);
+          context.clearSnackBar();
+          context.showSnackBar(
+            message: message,
+            color: AppColors.lightPrimaryColor,
+          );
+        }
       },
       child: const SizedBox.shrink(),
     );
+  }
+
+  _getLanguageMessage(String languageCode, String message) {
+    if (languageCode == 'ar') {
+      return 'تم حفظ $message بنجاح';
+    } else if (languageCode == 'en') {
+      return '$message saved successfully';
+    }
   }
 }

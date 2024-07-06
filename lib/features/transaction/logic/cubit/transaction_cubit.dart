@@ -166,9 +166,7 @@ class TransactionCubit extends Cubit<TransactionState> {
       transactionCategory.updateAmount(double.parse(amountController.text));
       log(transactionCategory.totalAmount.toString());
       emit(
-        TransactionSaved(
-            message:
-                "${newTransaction.title} Transaction Saved to Your ${newTransaction.transactionType}!"),
+        TransactionSaved(message: newTransaction.title),
       );
     } catch (e) {
       emit(const TransactionErrorState(
