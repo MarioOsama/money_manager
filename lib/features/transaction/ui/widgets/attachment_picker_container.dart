@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
@@ -15,18 +17,25 @@ class AttachmentPickerContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TransactionCubit, TransactionState>(
-      buildWhen: (previous, current) => current is TransactionComposing,
-      builder: (context, state) {
-        final transactionCubit = context.read<TransactionCubit>();
-        final isAttachmentPicked =
-            transactionCubit.attachmentPathController.text.isNotEmpty;
+    return BlocSelector<TransactionCubit, TransactionState, bool?>(
+      selector: (state) {
+        if (state is TransactionComposing) {
+          return state.isAttachmentPicked ?? false;
+        } else if (state is TransactionEditing) {
+          return state.transaction.attachmentPath.toString().trim().isNotEmpty;
+        } else {
+          return false;
+        }
+      },
+      builder: (context, isAttachmentPicked) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Attachment (Optional)',
-              style: TextStyles.f15GreySemiBold,
+              AppString.attachmentOptional.tr(),
+              style: TextStyles.f15GreySemiBold.copyWith(
+                  fontSize: TextStyles.getResponsiveFontSize(context,
+                      baseFontSize: 15)),
             ),
             verticalSpace(5),
             DottedBorder(
@@ -38,7 +47,7 @@ class AttachmentPickerContainer extends StatelessWidget {
               child: SizedBox(
                 height: 65.h,
                 width: double.infinity,
-                child: isAttachmentPicked
+                child: isAttachmentPicked!
                     ? _buildAttachmentPreviewButton(context)
                     : _buildAttachmentPickerButton(context),
               ),
@@ -66,8 +75,10 @@ class AttachmentPickerContainer extends StatelessWidget {
             width: 10,
           ),
           Text(
-            'Add attachment (Image, PDF, etc.)',
-            style: TextStyles.f15GreySemiBold,
+            AppString.addAttachment.tr(),
+            style: TextStyles.f15GreySemiBold.copyWith(
+                fontSize: TextStyles.getResponsiveFontSize(context,
+                    baseFontSize: 15)),
           ),
         ],
       ),
@@ -91,8 +102,10 @@ class AttachmentPickerContainer extends StatelessWidget {
             width: 10,
           ),
           Text(
-            'Remove attachment',
-            style: TextStyles.f15PrimaryLightSemiBold,
+            AppString.removeAttachment.tr(),
+            style: TextStyles.f15PrimaryLightSemiBold.copyWith(
+                fontSize: TextStyles.getResponsiveFontSize(context,
+                    baseFontSize: 15)),
           ),
         ],
       ),
@@ -104,20 +117,15 @@ class AttachmentPickerContainer extends StatelessWidget {
 
     if (result != null) {
       File file = File(result.files.single.path!);
-      // print(file);
       final transactionCubit = context.read<TransactionCubit>();
-      // print(
-      //     'Transaction Cubit Attachment Controller Before Editing: ${transactionCubit.attachmentPathController.text}');
       transactionCubit.attachmentPathController.text = file.path;
-      transactionCubit.isAttachmentPicked();
-      // print(
-      //     "Transaction Cubit Attachment Controller After Editing: ${transactionCubit.attachmentPathController.text}");
+      transactionCubit.changeAttachmentState();
     }
   }
 
   void _onRemoveAttachment(BuildContext context) {
     final transactionCubit = context.read<TransactionCubit>();
     transactionCubit.attachmentPathController.text = '';
-    transactionCubit.isAttachmentPicked();
+    transactionCubit.changeAttachmentState();
   }
 }

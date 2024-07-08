@@ -5,20 +5,29 @@ class _NumbersKeyPad extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NumericKeyboard(
-      onKeyboardTap: (value) => _onKeypadTap(context, value),
-      textStyle: TextStyles.f32CyanBold,
-      leftIcon: const Icon(
-        Icons.backspace,
-        color: AppColors.cyanColor,
+    return AspectRatio(
+      aspectRatio: 3,
+      child: NumericKeyboard(
+        onKeyboardTap: (value) => _onKeypadTap(context, value),
+        textStyle: TextStyles.f24CyanBold.copyWith(
+            fontSize:
+                TextStyles.getResponsiveFontSize(context, baseFontSize: 24)),
+        leftIcon: const FittedBox(
+          child: Icon(
+            Icons.backspace,
+            color: AppColors.cyanColor,
+          ),
+        ),
+        leftButtonFn: () => _onBackspaceTap(context),
+        rightIcon: FittedBox(
+          child: Icon(
+            Icons.check,
+            color: AppColors.cyanColor,
+            size: 30.sp,
+          ),
+        ),
+        rightButtonFn: () => _onDoneTap(context),
       ),
-      leftButtonFn: () => _onBackspaceTap(context),
-      rightIcon: Icon(
-        Icons.check,
-        color: AppColors.cyanColor,
-        size: 30.sp,
-      ),
-      rightButtonFn: () => _onDoneTap(context),
     );
   }
 

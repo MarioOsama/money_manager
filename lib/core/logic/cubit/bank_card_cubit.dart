@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_manager/core/data/repos/bank_card_repo.dart';
+import 'package:money_manager/core/models/transaction.dart';
 
 part 'bank_card_state.dart';
 
@@ -9,7 +10,7 @@ class BankCardCubit extends Cubit<BankCardState> {
 
   BankCardCubit(this._bankCardRepo) : super(const BankCardInitial());
 
-  void getBankCardData() {
+  void updateBankCardData() {
     emit(const BankCardLoading());
     try {
       _bankCardRepo.loadTransactionsFromDatabase();
@@ -17,6 +18,60 @@ class BankCardCubit extends Cubit<BankCardState> {
       _setBankCardValues();
     } catch (e) {
       _emitError(e);
+    }
+  }
+
+  void updateBankCardDataOnDeleteTransaction(Transaction transaction) {
+    final transactionType = transaction.transactionType;
+    if (transactionType == TransactionType.expense) {
+      emit(
+        BankCardLoaded(
+            bankCardExpenses: ((state as BankCardLoaded).bankCardExpenses -
+                    transaction.amount)
+                .abs(),
+            bankCardIncomes: (state as BankCardLoaded).bankCardIncomes,
+            bankCardBalance: (state as BankCardLoaded).bankCardIncomes -
+                (state as BankCardLoaded).bankCardExpenses +
+                transaction.amount),
+      );
+    } else {
+      emit(
+        BankCardLoaded(
+            bankCardExpenses: (state as BankCardLoaded).bankCardExpenses,
+            bankCardIncomes:
+                ((state as BankCardLoaded).bankCardIncomes - transaction.amount)
+                    .abs(),
+            bankCardBalance: (state as BankCardLoaded).bankCardIncomes -
+                transaction.amount -
+                (state as BankCardLoaded).bankCardExpenses),
+      );
+    }
+  }
+
+  void updateBankCardDataOnRestoreTransaction(Transaction transaction) {
+    final transactionType = transaction.transactionType;
+    if (transactionType == TransactionType.expense) {
+      emit(
+        BankCardLoaded(
+            bankCardExpenses: ((state as BankCardLoaded).bankCardExpenses +
+                    transaction.amount)
+                .abs(),
+            bankCardIncomes: (state as BankCardLoaded).bankCardIncomes,
+            bankCardBalance: (state as BankCardLoaded).bankCardIncomes -
+                (state as BankCardLoaded).bankCardExpenses -
+                transaction.amount),
+      );
+    } else {
+      emit(
+        BankCardLoaded(
+            bankCardExpenses: (state as BankCardLoaded).bankCardExpenses,
+            bankCardIncomes:
+                ((state as BankCardLoaded).bankCardIncomes + transaction.amount)
+                    .abs(),
+            bankCardBalance: (state as BankCardLoaded).bankCardIncomes +
+                transaction.amount -
+                (state as BankCardLoaded).bankCardExpenses),
+      );
     }
   }
 
@@ -39,7 +94,8 @@ class BankCardCubit extends Cubit<BankCardState> {
     double expensesAmount = getExpensesAmount();
     double incomesAmount = getIncomesAmount();
     double bankCardBalance = incomesAmount - expensesAmount;
-
+    transactionType = transactionType.replaceAll('(', '');
+    transactionType = transactionType.replaceAll(')', '');
     if (transactionType == 'Expense') {
       _refreshBankCardWithValues(bankCardBalance - newTransactionAmount,
           expensesAmount + newTransactionAmount, incomesAmount);
@@ -74,4 +130,6 @@ class BankCardCubit extends Cubit<BankCardState> {
   void resetBankCardData() {
     emit(const BankCardInitial());
   }
+
+  String get getCurrencyAbbreviation => _bankCardRepo.getCurrencyAbbreviation;
 }

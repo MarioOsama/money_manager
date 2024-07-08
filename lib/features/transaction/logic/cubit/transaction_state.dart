@@ -34,6 +34,12 @@ class TransactionComposing extends TransactionState {
   }
 }
 
+class TransactionEditing extends TransactionState {
+  final Transaction transaction;
+
+  const TransactionEditing({required this.transaction});
+}
+
 class TransactionSaving extends TransactionState {
   const TransactionSaving();
 }
@@ -42,6 +48,12 @@ class TransactionSaved extends TransactionState {
   final String message;
 
   const TransactionSaved({required this.message});
+}
+
+class TransactionUpdated extends TransactionState {
+  final String message;
+
+  const TransactionUpdated({required this.message});
 }
 
 class TransactionErrorState extends TransactionState {

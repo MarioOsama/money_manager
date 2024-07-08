@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/date.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/theming/colors.dart';
@@ -8,14 +10,23 @@ import 'package:money_manager/core/theming/text_styles.dart';
 class TypeDateContainer extends StatelessWidget {
   final bool isExpense;
   final DateTime transactionDate;
-  const TypeDateContainer(
-      {super.key, required this.isExpense, required this.transactionDate});
+  final String transactionId;
+  final bool isPeriodicFormat;
+  const TypeDateContainer({
+    super.key,
+    required this.isExpense,
+    required this.transactionDate,
+    required this.transactionId,
+    required this.isPeriodicFormat,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final String transactionType = isExpense ? 'Expense' : 'Income';
-    final transactionFormattedDate =
-        DateHelper.getFormattedDate(transactionDate);
+    final String transactionType =
+        isExpense ? AppString.expense.tr() : AppString.income.tr();
+    final transactionFormattedDate = isPeriodicFormat
+        ? DateHelper.getPeriodicDate(transactionDate)
+        : DateHelper.toDateFormat(transactionDate.toString());
     return Positioned(
       bottom: 5,
       left: 20,
@@ -44,8 +55,10 @@ class TypeDateContainer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  'Type',
-                  style: TextStyles.f16LightGreySemiBold,
+                  AppString.type.tr(),
+                  style: TextStyles.f16LightGreySemiBold.copyWith(
+                      fontSize: TextStyles.getResponsiveFontSize(context,
+                          baseFontSize: 16)),
                 ),
                 Row(
                   children: [
@@ -64,7 +77,9 @@ class TypeDateContainer extends StatelessWidget {
                     horizontalSpace(5),
                     Text(
                       transactionType,
-                      style: TextStyles.f18BlackSemiBold,
+                      style: TextStyles.f16BlackSemiBold.copyWith(
+                          fontSize: TextStyles.getResponsiveFontSize(context,
+                              baseFontSize: 16)),
                     ),
                   ],
                 ),
@@ -81,12 +96,21 @@ class TypeDateContainer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  'Date',
-                  style: TextStyles.f16LightGreySemiBold,
+                  AppString.date.tr(),
+                  style: TextStyles.f16LightGreySemiBold.copyWith(
+                      fontSize: TextStyles.getResponsiveFontSize(context,
+                          baseFontSize: 16)),
                 ),
-                Text(
-                  transactionFormattedDate,
-                  style: TextStyles.f18BlackSemiBold,
+                Hero(
+                  tag: '$transactionId+$transactionFormattedDate',
+                  child: DefaultTextStyle(
+                    style: TextStyles.f16BlackSemiBold.copyWith(
+                        fontSize: TextStyles.getResponsiveFontSize(context,
+                            baseFontSize: 16)),
+                    child: Text(
+                      transactionFormattedDate!,
+                    ),
+                  ),
                 ),
               ],
             ),

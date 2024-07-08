@@ -1,8 +1,19 @@
-part of 'transactions_container.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
+import 'package:money_manager/core/logic/cubit/bank_card_cubit.dart';
+import 'package:money_manager/core/models/transaction.dart';
+import 'package:money_manager/core/theming/colors.dart';
+import 'package:money_manager/core/theming/text_styles.dart';
+import 'package:money_manager/core/widgets/dismissible_background.dart';
+import 'package:money_manager/core/widgets/transaction_item_card_hero.dart';
+import 'package:money_manager/features/home/logic/cubit/home_cubit.dart';
 
-class _TransactionsListWidget extends StatelessWidget {
+class TransactionsListWidget extends StatelessWidget {
   final TransactionType transactionType;
-  const _TransactionsListWidget({required this.transactionType});
+  const TransactionsListWidget({super.key, required this.transactionType});
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +23,7 @@ class _TransactionsListWidget extends StatelessWidget {
     }
 
     final bool isExpanse = transactionType == TransactionType.expense;
-    final String typeSign = isExpanse ? '-' : '+';
-    // TODO: implement periodic formate logic in settings
-    final bool isPeriodicFormate = false;
+    final bool isPeriodicFormat = homeCubit.getDateFormat == 'Periodic';
 
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
@@ -25,142 +34,82 @@ class _TransactionsListWidget extends StatelessWidget {
             : [];
 
         final int listLength = transactions.length;
-        return ListView.builder(
-          padding: EdgeInsets.only(top: 5.h),
-          itemCount: listLength > 5 ? 5 : listLength,
-          itemBuilder: (context, index) {
-            final Transaction currentTransaction = transactions[index];
-            final String title = currentTransaction.title;
-            final DateTime date = currentTransaction.date;
-            final String formattedDate = isPeriodicFormate
-                ? DateHelper.getPeriodicDate(date)
-                : DateHelper.getFormattedDate(date);
-            final double amount = currentTransaction.amount;
-            final int categoryColorCode = currentTransaction.category.colorCode;
 
-            return Dismissible(
-              key: Key(transactions[index].createdAt),
-              background: _buildDeleteDismissibleBackground(),
-              direction: DismissDirection.endToStart,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 0.1,
-                        blurRadius: 5,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
-                    color: Colors.grey[50],
-                    border: Border(
-                      left: BorderSide(
-                        color: isExpanse
-                            ? AppColors.lightRedColor
-                            : AppColors.lightGreenColor,
-                        width: 5.w,
-                      ),
-                    ),
-                    borderRadius: BorderRadius.circular(5.r),
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      context.pushNamed(Routes.transactionDetailsScreen,
-                          arguments: currentTransaction);
-                    },
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      titleAlignment: ListTileTitleAlignment.top,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                      title: Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
-                        child: Text(title, style: TextStyles.f18BlackSemiBold),
-                      ),
-                      subtitle: Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
-                        child: Text(
-                          formattedDate,
-                          style: TextStyles.f15GreySemiBold,
-                        ),
-                      ),
-                      trailing: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text('$typeSign\$$amount',
-                              style: isExpanse
-                                  ? TextStyles.f18RedSemiBold
-                                  : TextStyles.f18LightGreenSemiBold),
-                          const Spacer(),
-                          Container(
-                            width: 100.w,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.r),
-                              color: Color(categoryColorCode).withOpacity(0.50),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 3.0,
-                              ),
-                              child: Text(
-                                currentTransaction.category.name,
-                                textAlign: TextAlign.center,
-                                style: TextStyles.f12BlackSemiBold.copyWith(
-                                  color: Color(categoryColorCode +
-                                          categoryColorCode * 3)
-                                      .withOpacity(0.75),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+        return listLength == 0
+            ? Center(
+                child: Text(
+                  isExpanse
+                      ? AppString.emptyExpenseMessage.tr()
+                      : AppString.emptyIncomeMessage.tr(),
+                  style: TextStyles.f14GreySemiBold.copyWith(
+                      fontSize: TextStyles.getResponsiveFontSize(context,
+                          baseFontSize: 14)),
+                  textAlign: TextAlign.center,
                 ),
-              ),
-            );
-          },
-        );
+              )
+            : ListView.builder(
+                padding: EdgeInsets.only(top: 5.h),
+                itemCount: listLength > 5 ? 5 : listLength,
+                itemBuilder: (context, index) {
+                  final Transaction currentTransaction =
+                      transactions[transactions.length - index - 1];
+                  final String categoryName = currentTransaction.categoryName;
+                  final Category currentTransactionCategory =
+                      homeCubit.getTransactionCategory(categoryName);
+                  final String currencyAbbreviation =
+                      homeCubit.getCurrencyAbbreviation;
+
+                  return Dismissible(
+                    key: UniqueKey(),
+                    onDismissed: (direction) =>
+                        onDismissed(context, currentTransaction),
+                    background: const DismissibleBackground(),
+                    direction: DismissDirection.endToStart,
+                    child: TransactionItemCardHero(
+                      transactionData: currentTransaction,
+                      transactionCategory: currentTransactionCategory,
+                      isPeriodicDate: isPeriodicFormat,
+                      currencyAbbreviation: currencyAbbreviation,
+                    ),
+                  );
+                },
+              );
       },
     );
   }
 
-  Widget _buildDeleteDismissibleBackground() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 7.h),
-      padding: EdgeInsets.only(right: 20.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.r),
-        color: AppColors.lightRedColor,
-      ),
-      alignment: Alignment.centerRight,
-      child: const Icon(
-        Icons.delete,
-        color: Colors.white,
-        size: 30,
-      ),
-    );
+  void onDismissed(BuildContext context, Transaction transaction) {
+    final BankCardCubit bankCardCubit = context.read<BankCardCubit>();
+    bankCardCubit.updateBankCardDataOnDeleteTransaction(transaction);
+    showUndoSnackBar(context, transaction);
   }
 
-  //TODO: Delete this method if not used
-  Widget _buildEditDismissibleBackground() {
-    return Container(
-      padding: EdgeInsets.only(right: 20.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.r),
-        color: AppColors.lightPrimaryColor,
+  void showUndoSnackBar(BuildContext context, Transaction transaction) {
+    final HomeCubit homeCubit = context.read<HomeCubit>();
+    final BankCardCubit bankCardCubit = context.read<BankCardCubit>();
+    final snackBar = ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(AppString.deletedTransactionMessage.tr()),
+        backgroundColor: AppColors.redColor,
+        action: SnackBarAction(
+          label: AppString.undo.tr(),
+          onPressed: () {},
+          textColor: Colors.white,
+        ),
       ),
-      alignment: Alignment.centerRight,
-      child: const Icon(
-        Icons.edit,
-        color: Colors.white,
-        size: 30,
-      ),
+    );
+    snackBar.closed.then(
+      (reason) {
+        if (reason == SnackBarClosedReason.action) {
+          bankCardCubit.updateBankCardDataOnRestoreTransaction(transaction);
+          context.read<HomeCubit>().getTransactionsData();
+          homeCubit.filterTransactionsByType();
+          return;
+        }
+        homeCubit.deleteTransaction(transaction.createdAt);
+        context.read<HomeCubit>().getTransactionsData();
+        homeCubit.filterTransactionsByType();
+      },
     );
   }
 }

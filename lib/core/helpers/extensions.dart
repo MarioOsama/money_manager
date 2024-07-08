@@ -36,7 +36,7 @@ extension Message on BuildContext {
         content: child ??
             Text(
               message ?? '',
-              style: textStyle ?? TextStyles.f18WhiteSemiBold,
+              style: textStyle ?? TextStyles.f18WhiteMedium,
             ),
         backgroundColor: color ?? AppColors.primaryDarkColor,
       ),

@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/logic/cubit/bank_card_cubit.dart';
 import 'package:money_manager/core/theming/colors.dart';
@@ -8,36 +10,39 @@ import 'package:money_manager/core/theming/text_styles.dart';
 
 class BankCardWidget extends StatelessWidget {
   final double? radius;
-  final double? height;
-  final double? width;
   final EdgeInsets? padding;
+  final EdgeInsets? margin;
 
-  const BankCardWidget(
-      {super.key, this.radius, this.height, this.width, this.padding});
+  const BankCardWidget({super.key, this.radius, this.padding, this.margin});
 
   @override
   Widget build(BuildContext context) {
-    context.read<BankCardCubit>().getBankCardData();
+    final BankCardCubit bankCardCubit = context.read<BankCardCubit>();
+    bankCardCubit.updateBankCardData();
     return BlocBuilder<BankCardCubit, BankCardState>(
       builder: (context, state) {
-        double totalBalance =
+        final double totalBalance =
             state is BankCardLoaded ? state.bankCardBalance : 0.0;
-        double income = state is BankCardLoaded ? state.bankCardIncomes : 0.0;
-        double expense = state is BankCardLoaded ? state.bankCardExpenses : 0.0;
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 250),
-          height: height?.h ?? 225.h,
-          width: width?.w ?? double.infinity,
+        final double income =
+            state is BankCardLoaded ? state.bankCardIncomes : 0.0;
+        final double expense =
+            state is BankCardLoaded ? state.bankCardExpenses : 0.0;
+        final String currencyAbbreviation =
+            bankCardCubit.getCurrencyAbbreviation;
+        final double height = MediaQuery.of(context).size.height;
+        return Container(
+          height: height * 0.26,
+          margin: margin ?? const EdgeInsets.only(top: 35),
           padding: padding ?? const EdgeInsets.all(25),
           decoration: BoxDecoration(
             color: AppColors.primaryColor,
             borderRadius: BorderRadius.circular(radius?.r ?? 20.r),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primaryColor.withOpacity(0.75),
-                blurRadius: 15,
-                offset: const Offset(0, 15),
-                spreadRadius: 5,
+                color: AppColors.primaryDarkColor.withOpacity(0.75),
+                blurRadius: 10,
+                offset: const Offset(3, 7),
+                spreadRadius: 3,
               )
             ],
             image: const DecorationImage(
@@ -53,40 +58,59 @@ class BankCardWidget extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Total Balance',
-                        style: TextStyles.f18CyanMedium,
+                      Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.r),
+                              color: AppColors.lightCyanColor.withOpacity(0.2),
+                            ),
+                            padding: const EdgeInsets.all(5),
+                            child: const Icon(
+                              Icons.account_balance_wallet,
+                              color: AppColors.lightCyanColor,
+                              size: 20,
+                            ),
+                          ),
+                          horizontalSpace(7),
+                          Text(
+                            AppString.totalBalance.tr(),
+                            style: TextStyles.f18CyanMedium.copyWith(
+                                fontSize: TextStyles.getResponsiveFontSize(
+                                    context,
+                                    baseFontSize: 18)),
+                          ),
+                        ],
                       ),
-                      Text('\$$totalBalance', style: TextStyles.f30WhiteBold),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text('$currencyAbbreviation $totalBalance',
+                            style: TextStyles.f24WhiteMedium.copyWith(
+                                fontSize: TextStyles.getResponsiveFontSize(
+                                    context,
+                                    baseFontSize: 24))),
+                      ),
                     ],
                   ),
-                  const Spacer(),
-                  //TODO: Remove this icon button if not needed
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.more_horiz,
-                        size: 30,
-                        color: AppColors.lightCyanColor,
-                      ))
                 ],
               ),
               const Spacer(),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _buildBalanceCard(
-                      title: 'Income',
-                      amount: '\$$income',
+                      context: context,
+                      title: AppString.income.tr(),
+                      amount: '$currencyAbbreviation $income',
                       icon: const Icon(
                         Icons.download_sharp,
                         color: AppColors.lightCyanColor,
                         size: 20,
                       )),
-                  const Spacer(),
-                  horizontalSpace(10),
                   _buildBalanceCard(
-                      title: 'Expense',
-                      amount: '\$$expense',
+                      context: context,
+                      title: AppString.expense.tr(),
+                      amount: '$currencyAbbreviation $expense',
                       icon: const Icon(
                         Icons.file_upload,
                         color: AppColors.lightCyanColor,
@@ -102,27 +126,44 @@ class BankCardWidget extends StatelessWidget {
   }
 
   _buildBalanceCard(
-      {required String title, required String amount, required Icon icon}) {
+      {required BuildContext context,
+      required String title,
+      required String amount,
+      required Icon icon}) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            CircleAvatar(
-              radius: 13,
-              backgroundColor: AppColors.lightCyanColor.withOpacity(0.2),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5.r),
+                color: AppColors.lightCyanColor.withOpacity(0.2),
+              ),
+              padding: const EdgeInsets.all(5),
               child: icon,
             ),
             horizontalSpace(7),
-            Text(
-              title,
-              style: TextStyles.f18CyanMedium,
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                title,
+                style: TextStyles.f18CyanMedium.copyWith(
+                    fontSize: TextStyles.getResponsiveFontSize(context,
+                        baseFontSize: 18)),
+              ),
             ),
           ],
         ),
-        Text(
-          amount,
-          style: TextStyles.f18WhiteSemiBold,
+        verticalSpace(5),
+        FittedBox(
+          fit: BoxFit.fitWidth,
+          child: Text(
+            amount,
+            style: TextStyles.f18WhiteSemiBold.copyWith(
+                fontSize: TextStyles.getResponsiveFontSize(context,
+                    baseFontSize: 18)),
+          ),
         ),
       ],
     );

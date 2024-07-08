@@ -49,9 +49,4 @@ class HomeError extends HomeState {
   final int errorCode;
 
   const HomeError({required this.error, required this.errorCode});
-
-  // @override
-  // String get getValue => error;
-
-  // int get getErrorCode => errorCode;
 }

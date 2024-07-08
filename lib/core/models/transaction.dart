@@ -3,13 +3,12 @@ import 'package:uuid/uuid.dart';
 
 part 'transaction.g.dart';
 
-//TODO: Change the Transaction id to be the creation date of the transaction
 const _uuid = Uuid();
 
 @HiveType(typeId: 1)
 class Transaction {
   @HiveField(0)
-  final String createdAt;
+  String createdAt;
   @HiveField(1)
   final String title;
   @HiveField(2)
@@ -17,7 +16,7 @@ class Transaction {
   @HiveField(3)
   final DateTime date;
   @HiveField(4)
-  final Category category;
+  final String categoryName;
   @HiveField(5)
   final TransactionType transactionType;
   @HiveField(6)
@@ -29,17 +28,18 @@ class Transaction {
     required this.title,
     required this.amount,
     required this.date,
-    required this.category,
+    required this.categoryName,
     required this.transactionType,
     this.note,
     this.attachmentPath,
   }) : createdAt = DateTime.now().toUtc().toString();
 
   Transaction copyWith({
+    String? id,
     String? title,
     double? amount,
     DateTime? date,
-    Category? category,
+    String? categoryName,
     TransactionType? transactionType,
     String? note,
     String? attachmentPath,
@@ -48,30 +48,39 @@ class Transaction {
       title: title ?? this.title,
       amount: amount ?? this.amount,
       date: date ?? this.date,
-      category: category ?? this.category,
+      categoryName: categoryName ?? this.categoryName,
       attachmentPath: attachmentPath ?? this.attachmentPath,
       note: note ?? this.note,
       transactionType: transactionType ?? this.transactionType,
-    );
+    )..createdAt = id ?? this.createdAt;
   }
 }
 
 @HiveType(typeId: 2)
 class Category {
   @HiveField(0)
-  final String id;
+  String id;
   @HiveField(1)
   final String name;
   @HiveField(2)
   final int colorCode;
+  @HiveField(3)
+  double totalAmount;
 
-  Category({required this.name, required this.colorCode}) : id = _uuid.v4();
+  Category(
+      {required this.name, required this.colorCode, required this.totalAmount})
+      : id = _uuid.v4();
 
-  Category copyWith({String? name, int? colorCode}) {
+  Category copyWith({String? name, int? colorCode, double? totalAmount}) {
     return Category(
       name: name ?? this.name,
       colorCode: colorCode ?? this.colorCode,
-    );
+      totalAmount: totalAmount ?? this.totalAmount,
+    )..id = this.id;
+  }
+
+  void updateAmount(double value) {
+    this.totalAmount = this.totalAmount + value;
   }
 
   @override

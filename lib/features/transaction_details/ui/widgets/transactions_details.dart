@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/core/theming/colors.dart';
@@ -10,23 +12,27 @@ import 'package:open_file/open_file.dart';
 
 class TransactionDetails extends StatelessWidget {
   final Category tarnsactionCategory;
+  final String transactionId;
   final String? transactionNote;
   final String? transactionAttachmentPath;
-  const TransactionDetails(
-      {super.key,
-      required this.tarnsactionCategory,
-      this.transactionNote,
-      this.transactionAttachmentPath});
+  const TransactionDetails({
+    super.key,
+    required this.tarnsactionCategory,
+    this.transactionNote,
+    this.transactionAttachmentPath,
+    required this.transactionId,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final isAttachement = transactionAttachmentPath != null;
+    final isAttachement = transactionAttachmentPath != null &&
+        transactionAttachmentPath!.isNotEmpty;
     final isPhotoAttachment = isAttachement
         ? transactionAttachmentPath!.contains('.jpg') ||
             transactionAttachmentPath!.contains('.png')
         : false;
     Widget attachmentWidget =
-        buildAttachmentWidget(isAttachement, isPhotoAttachment);
+        buildAttachmentWidget(context, isAttachement, isPhotoAttachment);
     final int categoryColorCode = tarnsactionCategory.colorCode;
 
     return Flexible(
@@ -39,17 +45,23 @@ class TransactionDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Category
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 16.0),
-              decoration: BoxDecoration(
-                color: Color(tarnsactionCategory.colorCode).withOpacity(0.50),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Text(
-                tarnsactionCategory.name,
-                style: TextStyles.f18BlackSemiBold.copyWith(
-                  color: Color(categoryColorCode + categoryColorCode * 3)
-                      .withOpacity(0.75),
+            Hero(
+              tag: '$transactionId+$categoryColorCode',
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 30.0),
+                decoration: BoxDecoration(
+                  color: Color(tarnsactionCategory.colorCode).withOpacity(0.50),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: DefaultTextStyle(
+                  style: TextStyles.f16BlackSemiBold.copyWith(
+                    color: Color(categoryColorCode + categoryColorCode * 3),
+                    fontSize: TextStyles.getResponsiveFontSize(context,
+                        baseFontSize: 14),
+                  ),
+                  child: Text(
+                    tarnsactionCategory.name,
+                  ),
                 ),
               ),
             ),
@@ -61,24 +73,23 @@ class TransactionDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Note',
-                    style: TextStyles.f20LightGreySemiBold,
+                    AppString.note.tr(),
+                    style: TextStyles.f20LightGreySemiBold.copyWith(
+                        fontSize: TextStyles.getResponsiveFontSize(context,
+                            baseFontSize: 20)),
                   ),
                   verticalSpace(5),
-                  Text(
-                    transactionNote ?? 'No Note Added',
-                    style: transactionNote == null
-                        ? TextStyles.f15GreyRegular
-                        : TextStyles.f16BlackRegular,
-                  ),
+                  getNoteWidget(context),
                 ],
               ),
             ),
             // Attachment
             verticalSpace(10),
             Text(
-              'Attachment',
-              style: TextStyles.f20LightGreySemiBold,
+              AppString.attachment.tr(),
+              style: TextStyles.f20LightGreySemiBold.copyWith(
+                  fontSize: TextStyles.getResponsiveFontSize(context,
+                      baseFontSize: 20)),
             ),
             verticalSpace(10),
             attachmentWidget,
@@ -88,7 +99,8 @@ class TransactionDetails extends StatelessWidget {
     );
   }
 
-  buildAttachmentWidget(bool isAttachement, bool isPhotoAttachment) {
+  buildAttachmentWidget(
+      BuildContext context, bool isAttachement, bool isPhotoAttachment) {
     Widget toOpenAttachmentWidget = isPhotoAttachment
         ? GestureDetector(
             onTap: () {
@@ -100,7 +112,7 @@ class TransactionDetails extends StatelessWidget {
               height: 150.h,
               width: double.infinity,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
                   image: FileImage(
                     File(transactionAttachmentPath!),
@@ -122,14 +134,12 @@ class TransactionDetails extends StatelessWidget {
                 foregroundColor:
                     isAttachement ? AppColors.lightPrimaryColor : Colors.grey,
               ),
-              label: const Text(
-                'OpenAttachment',
+              label: Text(
+                AppString.openAttachment.tr(),
               ),
-              icon: isAttachement
-                  ? const Icon(
-                      Icons.file_open_outlined,
-                    )
-                  : null,
+              icon: const Icon(
+                Icons.file_open_outlined,
+              ),
             ),
           );
 
@@ -138,8 +148,10 @@ class TransactionDetails extends StatelessWidget {
         : Padding(
             padding: EdgeInsets.symmetric(vertical: 18.0.h),
             child: Text(
-              'No Attachment',
-              style: TextStyles.f14GreySemiBold,
+              AppString.noAttachment.tr(),
+              style: TextStyles.f14GreySemiBold.copyWith(
+                  fontSize: TextStyles.getResponsiveFontSize(context,
+                      baseFontSize: 14)),
               textAlign: TextAlign.center,
             ),
           );
@@ -154,5 +166,23 @@ class TransactionDetails extends StatelessWidget {
       ),
       child: attachmentWidget,
     );
+  }
+
+  Widget getNoteWidget(BuildContext context) {
+    if (transactionNote != null && transactionNote!.trim().isNotEmpty) {
+      return Text(
+        transactionNote!,
+        style: TextStyles.f16BlackMedium.copyWith(
+            fontSize:
+                TextStyles.getResponsiveFontSize(context, baseFontSize: 16)),
+      );
+    } else {
+      return Text(
+        AppString.noNote.tr(),
+        style: TextStyles.f15GreyRegular.copyWith(
+            fontSize:
+                TextStyles.getResponsiveFontSize(context, baseFontSize: 15)),
+      );
+    }
   }
 }

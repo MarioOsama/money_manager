@@ -5,23 +5,35 @@ import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
 
 class AppTextFormField extends StatelessWidget {
-  final String title;
+  final String? title;
   final TextEditingController controller;
   final TextInputType? keyboardType;
   final Widget? icon;
   final String? hintText;
   final void Function(String value)? onChanged;
   final bool? isRequired;
+  final int? maxLength;
+  final bool? obscure;
+  final Color? borderColor;
+  final TextStyle? textStyle;
+  final bool? enabled;
+  final bool? capitalization;
 
   const AppTextFormField({
     super.key,
-    required this.title,
+    this.title,
     required this.controller,
     this.keyboardType,
     this.icon,
     this.hintText,
     this.onChanged,
     this.isRequired = true,
+    this.maxLength,
+    this.obscure,
+    this.borderColor,
+    this.textStyle,
+    this.enabled,
+    this.capitalization,
   });
 
   @override
@@ -31,26 +43,31 @@ class AppTextFormField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: TextStyles.f15GreySemiBold,
-          ),
+          title != null
+              ? Text(
+                  title!,
+                  style: TextStyles.f15GreySemiBold.copyWith(
+                      fontSize: TextStyles.getResponsiveFontSize(context,
+                          baseFontSize: 15)),
+                )
+              : const SizedBox.shrink(),
           verticalSpace(5),
           SizedBox(
             height: 75.h,
             child: TextFormField(
               controller: controller,
               keyboardType: keyboardType,
-              style: TextStyles.f18LightPrimarySemiBold,
+              style: textStyle ?? TextStyles.f18LightPrimarySemiBold,
               onChanged: onChanged,
               decoration: InputDecoration(
+                counterText: '',
                 hintText: hintText,
                 suffixIcon: icon,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5),
-                  borderSide: const BorderSide(
+                  borderSide: BorderSide(
                     width: 1,
-                    color: Colors.grey,
+                    color: borderColor ?? Colors.grey,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
@@ -76,6 +93,13 @@ class AppTextFormField extends StatelessWidget {
                 ),
               ),
               validator: isRequired! ? (value) => _validator(value) : null,
+              maxLength: maxLength,
+              obscureText: obscure ?? false,
+              enabled: enabled,
+              cursorColor: borderColor,
+              textCapitalization: capitalization == true
+                  ? TextCapitalization.characters
+                  : TextCapitalization.none,
             ),
           ),
         ],

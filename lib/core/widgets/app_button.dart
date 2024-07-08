@@ -15,6 +15,7 @@ class AppButton extends StatelessWidget {
   final double? horizontalPadding;
   final double? verticalPadding;
   final double? radius;
+  final double? fontSize;
 
   const AppButton({
     super.key,
@@ -27,20 +28,21 @@ class AppButton extends StatelessWidget {
     this.horizontalPadding,
     this.verticalPadding,
     this.radius,
+    this.fontSize,
   });
 
   @override
   Widget build(BuildContext context) {
     final isBorder = borderWidth != null;
-    return _buildContainer(isBorder);
+    return _buildContainer(context, isBorder);
   }
 
-  Widget _buildContainer(bool isBorder) {
+  Widget _buildContainer(BuildContext context, bool isBorder) {
     return Container(
       width: width?.w ?? double.maxFinite,
       height: height?.h ?? 67.h,
       decoration: _buildDecoration(isBorder),
-      child: _buildTextButton(isBorder),
+      child: _buildTextButton(context, isBorder),
     );
   }
 
@@ -70,7 +72,7 @@ class AppButton extends StatelessWidget {
     );
   }
 
-  Widget _buildTextButton(bool isBorder) {
+  Widget _buildTextButton(BuildContext context, bool isBorder) {
     return TextButton(
       onPressed: onPress,
       style: ButtonStyle(
@@ -90,12 +92,18 @@ class AppButton extends StatelessWidget {
           ),
         ),
       ),
-      child: Text(
-        text,
-        style: TextStyles.f18WhiteSemiBold.copyWith(
-          color: isBorder ? AppColors.primaryColor : Colors.white,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          text,
+          style: TextStyles.f18WhiteSemiBold.copyWith(
+            color: isBorder ? AppColors.primaryColor : Colors.white,
+            fontSize: TextStyles.getResponsiveFontSize(context,
+                baseFontSize: fontSize ?? 18.sp),
+            letterSpacing: 1.5,
+          ),
+          textAlign: TextAlign.center,
         ),
-        textAlign: TextAlign.center,
       ),
     );
   }

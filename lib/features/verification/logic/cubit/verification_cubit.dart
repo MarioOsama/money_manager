@@ -105,7 +105,7 @@ class VerificationCubit extends Cubit<VerificationState> {
           pinCode: confirmationCode,
         ),
       );
-      storePinCode(state.getValue);
+      storePinAndInitData(state.getValue);
     } else {
       emit(
         const VerificationErrorState(
@@ -118,5 +118,6 @@ class VerificationCubit extends Cubit<VerificationState> {
     }
   }
 
-  void storePinCode(String pin) => _verificationRepo.storeUserPinCode(pin);
+  void storePinAndInitData(String pin) =>
+      _verificationRepo.storeUserPinAndInitData(pin);
 }

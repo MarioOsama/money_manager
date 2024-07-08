@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
+import 'package:money_manager/core/helpers/date.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/features/transaction/data/repos/transaction_repo.dart';
 
@@ -17,13 +22,19 @@ class TransactionCubit extends Cubit<TransactionState> {
   TextEditingController noteController = TextEditingController();
   TextEditingController attachmentPathController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  Transaction? transactionToEdit;
 
-  void setupTransactionControllers() {
+  void setupNewTransactionControllers() {
     typeController.text = 'Expense';
-    categoryController.text = 'Shopping';
+    categoryController.text = 'Others';
+    dateController.text = getFormattedStringDate;
   }
 
-  void processTransaction() {
+  String get getFormattedStringDate {
+    return DateTime.now().toLocal().toString().split(' ')[0];
+  }
+
+  void processTransaction(bool isEditing) {
     emit(const TransactionComposing());
 
     final isValidatedDate = isValidDate(dateController.text);
@@ -32,93 +43,34 @@ class TransactionCubit extends Cubit<TransactionState> {
     if (!isValidatedDate || !isValidatedAmount) {
       final currentState = state;
       if (!isValidatedAmount) {
-        emit(const TransactionErrorState(
-            error: 'Invalid Amount, Please enter a numerical amount',
-            errorCode: 400));
+        emit(TransactionErrorState(
+            error: AppString.numericalAmountError.tr(), errorCode: 400));
         emit(const TransactionComposing()
             .copyWith(currentState, isValidAmount: false));
         return;
       }
 
-      emit(const TransactionErrorState(
-          error:
-              'Invalid Date, Please enter a valid date or pick corrected date directly',
-          errorCode: 400));
+      emit(TransactionErrorState(
+          error: AppString.invalidDateError.tr(), errorCode: 400));
       emit(const TransactionComposing()
           .copyWith(currentState, isValidDate: false));
       return;
     }
 
+    if (isEditing) {
+      updateTransaction();
+      return;
+    }
     saveTransaction();
-
-    // if (isValidatedDate && isValidatedAmount) {
-    //   emit(const TransactionComposing(isValidAmount: true, isValidDate: true));
-    //   // saveTransaction();
-    // }
-
-    // print('${dateController.text} date from processTransaction');
-    // print('${amountController.text} amount from processTransaction');
-    // print('${typeController.text} type from processTransaction');
-    // print('${categoryController.text} category from processTransaction');
-    // print('${noteController.text} note from processTransaction');
-    // print(
-    //     '${attachmentPathController.text} attachment from processTransaction');
-    // print('Saving Transaction...');
-    // saveTransaction();
   }
 
   double? _toNumericAmount(String stringAmount) {
     return double.tryParse(stringAmount);
   }
 
-  String? _toDateFormat(String stringDate) {
-    final String wantedDateFragment = splitWantedDateFragment(stringDate);
-    final List<String> stringDateFragments = wantedDateFragment.split('-');
-    if (stringDateFragments.length != 3 ||
-        stringDateFragments[0].length != 4 ||
-        stringDateFragments[1].length != 2 ||
-        stringDateFragments[2].length != 2) {
-      return null;
-    }
-    final List<int?>? intDateFragments =
-        _checkIntDateFormat(stringDateFragments);
-    final bool isValidDateValues = intDateFragments != null;
-
-    if (!isValidDateValues) {
-      return null;
-    }
-
-    final String validDate = intDateFragments.join('-');
-    final String formattedDate = validDate
-        .split('-')
-        .map((dateFragment) =>
-            dateFragment.length == 1 ? '0$dateFragment' : dateFragment)
-        .join('-');
-    return formattedDate;
-  }
-
-  String splitWantedDateFragment(String stringDate) {
-    return stringDate.trim().split(' ').first;
-  }
-
-  List<int?>? _checkIntDateFormat(List<String> dateFragments) {
-    final List<int?> intFragmentsList = dateFragments
-        .map((stringDateFragment) => int.tryParse(stringDateFragment))
-        .toList();
-    if (intFragmentsList.contains(null) ||
-        intFragmentsList[0]! < 2000 ||
-        intFragmentsList.contains(0) ||
-        intFragmentsList[1]! > 12 ||
-        intFragmentsList[2]! > 31) {
-      return null;
-    }
-    return intFragmentsList;
-  }
-
   bool isValidDate(String date) {
-    final String? formattedDate = _toDateFormat(date);
+    final String? formattedDate = DateHelper.toDateFormat(date);
     if (formattedDate == null) {
-      // print('Invalid Date');
       emit(const TransactionComposing().copyWith(state, isValidDate: false));
       return false;
     }
@@ -130,7 +82,6 @@ class TransactionCubit extends Cubit<TransactionState> {
   bool isValidAmount(String amount) {
     final double? formattedAmount = _toNumericAmount(amount);
     if (formattedAmount == null) {
-      // print('Invalid Amount');
       emit(const TransactionComposing().copyWith(state, isValidAmount: false));
       return false;
     }
@@ -139,15 +90,24 @@ class TransactionCubit extends Cubit<TransactionState> {
     return true;
   }
 
-  bool isAttachmentPicked() {
+  void changeAttachmentState() {
+    if (state is TransactionEditing) {
+      emit(
+        TransactionEditing(
+          transaction: (state as TransactionEditing).transaction.copyWith(
+                attachmentPath: attachmentPathController.text,
+              ),
+        ),
+      );
+      return;
+    }
     if (attachmentPathController.text.isEmpty) {
       emit(const TransactionComposing()
           .copyWith(state, isAttachmentPicked: false));
-      return false;
+      return;
     }
     emit(
         const TransactionComposing().copyWith(state, isAttachmentPicked: true));
-    return true;
   }
 
   bool isWithNote() {
@@ -157,45 +117,117 @@ class TransactionCubit extends Cubit<TransactionState> {
     return true;
   }
 
-  Future<bool> isUserEnteredData() {
-    return Future(() =>
-        titleController.text.trim().isNotEmpty ||
+  bool isUserEnteredData() {
+    return titleController.text.trim().isNotEmpty ||
         amountController.text.trim().isNotEmpty ||
         dateController.text.trim().isNotEmpty ||
         noteController.text.trim().isNotEmpty ||
-        attachmentPathController.text.isNotEmpty);
+        attachmentPathController.text.isNotEmpty;
+  }
+
+  String get getAttachmentPath {
+    return attachmentPathController.text.isNotEmpty
+        ? attachmentPathController.text
+        : '';
+  }
+
+  String? get getNote {
+    return isWithNote() ? noteController.text : null;
   }
 
   void saveTransaction() {
     emit(const TransactionSaving());
-    final isAttachmentAttached = isAttachmentPicked();
-    final isNoteAttached = isWithNote();
+    handleControllers();
+    final attachmentPath = getAttachmentPath;
+    final note = getNote;
+    final categoryName = categoryController.text;
     final Transaction newTransaction = Transaction(
       title: titleController.text,
       amount: double.parse(amountController.text),
-      date: DateTime.parse(dateController.text).toUtc(),
-      category: Category(
-        name: categoryController.text,
-        colorCode: Colors.blueAccent.value,
-      ),
+      date: DateTime.parse(dateController.text).toLocal().add(
+            Duration(
+              hours: DateTime.now().hour,
+              minutes: DateTime.now().minute,
+              seconds: DateTime.now().second,
+            ),
+          ),
+      categoryName: categoryName,
       transactionType: typeController.text == 'Expense'
           ? TransactionType.expense
           : TransactionType.income,
-      note: isNoteAttached ? noteController.text : null,
-      attachmentPath:
-          isAttachmentAttached ? attachmentPathController.text : null,
+      note: note,
+      attachmentPath: attachmentPath,
     );
     try {
       _transactionRepo.saveTransaction(newTransaction);
+      // Update transaction category total amount
+      final Category transactionCategory =
+          _transactionRepo.getCategoryByName(categoryName);
+      transactionCategory.updateAmount(double.parse(amountController.text));
+      log(transactionCategory.totalAmount.toString());
       emit(
-        TransactionSaved(
-            message:
-                "${newTransaction.title} Transaction Saved to Your ${newTransaction.transactionType}!"),
+        TransactionSaved(message: newTransaction.title),
       );
     } catch (e) {
       emit(const TransactionErrorState(
           error: 'Error Saving Transaction', errorCode: 500));
     }
-    // print('Saving Transaction...');
+  }
+
+  void setupEditingTransactionEnvironment(Transaction currentTransaction) {
+    emit(TransactionEditing(transaction: currentTransaction));
+    transactionToEdit = currentTransaction;
+
+    titleController.text = currentTransaction.title;
+    amountController.text = currentTransaction.amount.toStringAsFixed(2);
+    final String formattedDate =
+        DateHelper.toDateFormat(currentTransaction.date.toString())!;
+    dateController.text = formattedDate;
+    typeController.text =
+        currentTransaction.transactionType == TransactionType.expense
+            ? 'Expense'
+            : 'Income';
+    categoryController.text = currentTransaction.categoryName;
+    noteController.text = currentTransaction.note ?? '';
+    attachmentPathController.text = currentTransaction.attachmentPath ?? '';
+  }
+
+  void updateTransaction() {
+    handleControllers();
+    final Transaction updatedTransaction = transactionToEdit!.copyWith(
+      title: titleController.text,
+      amount: double.parse(amountController.text),
+      date: DateTime.parse(dateController.text).toLocal().add(
+            Duration(
+              hours: DateTime.now().hour,
+              minutes: DateTime.now().minute,
+              seconds: DateTime.now().second,
+            ),
+          ),
+      categoryName: categoryController.text,
+      transactionType: typeController.text == 'Expense'
+          ? TransactionType.expense
+          : TransactionType.income,
+      note: noteController.text.isEmpty ? '' : noteController.text,
+      attachmentPath: attachmentPathController.text.isEmpty
+          ? ''
+          : attachmentPathController.text,
+    );
+    try {
+      _transactionRepo.updateTransaction(updatedTransaction);
+      emit(
+        TransactionUpdated(message: updatedTransaction.title),
+      );
+    } catch (e) {
+      emit(const TransactionErrorState(
+          error: 'Error Updating Transaction', errorCode: 500));
+    }
+  }
+
+  void handleControllers() {
+    typeController.text = typeController.text.replaceFirst('(', '');
+    typeController.text = typeController.text.replaceFirst(')', '');
+    categoryController.text = categoryController.text.replaceFirst('(', '');
+    categoryController.text = categoryController.text.replaceFirst(')', '');
   }
 }

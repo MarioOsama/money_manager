@@ -16,9 +16,14 @@ class _VerificationHeader extends StatelessWidget {
           } else if (state is VerificationConfirmPin) {
             verificationHeader = 'Confirm your PIN';
           }
-          return Text(
-            verificationHeader,
-            style: TextStyles.f18WhiteSemiBold,
+          return FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              verificationHeader,
+              style: TextStyles.f18WhiteSemiBold.copyWith(
+                  fontSize: TextStyles.getResponsiveFontSize(context,
+                      baseFontSize: 18)),
+            ),
           );
         },
       ),
