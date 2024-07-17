@@ -7,7 +7,10 @@ import 'package:money_manager/features/all_transactions/logic/cubit/all_transact
 class AllTransactionsListView extends StatelessWidget {
   const AllTransactionsListView({
     super.key,
+    required this.transactions,
   });
+
+  final List<Transaction> transactions;
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +23,14 @@ class AllTransactionsListView extends StatelessWidget {
     return BlocBuilder<AllTransactionsCubit, AllTransactionsState>(
       buildWhen: (previous, current) => current is AllTransactionsLoadedState,
       builder: (context, state) {
-        final List<Transaction> allTypeTransactions =
-            (state as AllTransactionsLoadedState).allTransactions.toList();
         return ListView.builder(
-          itemCount: allTypeTransactions.length,
+          itemCount: transactions.length,
           itemBuilder: (context, index) {
-            final Transaction currentTransaction = allTypeTransactions[index];
+            final Transaction currentTransaction = transactions[index];
             final Category currentTransactionCategory = allTransactionsCubit
                 .getTransactionCategory(currentTransaction.categoryName);
             return TransactionItemCard(
-                transactionData: allTypeTransactions[index],
+                transactionData: transactions[index],
                 transactionCategory: currentTransactionCategory,
                 isPeriodicDate: isPeriodicFormat,
                 currencyAbbreviation: currencyAbbreviation);

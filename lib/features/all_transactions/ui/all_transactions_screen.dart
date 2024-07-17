@@ -8,8 +8,9 @@ import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/core/widgets/custom_app_bar.dart';
 import 'package:money_manager/features/all_transactions/logic/cubit/all_transactions_cubit.dart';
-import 'package:money_manager/features/all_transactions/ui/widgets/all_transactions_list_view.dart';
 import 'package:money_manager/features/all_transactions/ui/widgets/empty_transactions.dart';
+
+import 'widgets/transactions_body.dart';
 
 class AllTransactionsScreen extends StatelessWidget {
   final TransactionType transactionType;
@@ -24,7 +25,8 @@ class AllTransactionsScreen extends StatelessWidget {
         ? AppString.expense.tr()
         : AppString.income.tr();
 
-    final bool noTransactions = allTransactionsCubit.transactionsList.isEmpty;
+    final bool noTransactions =
+        allTransactionsCubit.allTransactionsList.isEmpty;
 
     final String languageCode = context.locale.languageCode;
 
@@ -49,7 +51,7 @@ class AllTransactionsScreen extends StatelessWidget {
             ? EmptyTransactions(
                 transactionType: transactionType,
               )
-            : const AllTransactionsListView(),
+            : const TransactionsBody(),
       ),
     );
   }
