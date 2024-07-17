@@ -30,6 +30,7 @@ class _TransactionsHeaderWidget extends StatelessWidget {
             },
             child: Text(AppString.seeAll.tr(),
                 style: TextStyles.f15GreyRegular.copyWith(
+                    color: AppColors.lightPrimaryColor,
                     fontSize: TextStyles.getResponsiveFontSize(context,
                         baseFontSize: 15))),
           ),

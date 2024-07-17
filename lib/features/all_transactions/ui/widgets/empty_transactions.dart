@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/models/transaction.dart';
@@ -18,7 +20,7 @@ class EmptyTransactions extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(
-            'There are no ${transactionType}s, \n try to log new $transactionType',
+            AppString.noTransactions.tr(),
             style: TextStyles.f14GreySemiBold.copyWith(
                 fontSize: TextStyles.getResponsiveFontSize(context,
                     baseFontSize: 16)),
@@ -35,7 +37,7 @@ class EmptyTransactions extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                 )),
             child: Text(
-              'Add New Transaction',
+              AppString.addNewTransaction.tr(),
               style: TextStyles.f16WhiteMedium,
             ),
           ),

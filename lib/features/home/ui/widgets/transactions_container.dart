@@ -5,6 +5,7 @@ import 'package:money_manager/core/helpers/app_string.dart';
 import 'package:money_manager/core/helpers/extensions.dart';
 import 'package:money_manager/core/helpers/spacing.dart';
 import 'package:money_manager/core/routing/routes.dart';
+import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/core/models/transaction.dart';
 import 'package:money_manager/features/home/ui/widgets/transactions_list_widget.dart';

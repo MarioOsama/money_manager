@@ -45,6 +45,12 @@ class TextStyles {
     color: AppColors.primaryColor,
   );
 
+  static TextStyle f20PrimaryDarkBold = const TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeights.bold,
+    color: AppColors.primaryDarkColor,
+  );
+
   static TextStyle f20RedBold = const TextStyle(
     fontSize: 20,
     fontWeight: FontWeights.bold,
