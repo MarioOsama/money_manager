@@ -8,9 +8,7 @@ import 'package:money_manager/core/theming/colors.dart';
 import 'package:money_manager/core/theming/text_styles.dart';
 import 'package:money_manager/core/widgets/custom_app_bar.dart';
 import 'package:money_manager/features/all_transactions/logic/cubit/all_transactions_cubit.dart';
-import 'package:money_manager/features/all_transactions/ui/widgets/empty_transactions.dart';
-
-import 'widgets/transactions_body.dart';
+import 'package:money_manager/features/all_transactions/ui/widgets/all_transactions_bloc_builder.dart';
 
 class AllTransactionsScreen extends StatelessWidget {
   final TransactionType transactionType;
@@ -25,9 +23,6 @@ class AllTransactionsScreen extends StatelessWidget {
         ? AppString.expense.tr()
         : AppString.income.tr();
 
-    final bool noTransactions =
-        allTransactionsCubit.allTransactionsList.isEmpty;
-
     final String languageCode = context.locale.languageCode;
 
     return Scaffold(
@@ -35,25 +30,30 @@ class AllTransactionsScreen extends StatelessWidget {
         title: _getHeaderTitle(languageCode, titleType),
         withBackButton: true,
         foregroundColor: AppColors.primaryDarkColor,
-        action: IconButton(
-          onPressed: () {
-            _showSortingModalSheet(context, allTransactionsCubit);
-          },
-          icon: const Icon(
-            Icons.sort,
-            color: AppColors.primaryDarkColor,
-          ),
-        ),
+        action: _buildSortingButton(context, allTransactionsCubit),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: noTransactions
-            ? EmptyTransactions(
-                transactionType: transactionType,
-              )
-            : const TransactionsBody(),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: AllTransactionsBlocBuilder(),
       ),
     );
+  }
+
+  Widget _buildSortingButton(
+      BuildContext context, AllTransactionsCubit allTransactionsCubit) {
+    final bool isNoTransactions =
+        allTransactionsCubit.state is AllTransactionsEmptyState;
+    return isNoTransactions
+        ? const SizedBox.shrink()
+        : IconButton(
+            onPressed: () {
+              _showSortingModalSheet(context, allTransactionsCubit);
+            },
+            icon: const Icon(
+              Icons.sort,
+              color: AppColors.primaryDarkColor,
+            ),
+          );
   }
 
   Future<dynamic> _showSortingModalSheet(

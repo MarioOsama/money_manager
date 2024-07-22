@@ -17,6 +17,10 @@ class AllTransactionsLoadedState extends AllTransactionsState {
   const AllTransactionsLoadedState(this.allTransactions);
 }
 
+class AllTransactionsEmptyState extends AllTransactionsState {
+  const AllTransactionsEmptyState();
+}
+
 class AllTransactionsErrorState extends AllTransactionsState {
   final String error;
   const AllTransactionsErrorState(this.error);
