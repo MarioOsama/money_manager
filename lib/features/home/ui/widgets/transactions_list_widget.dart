@@ -79,6 +79,7 @@ class TransactionsListWidget extends StatelessWidget {
   }
 
   void onDismissed(BuildContext context, Transaction transaction) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
     final BankCardCubit bankCardCubit = context.read<BankCardCubit>();
     bankCardCubit.updateBankCardDataOnDeleteTransaction(transaction);
     showUndoSnackBar(context, transaction);
