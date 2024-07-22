@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:money_manager/core/models/transaction.dart';
@@ -22,6 +24,10 @@ class AllTransactionsCubit extends Cubit<AllTransactionsState> {
   void loadAllTransactions(TransactionType transactionType) {
     emit(const AllTransactionsLoadingState());
     allTransactionsList = _getAllTypeTransactionsList(transactionType);
+    if (allTransactionsList.isEmpty) {
+      emit(const AllTransactionsEmptyState());
+      return;
+    }
     // Split transactions into months
     splitIntoMonths();
     // Setup page controller
@@ -47,6 +53,11 @@ class AllTransactionsCubit extends Cubit<AllTransactionsState> {
 
   /// Call the specific [sortingType] sorting function then emit loaded state to update the list ordering in UI
   void sortTransactions(String sortingType) {
+    try {
+      setupCurrentIndex();
+    } catch (e) {
+      log(e.toString());
+    }
     switch (sortingType) {
       case 'Lowest Price':
         lowestSorting();
@@ -96,8 +107,6 @@ class AllTransactionsCubit extends Cubit<AllTransactionsState> {
 
   /// Sorting the transactions list by price with ascending ordering
   void lowestSorting() {
-    setupCurrentIndex();
-
     transactionsByMonthMap.values
         .elementAt(currentFilteredListIndex)
         .sort((a, b) => a.amount.compareTo(b.amount));
@@ -105,8 +114,6 @@ class AllTransactionsCubit extends Cubit<AllTransactionsState> {
 
   /// Sorting the transactions list by price with descending ordering
   void highestSorting() {
-    setupCurrentIndex();
-
     transactionsByMonthMap.values
         .elementAt(currentFilteredListIndex)
         .sort((a, b) => b.amount.compareTo(a.amount));
@@ -114,8 +121,6 @@ class AllTransactionsCubit extends Cubit<AllTransactionsState> {
 
   /// Sorting the transactions list by date with descending ordering
   void newestSorting() {
-    setupCurrentIndex();
-
     transactionsByMonthMap.values
         .elementAt(currentFilteredListIndex)
         .sort((a, b) => b.date.compareTo(a.date));
@@ -123,8 +128,6 @@ class AllTransactionsCubit extends Cubit<AllTransactionsState> {
 
   /// Sorting the transactions list by date with ascending ordering
   void oldestSorting() {
-    setupCurrentIndex();
-
     transactionsByMonthMap.values
         .elementAt(currentFilteredListIndex)
         .sort((a, b) => a.date.compareTo(b.date));
@@ -132,8 +135,6 @@ class AllTransactionsCubit extends Cubit<AllTransactionsState> {
 
   /// Sorting the transactions list by the highst amount category
   void categorySorting() {
-    setupCurrentIndex();
-
     transactionsByMonthMap.values
         .elementAt(currentFilteredListIndex)
         .sort((a, b) {
